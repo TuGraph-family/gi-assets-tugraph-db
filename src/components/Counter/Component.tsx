@@ -15,7 +15,7 @@ const Counter = props => {
         padding: '20px',
       }}
     >
-      自定义分析资产：计数器
+      TuGraph Assets
       <br />
       Nodes Count: {nodes} <br />
       Edges Count: {edges}

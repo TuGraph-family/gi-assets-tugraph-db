@@ -1,6 +1,6 @@
-# gi-assets-tugraph-db
+# G6VP Assets for TuGraph-DB
 
-G6VP Assets for TuGraph-DB
+## Development
 
 - clone G6VP Repo
 
@@ -35,4 +35,12 @@ cd /G6VP/packages/gi-site
 
 npm run start
 
+```
+
+Notice ⚠️：Please do not submit the following three files:
+
+```bash
+G6VP/pacakges/gi-site/src/pacakge.json
+G6VP/pacakges/gi-site/src/services/inject.ts
+G6VP/pnpm-lock.yaml
 ```
