@@ -18,12 +18,12 @@
   ],
   "scripts": {
     "start": "father build --watch",
-    "build": "father build && npm run build:umd",
+    "build:es": "father build",
     "build:umd": "webpack  --mode production  -c ./webpack.config.js",
     "build:umd:watch": "webpack  --mode production  -c ./webpack.config.js --env watch=true",
+    "build": "father build && npm run build:umd",
     "serve": "http-server dist -p 9527",
-    "demo": "umi dev",
-    "build:es": "father build"
+    "demo": "umi dev"
   },
   "dependencies": {
     "@antv/g6": "4.x",
@@ -32,7 +32,8 @@
     "antd": "4.x",
     "lodash": "^4.17.21",
     "react": "17.x",
-    "react-dom": "17.x"
+    "react-dom": "17.x",
+    "umi-request": "^1.4.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
