@@ -28,14 +28,16 @@ export const GI_SERVICE_INTIAL_GRAPH = {
 export const GI_SERVICE_SCHEMA = {
   name: '查询图模型',
   service: async () => {
-    const { ENGINE_USER_TOKEN, HTTP_SERVICE_URL, CURRENT_SUBGRAPH } =
-      utils.getServerEngineContext();
+    const { ENGINE_USER_TOKEN, HTTP_SERVICE_URL, CURRENT_SUBGRAPH } = utils.getServerEngineContext();
     if (!ENGINE_USER_TOKEN) {
       // 没有登录信息，需要先登录再查询 schema
       message.error(
         'TuGraph 数据源连接失败: 没有获取到连接 TuGraph 数据库的 Token 信息，请先连接 TuGraph 数据库再进行尝试！',
       );
-      return;
+      return {
+        nodes: [],
+        edges: [],
+      };
     }
 
     try {
