@@ -17,7 +17,7 @@ const Counter = props => {
     >
       TuGraph Assets
       <br />
-      Nodes Count: {nodes} <br />
+      Nodes Countrrr: {nodes} <br />
       Edges Count: {edges}
     </div>
   );

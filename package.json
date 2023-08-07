@@ -29,6 +29,7 @@
     "@antv/g6": "4.x",
     "@antv/gi-sdk": "latest",
     "@antv/graphin": "2.x",
+    "ace-gremlin-editor": "^1.0.2",
     "antd": "4.x",
     "lodash": "^4.17.21",
     "react": "17.x",
