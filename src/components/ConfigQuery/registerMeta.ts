@@ -19,7 +19,7 @@ const registerMeta = (context) => {
       "x-component-props": {
         options: serviceOptions
       },
-      default: "TuGraph-DB/configQueryService"
+      default: "TuGraph-DB/languageQueryService"
     },
     schemaServiceId: {
       title: 'Schema服务',

@@ -1,5 +1,5 @@
 import { useContext, utils } from "@antv/gi-sdk";
-import { Button, Select, Radio, Tooltip } from "antd";
+import { Button, Radio, Tooltip } from "antd";
 import { FileTextOutlined } from '@ant-design/icons';
 import React from "react";
 import { useImmer } from "use-immer";
@@ -15,6 +15,8 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "220px", langua
   const { transform, updateContext, services } = useContext();
 
   const languageService = utils.getService(services, languageServiceId);
+
+  const graphName = 'default'
 
   const [state, setState] = useImmer<{
     languageType: string;
@@ -46,7 +48,7 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "220px", langua
     }
     const result = await languageService({
       script: editorValue,
-      graphName: 'default'
+      graphName
     });
 
     setState((draft) => {

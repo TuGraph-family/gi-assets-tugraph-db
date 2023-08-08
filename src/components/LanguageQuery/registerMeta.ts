@@ -1,4 +1,4 @@
-import { extra, utils } from "@antv/gi-sdk";
+import { extra } from "@antv/gi-sdk";
 const { GIAC_CONTENT_METAS, deepClone } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
 
