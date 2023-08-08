@@ -1,1 +1,4 @@
 export { default as TuGraphBack } from './Back';
+export { default as Counter } from './Counter';
+export { default as LanguageQuery } from './LanguageQuery'
+export { default as ConfigQuery } from './ConfigQuery'

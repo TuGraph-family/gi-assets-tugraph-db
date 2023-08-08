@@ -1,0 +1,56 @@
+.quickQueryContainer {
+  top: 70px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-left: 4px;
+  overflow: hidden;
+  .quickQueryForm {
+    flex: 1;
+    padding: 12px 16px;
+    .formContainer {
+      padding: 16px;
+      background: #fff;
+      border-radius: 8px;;
+    }
+    .otherContainer {
+      margin-top: 24px;
+    }
+  }
+
+  // height: calc(100vh - 185px);
+  .isogqlQuery {
+    width: 315px;
+    height: 85px;
+    padding: 8px;
+    font-weight: normal;
+    font-size: 14px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+  }
+  .buttonContainer {
+    width: 100%;
+    padding: 12px 16px;
+    text-align: right;
+    border-top: 1px solid #e3e4e6;
+    .ant-btn:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+  .conditionDescription {
+    position: relative;
+    padding: 8px;
+    background: #fafafa;
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      li {
+        padding: 4px 0;
+      }
+    }
+  }
+}
