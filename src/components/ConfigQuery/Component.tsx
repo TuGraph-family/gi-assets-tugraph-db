@@ -217,8 +217,7 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
         cypherScript = `MATCH (n: ${label}) WHERE n.${property} ${operatorMapping[logic]} '${value}' RETURN n limit ${limit}`
       }
     }
-    console.log(currentProperty.type, cypherScript)
-    
+
     const result = await quickQueryService({
       script: cypherScript,
       graphName
@@ -239,8 +238,7 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
       });
     } else {
       // 在画布上叠加数据
-      console.log(graph)
-      const originData = graph.save()
+      const originData = graph.save() as any
       const newData = {
         nodes: [...originData.nodes, ...formatData.nodes],
         edges: [...originData.edges, ...formatData.edges]
@@ -265,6 +263,10 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
       setState(draft => {
         draft.selectTag = tag
       })
+
+      if (!quickQueryService) {
+        return
+      }
 
       const cypherScript = `MATCH (n: ${tag}) RETURN n LIMIT 1`
       // 选中时候执行查询
