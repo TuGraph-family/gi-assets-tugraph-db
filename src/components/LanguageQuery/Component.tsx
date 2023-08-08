@@ -1,5 +1,5 @@
 import { useContext, utils } from "@antv/gi-sdk";
-import { Button, Radio, Tooltip } from "antd";
+import { Button, Radio, Tooltip, Checkbox } from "antd";
 import { FileTextOutlined } from '@ant-design/icons';
 import React from "react";
 import { useImmer } from "use-immer";
@@ -12,7 +12,7 @@ export interface ILanguageQueryProps {
 }
 
 const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "220px", languageServiceId }) => {
-  const { transform, updateContext, services } = useContext();
+  const { transform, updateContext, services, graph } = useContext();
 
   const languageService = utils.getService(services, languageServiceId);
 
@@ -22,10 +22,12 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "220px", langua
     languageType: string;
     editorValue: string;
     btnLoading: boolean;
+    hasClear: boolean;
   }>({
     languageType: 'Cypher',
     editorValue: "",
     btnLoading: false,
+    hasClear: false
   });
   const { languageType, editorValue, btnLoading } = state;
 
@@ -58,14 +60,36 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "220px", langua
     const { formatData } = result.data
 
     // 查询后除了改变画布节点/边数据，还需要保存“初始数据”，供类似 Filter 组件作为初始化数据使用
-    updateContext((draft) => {
-      const newData = transform(formatData);
-      draft.data = newData; // 当前图数据
-      draft.source = newData; // 查询后数据
-    });
+    if (state.hasClear) {
+      // 清空数据
+      updateContext((draft) => {
+        const res = transform(formatData);
+        draft.data = res;
+        draft.source = res;
+      });
+    } else {
+      // 在画布上叠加数据
+      const originData: any = graph.save()
+      const newData = {
+        nodes: [...originData.nodes, ...formatData.nodes],
+        edges: [...originData.edges, ...formatData.edges]
+      }
+      updateContext((draft) => {
+        const res = transform(newData);
+        draft.data = res;
+        draft.source = res;
+      });
+    }
+
     updateContext((draft) => {
       draft.isLoading = false;
     });
+  };
+
+  const handleChange = (e) => {
+    setState(draft => {
+      draft.hasClear = e.target.checked
+    })
   };
 
   const handleChangeLangageType = (value) => {
@@ -114,6 +138,9 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "220px", langua
               />
             </div>
           </div>
+
+          <Checkbox onChange={handleChange}>是否清空画布数据</Checkbox>
+
         </div>
         <div className={"buttonContainer"}>
           <Button

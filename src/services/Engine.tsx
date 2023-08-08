@@ -27,7 +27,7 @@ const Server: React.FunctionComponent<ServerProps> = props => {
     // 一定要先设置，否则schema查询是没有的
     setServerEngineContext(values);
 
-    const schema = await GI_SERVICE_SCHEMA.service();
+    const schema = await GI_SERVICE_SCHEMA.service('default');
     const engineContext = {
       engineId: ENGINE_ID,
       schemaData: schema,

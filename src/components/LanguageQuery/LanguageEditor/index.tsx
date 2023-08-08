@@ -27,6 +27,7 @@ export const GraphEditor: React.FC<Props> = forwardRef((props) => {
       gremlinId={graphId}
       initValue={initialValue}
       height={height}
+      showGutter={false}
       onValueChange={(val) => {
         if (onChange) {
           onChange(val)
