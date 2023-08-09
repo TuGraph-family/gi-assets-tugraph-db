@@ -1,5 +1,5 @@
 import { useContext, utils } from "@antv/gi-sdk";
-import { Button, Radio, Tooltip, Checkbox } from "antd";
+import { Button, Radio, Tooltip, Checkbox, message } from "antd";
 import { FileTextOutlined } from '@ant-design/icons';
 import React from "react";
 import { useImmer } from "use-immer";
@@ -25,7 +25,7 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "220px", langua
     hasClear: boolean;
   }>({
     languageType: 'Cypher',
-    editorValue: "",
+    editorValue: "match p=(n)-[r]-(m) return p limit 6",
     btnLoading: false,
     hasClear: false
   });
@@ -56,6 +56,12 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "220px", langua
     setState((draft) => {
       draft.btnLoading = false;
     });
+
+    if (!result.success) {
+      // 执行查询失败
+      message.error(`执行查询失败: ${result.errorMessage}`)
+      return
+    }
 
     const { formatData } = result.data
 

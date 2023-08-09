@@ -1,5 +1,5 @@
 import { useContext, utils } from "@antv/gi-sdk";
-import { Button, Checkbox, Form, Input, Select, InputNumber, Space, Tag } from "antd";
+import { Button, Checkbox, Form, Input, Select, InputNumber, Space, Tag, message } from "antd";
 import React, { useEffect } from "react";
 import { useImmer } from "use-immer";
 import "./index.less";
@@ -227,6 +227,12 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
       draft.btnLoading = false;
     });
 
+    if (!result.success) {
+      // 执行查询失败
+      message.error(`执行查询失败: ${result.errorMessage}`)
+      return
+    }
+
     const { formatData } = result.data
     // 查询后除了改变画布节点/边数据，还需要保存初始数据，供类似 Filter 组件作为初始化数据使用
     if (hasClearData) {
@@ -279,6 +285,12 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
         draft.btnLoading = false;
       });
   
+      if (!result.success) {
+        // 执行查询失败
+        message.error(`执行查询失败: ${result.errorMessage}`)
+        return
+      }
+
       const { formatData } = result.data
       // 查询后除了改变画布节点/边数据，还需要保存初始数据，供类似 Filter 组件作为初始化数据使用
  
