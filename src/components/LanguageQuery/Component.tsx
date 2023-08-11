@@ -5,6 +5,7 @@ import React from "react";
 import { useImmer } from "use-immer";
 import GraphEditor from "./LanguageEditor/index";
 import "./index.less";
+import { getTransformByTemplate } from "../StyleSetting/utils";
 
 export interface ILanguageQueryProps {
   height?: string;
@@ -12,7 +13,10 @@ export interface ILanguageQueryProps {
 }
 
 const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "220px", languageServiceId }) => {
-  const { transform, updateContext, services, graph } = useContext();
+  const { updateContext, services, graph, schemaData } = useContext();
+  const customStyleConfig = localStorage.getItem('CUSTOM_STYLE_CONFIG') ? JSON.parse(localStorage.getItem('CUSTOM_STYLE_CONFIG') as string) : {}
+
+  console.log('LanguageQuery', customStyleConfig, schemaData)
 
   const languageService = utils.getService(services, languageServiceId);
 
@@ -65,12 +69,29 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "220px", langua
 
     const { formatData } = result.data
 
+    // 处理 formData，添加 data 字段
+    formatData.nodes.forEach(d => {
+      d.data = d.properties
+    })
+
+    formatData.edges.forEach(d => {
+      d.data = d.properties
+    })
+
+    const transform = getTransformByTemplate(customStyleConfig, schemaData);
+
     // 查询后除了改变画布节点/边数据，还需要保存“初始数据”，供类似 Filter 组件作为初始化数据使用
     if (state.hasClear) {
       // 清空数据
       updateContext((draft) => {
+        if (transform) {
+          draft.transform = transform;
+        }
+
         const res = transform(formatData);
+        // @ts-ignore
         draft.data = res;
+        // @ts-ignore
         draft.source = res;
       });
     } else {
@@ -82,7 +103,9 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "220px", langua
       }
       updateContext((draft) => {
         const res = transform(newData);
+        // @ts-ignore
         draft.data = res;
+        // @ts-ignore
         draft.source = res;
       });
     }

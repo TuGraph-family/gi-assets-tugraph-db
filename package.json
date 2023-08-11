@@ -31,8 +31,10 @@
     "@antv/graphin": "2.x",
     "ace-gremlin-editor": "^1.0.2",
     "antd": "4.x",
+    "deepmerge": "^4.3.1",
     "lodash": "^4.17.21",
     "react": "17.x",
+    "react-color": "^2.19.3",
     "react-dom": "17.x",
     "umi-request": "^1.4.0"
   },

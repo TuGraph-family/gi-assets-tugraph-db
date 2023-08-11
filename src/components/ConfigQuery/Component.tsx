@@ -2,89 +2,13 @@ import { useContext, utils } from "@antv/gi-sdk";
 import { Button, Checkbox, Form, Input, Select, InputNumber, Space, Tag, message } from "antd";
 import React, { useEffect } from "react";
 import { useImmer } from "use-immer";
+import { getTransformByTemplate } from "../StyleSetting/utils";
+import { getOperatorList, operatorMapping } from '../StyleSetting/Constant'
 import "./index.less";
 const { Option } = Select;
 const { CheckableTag } = Tag;
 
-const operatorMapping = {
-  CT: "CONTAINS",
-  NC: "CONTAINS",
-  EQ: "=",
-  NE: "<>",
-  GT: ">",
-  LT: "<",
-  GE: ">=",
-  LE: "<="
-};
-
 const tagsData = ['person', 'movie', 'user'];
-
-const getOperatorList = (value: string = '') => {
-  const type = value.toLowerCase()
-  if (type === "string") {
-    return [
-      {
-        key: "CT",
-        value: "包括"
-      },
-      {
-        key: "NC",
-        value: "不包括"
-      },
-      {
-        key: "EQ",
-        value: "等于"
-      },
-      {
-        key: "NE",
-        value: "不等于"
-      }
-    ];
-  }
-
-  if (type === "long" || type === "double" || type === 'int32') {
-    return [
-      {
-        key: "GT",
-        value: "大于"
-      },
-      {
-        key: "LT",
-        value: "小于"
-      },
-      {
-        key: "EQ",
-        value: "等于"
-      },
-      {
-        key: "NE",
-        value: "不等于"
-      },
-      {
-        key: "GE",
-        value: "大于等于"
-      },
-      {
-        key: "LE",
-        value: "小于等于"
-      }
-    ];
-  }
-
-  if (type === "boolean") {
-    return [
-      {
-        key: "EQ",
-        value: "等于"
-      },
-      {
-        key: "NE",
-        value: "不等于"
-      }
-    ];
-  }
-  return [];
-};
 
 export interface QuickQueryProps {
   languageServiceId: string;
@@ -95,11 +19,12 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
 
   const {
     updateContext,
-    transform,
     services,
     graph,
   } = useContext();
   
+  const customStyleConfig = localStorage.getItem('CUSTOM_STYLE_CONFIG') ? JSON.parse(localStorage.getItem('CUSTOM_STYLE_CONFIG') as string) : {}
+
   const quickQueryService = utils.getService(services, languageServiceId);
 
   const schemaService = utils.getService(services, schemaServiceId);
@@ -191,6 +116,9 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
     }
   }, [schemaList]);
 
+
+  const transform = getTransformByTemplate(customStyleConfig, state.schemaList);
+
   const handleExecQuery = async () => {
     const values = await form.validateFields();
     const { label, property, value, logic, limit, hasClearData } = values;
@@ -234,12 +162,28 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
     }
 
     const { formatData } = result.data
+
+     // 处理 formData，添加 data 字段
+     formatData.nodes.forEach(d => {
+      d.data = d.properties
+    })
+
+    formatData.edges.forEach(d => {
+      d.data = d.properties
+    })
+
     // 查询后除了改变画布节点/边数据，还需要保存初始数据，供类似 Filter 组件作为初始化数据使用
     if (hasClearData) {
       // 清空数据
       updateContext((draft) => {
+        if (transform) {
+          draft.transform = transform;
+        }
+
         const res = transform(formatData);
+        // @ts-ignore
         draft.data = res;
+        // @ts-ignore
         draft.source = res;
       });
     } else {
@@ -250,8 +194,14 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
         edges: [...originData.edges, ...formatData.edges]
       }
       updateContext((draft) => {
+        if (transform) {
+          draft.transform = transform;
+        }
+
         const res = transform(newData);
+        // @ts-ignore
         draft.data = res;
+        // @ts-ignore
         draft.source = res;
       });
     }
@@ -294,9 +244,20 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
       const { formatData } = result.data
       // 查询后除了改变画布节点/边数据，还需要保存初始数据，供类似 Filter 组件作为初始化数据使用
  
+       // 处理 formData，添加 data 字段
+      formatData.nodes.forEach(d => {
+        d.data = d.properties
+      })
+
+      formatData.edges.forEach(d => {
+        d.data = d.properties
+      })
+      
       updateContext((draft) => {
         const res = transform(formatData);
+        // @ts-ignore
         draft.data = res;
+        // @ts-ignore
         draft.source = res;
       });
       setTimeout(() => {
