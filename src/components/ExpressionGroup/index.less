@@ -1,0 +1,70 @@
+.expressionGroup {
+  position: relative;
+  margin: 8px 0;
+  padding-right: 23px;
+  padding-left: 8px;
+  background-color: #ffffff;
+  border: 1px dashed #8c8c8c;
+  border-right: 4px solid rgba(24, 144, 255, 0.35);
+
+  .ant-collapse-header {
+    display: inline-flex;
+    width: 100%;
+    padding: 0 !important;
+    border-bottom: 1px solid #d9d9d9;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  .header {
+    display: inline-flex;
+    flex: 0.9;
+    align-items: center;
+    justify-content: space-between;
+    height: auto;
+    margin: 8px 0;
+    padding: 0;
+    font-weight: bold;
+    font-size: 16px;
+
+    .title {
+      margin-left: 8px;
+    }
+
+    .typeLabel {
+      display: inline-flex;
+      font-size: 14px;
+      white-space: nowrap;
+
+      .typeName {
+        max-width: 240px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
+  .addExpressionButton {
+    width: 100%;
+    margin: 8px 0;
+  }
+
+  .switchButton {
+    @color: #1890ff;
+    position: absolute;
+    top: 40%;
+    right: -25px;
+    z-index: 9;
+    background-color: @color;
+    border-color: @color;
+  }
+
+  .expressonList {
+    .item {
+      width: 100%;
+      margin: 8px 0;
+    }
+  }
+}
