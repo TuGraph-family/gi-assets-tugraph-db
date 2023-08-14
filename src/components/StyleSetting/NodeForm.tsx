@@ -1,31 +1,22 @@
 import {
-  CaretRightOutlined,
   MinusCircleOutlined,
   PlusOutlined,
-  QuestionCircleOutlined
 } from "@ant-design/icons";
 import {
   Button,
-  Col,
   Collapse,
   Form,
   FormInstance,
   FormProps,
   Input,
-  InputNumber,
   Radio,
-  Row,
   Select,
-  Steps,
-  Tooltip
 } from "antd";
 import React, { useEffect } from "react";
 import { useImmer } from "use-immer";
-import { getOperatorList } from "../ExpressionGroup";
 import CustomIcon from "./CustomIcon";
-
 import ColorInput from "./ColorInput";
-import { DefaultColor, ICONS } from "./Constant";
+import { DefaultColor, getOperatorList, ICONS } from "./Constant";
 import IntegerStep from "./IntegerStep";
 
 interface NodeFormProps extends FormProps {
@@ -309,8 +300,8 @@ export const NodeForm: React.FC<NodeFormProps> = ({
                               : undefined
                           ).map((op) => {
                             return (
-                              <Option value={op.value} key={op.value}>
-                                {op.label}
+                              <Option value={op.key} key={op.key}>
+                                {op.value}
                               </Option>
                             );
                           })}
