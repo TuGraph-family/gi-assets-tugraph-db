@@ -39,6 +39,7 @@ export const NodeForm: React.FC<NodeFormProps> = ({
   schemaData,
   ...otherProps
 }) => {
+  console.log('initialValues', initialValues)
   const [state, setState] = useImmer<{
     color: {
       basic: string;
@@ -60,7 +61,6 @@ export const NodeForm: React.FC<NodeFormProps> = ({
   });
   const { color, currentSchema, property } = state;
 
-  console.log('schemaData', schemaData)
   const handleChangeBasicColor = (e) => {
     // 设置选择的默认颜色
     setState((draft) => {
@@ -112,6 +112,7 @@ export const NodeForm: React.FC<NodeFormProps> = ({
   };
 
   const handleFormValueChange = (changedValues, allValues) => {
+    debugger
     if (onValuesChange) {
       onValuesChange(changedValues, allValues);
     }
@@ -139,6 +140,7 @@ export const NodeForm: React.FC<NodeFormProps> = ({
           draft.color.basic = curNodeStyles.color;
           draft.color.advanced = curNodeStyles.advancedColor;
           draft.property = curNodeStyles.property;
+          draft.labelText = curNodeStyles.labelText
         });
       }
     }
@@ -169,6 +171,8 @@ export const NodeForm: React.FC<NodeFormProps> = ({
       draft.labelText = evt.target.value
     })
   }
+
+  console.log('currentSchema', currentSchema)
 
   return (
     <Form
@@ -264,11 +268,10 @@ export const NodeForm: React.FC<NodeFormProps> = ({
       <Collapse
         bordered={false}
         ghost
-        defaultActiveKey={["3"]}
         // expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
         className='site-collapse-custom-collapse'
       >
-        <Panel header='高级自定义' key='3' className='site-collapse-custom-panel' forceRender>
+        <Panel header='高级自定义' key='1' className='site-collapse-custom-panel' forceRender>
           <div style={{ marginBottom: 16 }}>属性</div>
           <Form.List name='property'>
             {(fields, { add, remove }) => {
@@ -281,7 +284,7 @@ export const NodeForm: React.FC<NodeFormProps> = ({
                           placeholder='请选择'
                           showSearch
                           allowClear
-                          style={{ width: 100, marginRight: 8 }}
+                          style={{ width: '33%', marginRight: 8 }}
                           disabled={!currentSchema.properties}
                         >
                           {propertyOptions}
@@ -292,12 +295,13 @@ export const NodeForm: React.FC<NodeFormProps> = ({
                           placeholder='请选择'
                           showSearch
                           allowClear
-                          style={{ width: 90, marginRight: 8 }}
+                          style={{ width: '33%', marginRight: 8 }}
                         >
-                          {getOperatorList(
-                            property && property[key]?.name
-                              ? currentSchema.properties[property[key].name]?.schemaType
-                              : undefined
+                          {
+                            getOperatorList(
+                              property && property[key]?.name
+                                ? currentSchema.properties.find(d => d.name === property[key]?.name)?.type
+                                : undefined
                           ).map((op) => {
                             return (
                               <Option value={op.key} key={op.key}>
@@ -308,7 +312,7 @@ export const NodeForm: React.FC<NodeFormProps> = ({
                         </Select>
                       </Form.Item>
                       <Form.Item {...restField} name={[name, "value"]} noStyle>
-                        <Input style={{ width: 90, marginRight: 8 }} />
+                        <Input style={{ width: '19%', marginRight: 8 }} />
                       </Form.Item>
                       <MinusCircleOutlined onClick={() => remove(name)} />
                     </span>

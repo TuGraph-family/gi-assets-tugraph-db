@@ -1,5 +1,5 @@
 import ColorInput from "./ColorInput";
-import { CaretRightOutlined, MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import {
   Button,
   Collapse,
@@ -126,6 +126,7 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
           draft.color.basic = curEdgeStyles.color;
           draft.color.advanced = curEdgeStyles.advancedColor;
           draft.property = curEdgeStyles.property;
+          draft.labelText = curEdgeStyles.labelText
         });
       }
     }
@@ -239,11 +240,11 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
 
       <Collapse
         bordered={false}
-        defaultActiveKey={["1"]}
-        expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+        ghost
+        // expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
         className='site-collapse-custom-collapse'
       >
-        <Panel header='高级配置' key='4' className='site-collapse-custom-panel' forceRender>
+        <Panel header='高级配置' key='1' className='site-collapse-custom-panel' forceRender>
           <div style={{ marginBottom: 16 }}>属性</div>
           <Form.List name='property'>
             {(fields, { add, remove }) => (
@@ -255,7 +256,7 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
                         placeholder='请选择'
                         showSearch
                         allowClear
-                        style={{ width: 100, marginRight: 8 }}
+                        style={{ width: '33%', marginRight: 8 }}
                         disabled={!currentSchema.properties}
                       >
                         {propertyOptions}
@@ -266,11 +267,11 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
                         placeholder='请选择'
                         showSearch
                         allowClear
-                        style={{ width: 90, marginRight: 8 }}
+                        style={{ width: '33%', marginRight: 8 }}
                       >
                         {getOperatorList(
                           property && property[key]?.name
-                            ? currentSchema.properties[property[key].name]?.schemaType
+                            ? currentSchema.properties.find(d => d.name === property[key]?.name)?.type
                             : undefined
                         ).map((op) => {
                           return (
@@ -282,7 +283,7 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
                       </Select>
                     </Form.Item>
                     <Form.Item {...restField} name={[name, "value"]} noStyle>
-                      <Input style={{ width: 90, marginRight: 8 }} />
+                      <Input style={{ width: '19%', marginRight: 8 }} />
                     </Form.Item>
                     <MinusCircleOutlined onClick={() => remove(name)} />
                   </span>
@@ -313,7 +314,7 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
                       border: `1px solid ${color}`
                     }}
                   >
-                    <Radio key={color} value={color} style={{ background: color }} />
+                    <Radio className='custom-ant-radio-wrapper' key={color} value={color} style={{ background: color }} />
                   </span>
                 ))}
                 <span
@@ -323,6 +324,7 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
                   }}
                 >
                   <Radio
+                    className='custom-ant-radio-wrapper'
                     key={`${color.advanced || "advanced_custom_color"}`}
                     value={`${color.advanced || "advanced_custom_color"}`}
                     style={{ background: color.advanced }}
