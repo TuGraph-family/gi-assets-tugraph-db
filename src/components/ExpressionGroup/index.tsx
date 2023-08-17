@@ -22,7 +22,8 @@ import { getOperatorList } from "../StyleSetting/Constant";
 import "./index.less";
 
 export type Logic = "and" | "or";
-export type Operator = "contain" | "not-contain" | "eql" | "not-eql" | "gt" | "lt" | "gte" | "lte";
+// export type Operator = "contain" | "not-contain" | "eql" | "not-eql" | "gt" | "lt" | "gte" | "lte";
+export type Operator = "CT" | "NC" | "EQ" | "NE" | "GT" | "LT" | "GE" | "LE";
 
 // 切换 and/or
 const SwitchNode: React.FunctionComponent<{

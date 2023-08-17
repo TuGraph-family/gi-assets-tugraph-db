@@ -42,10 +42,24 @@ const NodeConfigurationPanel = (props) => {
         nodeType: changedValues.nodeType
       });
     }
+
+    // 如果改变了 advancedColor 值，则清空 advancedCustomColor
+    if (changedValues.advancedColor) {
+      form.setFieldsValue({
+        advancedCustomColor: undefined
+      })
+    }
+
+    if (changedValues.color) {
+      form.setFieldsValue({
+        customColor: undefined
+      })
+    }
   };
 
   // 点击确认按钮，获取到所有的配置项
   const handleSettingNodeConfig = async () => {
+    debugger
     const transform = getTransformByTemplate(elementStyles, schemaData);
 
     localStorage.setItem('CUSTOM_STYLE_CONFIG', JSON.stringify(elementStyles))
