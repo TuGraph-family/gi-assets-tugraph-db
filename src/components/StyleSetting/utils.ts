@@ -93,20 +93,22 @@ export const filterByTopRule = (
   },
   rule: SchemaItem
 ): boolean => {
-  const { logic, type, expressions } = rule;
-
+  const { type, expressions } = rule;
   // 未配置规则一律通过
   if (expressions.length === 0) {
     return true;
   }
 
-  return logic === "and"
-    ? expressions.every(
-        (item) => data.label === type && filterByExpression(formatProperties(data), item)
-      )
-    : expressions.some(
-        (item) => data.label === type && filterByExpression(formatProperties(data), item)
-      );
+  return expressions.some(
+    (item) => data.label === type && filterByExpression(formatProperties(data), item)
+  );
+  // return logic === "and"
+  //   ? expressions.every(
+  //       (item) => data.label === type && filterByExpression(formatProperties(data), item)
+  //     )
+  //   : expressions.some(
+  //       (item) => data.label === type && filterByExpression(formatProperties(data), item)
+  //     );
 };
 
 const filterByExpression = (
@@ -126,21 +128,21 @@ const filterByExpression = (
     formatted = parseInt(value as string, 10);
   }
 
-  if (operator === "eql") {
+  if (operator === "EQ") {
     return data[name] === formatted;
-  } else if (operator === "not-eql") {
+  } else if (operator === "NE") {
     return data[name] !== formatted;
-  } else if (operator === "contain") {
+  } else if (operator === "CT") {
     return `${data[name]}`.indexOf(`${formatted}`) > -1;
-  } else if (operator === "not-contain") {
+  } else if (operator === "NC") {
     return `${data[name]}`.indexOf(`${formatted}`) === -1;
-  } else if (operator === "gt") {
+  } else if (operator === "GT") {
     return Number(data[name]) > Number(formatted);
-  } else if (operator === "gte") {
+  } else if (operator === "GE") {
     return Number(data[name]) >= Number(formatted);
-  } else if (operator === "lt") {
+  } else if (operator === "LT") {
     return Number(data[name]) < Number(formatted);
-  } else if (operator === "lte") {
+  } else if (operator === "LE") {
     return Number(data[name]) <= Number(formatted);
   }
 
@@ -212,8 +214,6 @@ export interface EdgeStyle {
   lineWidth: number;
   advancedIds: string[];
   labelVisible: boolean;
-  animateVisible: boolean;
-  animateType: "line-dash" | "line-growth" | "circle-running";
   typeAliasVisible: boolean;
   property: Array<{ name: string; operator: string; value: string }>;
   customColor?: string;
@@ -231,8 +231,6 @@ const defaultEdgeStyles: EdgeStyle = {
   lineWidth: 1,
   advancedIds: [],
   labelVisible: true,
-  animateVisible: false,
-  animateType: "circle-running",
   typeAliasVisible: false,
   property: []
 };
@@ -257,11 +255,11 @@ export const getTransformByTemplate = (styles: any = {}, schemaData) => {
         icon,
         advancedColor,
         advancedCustomColor,
-        advancedSize,
         labelVisible,
         typeAliasVisible,
         property
       } = nodeCfg;
+      
       let advancedNodes: IUserNode[] = [];
       if (property?.length && nodeType) {
         const filterSchemaData = [
@@ -273,17 +271,19 @@ export const getTransformByTemplate = (styles: any = {}, schemaData) => {
           }
         ];
         advancedNodes = nodes.filter((node) =>
-          filterByTopRule(node.data, filterSchemaData[0] as any)
+          filterByTopRule({
+            id: node.id,
+            label: node.label,
+            properties: node.data
+          }, filterSchemaData[0] as any)
         );
       }
+
       const advancedIds = advancedNodes.map((item) => item.id);
       const hasCurrentId = advancedIds.indexOf(node.id) !== -1;
-
-      const size = hasCurrentId ? advancedSize : basicSize;
-
-      const nodeColor = hasCurrentId
-        ? advancedCustomColor || advancedColor || "#1890ff"
-        : customColor || basicColor || "#1890ff";
+      
+      const size = hasCurrentId ? basicSize : node.style?.keyshape?.size || nodeCfg.size
+      const nodeColor = hasCurrentId ? advancedCustomColor || advancedColor : customColor || basicColor || node.style?.keyshape?.fill || nodeCfg.color
 
       // 兼容单选数据
       const labelArr = typeof displyLabel === "string" ? [displyLabel] : displyLabel || [];
@@ -343,6 +343,7 @@ export const getTransformByTemplate = (styles: any = {}, schemaData) => {
         }
       };
     });
+    
     const filteredEdges = edges.map((edge) => {
       const edgeType = edge.label;
       const edgeSchema = schemaData?.edges?.find(
@@ -356,13 +357,12 @@ export const getTransformByTemplate = (styles: any = {}, schemaData) => {
         displyLabel,
         fontStyle,
         color: basicColor,
-        lineWidth: baseLineWidth,
+        customColor,
+        lineWidth,
         edgeStrokeType,
-        advancedLineWidth,
         advancedColor,
+        advancedCustomColor,
         labelVisible,
-        animateVisible,
-        animateType,
         typeAliasVisible,
         property
       } = edgeCfg;
@@ -377,16 +377,21 @@ export const getTransformByTemplate = (styles: any = {}, schemaData) => {
             properties: edgeSchema?.properties
           }
         ];
-        advancedEdges = edges.filter((node) =>
-          filterByTopRule(node.data, filterSchemaData[0] as any)
+        advancedEdges = edges.filter((edge) =>
+          filterByTopRule({
+            id: edge.id,
+            label: edge.label,
+            properties: edge.data
+          }, filterSchemaData[0] as any)
         );
       }
       const advancedIds = advancedEdges.map((item) => item.id);
 
       const isAdvanced = advancedIds.indexOf(edge.id) !== -1;
-      const lineWidth = isAdvanced ? advancedLineWidth : baseLineWidth || advancedLineWidth;
-      const color = isAdvanced ? advancedColor || basicColor || "#87e8de" : basicColor || "#87e8de";
-
+      // const color = isAdvanced ? advancedColor || basicColor || "#87e8de" : basicColor || "#87e8de";
+      
+      const color = isAdvanced ? advancedCustomColor || advancedColor : customColor || basicColor || edge.style?.keyshape?.fill || edgeCfg.color
+      
       // 兼容单选数据
       const labelArr = typeof displyLabel === "string" ? [displyLabel] : displyLabel || [];
       let labelValueArr: string[] = [];
@@ -419,17 +424,10 @@ export const getTransformByTemplate = (styles: any = {}, schemaData) => {
             visible: edgeLabelVisible
           },
           keyshape: {
-            lineWidth: lineWidth,
+            lineWidth,
             stroke: color || "#87e8de",
             lineDash: edgeStrokeType === "line" ? [] : [5, 5]
           },
-          animate: {
-            visible: animateVisible,
-            type: animateType || ("circle-running" as "circle-running"),
-            dotColor: color || "#87e8de",
-            repeat: true,
-            duration: 3000
-          }
         }
       };
     });

@@ -37,9 +37,22 @@ const EdgeConfigurationPanel = (props) => {
       form.resetFields();
       form.setFieldsValue({
         ...elementStyles[changedValues.edgeType || "allEdges"],
-        elementType: "node",
+        elementType: "edge",
         edgeType: changedValues.edgeType
       });
+    }
+
+    // 如果改变了 advancedColor 值，则清空 advancedCustomColor
+    if (changedValues.advancedColor) {
+      form.setFieldsValue({
+        advancedCustomColor: undefined
+      })
+    }
+
+    if (changedValues.color) {
+      form.setFieldsValue({
+        customColor: undefined
+      })
     }
   };
 

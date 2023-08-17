@@ -29,7 +29,7 @@ const IntegerStep: React.FC<IntegerStepProps> = ({ value, defaultValue = 0, onCh
   }, [value]);
 
   const marks = {
-    0: '最小',
+    5: '最小',
     30: '小',
     60: '中等',
     100: '大',
