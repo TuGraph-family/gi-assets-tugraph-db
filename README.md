@@ -44,3 +44,15 @@ G6VP/pacakges/gi-site/src/pacakge.json
 G6VP/pacakges/gi-site/src/services/inject.ts
 G6VP/pnpm-lock.yaml
 ```
+
+## custom icon
+
+view `src/index.tsx`
+
+```jsx
+// https://www.iconfont.cn/manage/index?spm=a313x.home_index.i3.23.58a33a81XuFfCN&manage_type=myprojects&projectId=3146710&keyword=&project_type=&page=
+
+const icons = ['font_3146710_kr2gi7k0et'];
+
+export { components, deploys, icons, services, templates };
+```
