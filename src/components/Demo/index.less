@@ -1,0 +1,111 @@
+.demo {
+  width: auto;
+  height: auto;
+}
+
+.title {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  .iconBox {
+    height: 46px;
+    width: 46px;
+    background-color: #ffffff;
+    border: 1.1px solid rgba(242, 242, 242, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 12px;
+    .icon {
+      margin: 0 auto;
+    }
+  }
+  .text {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    .main {
+      font-weight: 600;
+      font-size: 16px;
+      color: #363740;
+      line-height: 22px;
+    }
+    .sub {
+      font-weight: 400;
+      font-size: 14px;
+      color: #98989d;
+      line-height: 22px;
+    }
+  }
+}
+
+.demoContent {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  padding-bottom: 8px;
+  .demoItemSelected {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    height: 244px;
+    width: 220px;
+    overflow: hidden;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px #f0f1f2;
+    cursor: pointer;
+    border: 1px solid rgba(0, 63, 255, 0.2);
+    &:hover {
+      border: 1px solid rgba(0, 63, 255, 0.2);
+    }
+  }
+  .demoItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    height: 244px;
+    width: 220px;
+    overflow: hidden;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px #f0f1f2;
+    cursor: pointer;
+    &:hover {
+      border: 1px solid rgba(0, 63, 255, 0.2);
+    }
+  }
+}
+
+.picBox {
+  height: 182px;
+  width: 220px;
+  background-color: rgb(242, 245, 254);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  & img {
+    display: block;
+    width: 169.7px;
+    height: 146px;
+  }
+}
+.textBox {
+  height: 62px;
+  width: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  .demoText {
+    font-weight: 500;
+    font-size: 14px;
+    color: #363740;
+    line-height: 22px;
+  }
+}
