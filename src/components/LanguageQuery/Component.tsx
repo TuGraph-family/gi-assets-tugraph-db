@@ -16,8 +16,6 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "220px", langua
   const { updateContext, services, graph, schemaData } = useContext();
   const customStyleConfig = localStorage.getItem('CUSTOM_STYLE_CONFIG') ? JSON.parse(localStorage.getItem('CUSTOM_STYLE_CONFIG') as string) : {}
 
-  console.log('LanguageQuery', customStyleConfig, schemaData)
-
   const languageService = utils.getService(services, languageServiceId);
 
   const graphName = 'default'

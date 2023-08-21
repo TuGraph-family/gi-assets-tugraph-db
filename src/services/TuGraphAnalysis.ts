@@ -24,7 +24,18 @@ export const graphSchemaService = {
   service: async (graphName: string) => {
     const { HTTP_SERVER_URL } = utils.getServerEngineContext();
     return await request(HTTP_SERVER_URL + `/api/schema/${graphName}`, {
-      method: 'get'
+      method: 'GET'
     });
   },
 };
+
+export const neighborsQueryService = {
+  name: '邻居查询服务',
+  service: async (params) => {
+    const { HTTP_SERVER_URL } = utils.getServerEngineContext();
+    return await request(`${HTTP_SERVER_URL}/api/query/neighbors`, {
+      method: 'POST',
+      data: params
+    });
+  },
+}

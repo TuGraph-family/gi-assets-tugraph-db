@@ -7,3 +7,4 @@ export { default as TuGraphStyleSetting } from './StyleSetting';
 export { default as TuGraphAttributesFilter } from './AttributesFilter';
 export { default as TuGraphStatisticsFilter } from './StatisticsFilter';
 export { default as Demo } from './Demo';
+export { default as AdvanceNeighborsQuery } from './NeighborsQuery'
