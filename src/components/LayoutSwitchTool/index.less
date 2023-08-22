@@ -1,0 +1,49 @@
+.popoverContent {
+  border-radius: 8px;
+  height: 297px;
+  width: 496px;
+  background-color: #fff;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-left: 16px;
+  padding-top: 12px;
+  .popoverItem {
+    height: 122px;
+    width: 110px;
+    border-radius: 8px;
+    border: 1px solid #f2f2f2;
+    margin-right: 8px;
+    cursor: pointer;
+    &:hover {
+      border: 1px solid #1754c5;
+    }
+    .pic {
+      display: block;
+      width: 110px;
+      height: 94px;
+      padding: 12px;
+      opacity: 0.7;
+      background-image: linear-gradient(179deg, rgba(222, 232, 255, 0.5) 1%, #dce7ff 96%);
+    }
+    .text {
+      height: 28px;
+      width: 110px;
+      font-family: PingFangSC;
+      font-weight: 400;
+      font-size: 12px;
+      color: #6a6b71;
+      line-height: 28px;
+      text-align: center;
+    }
+  }
+}
+.popoverContainer {
+  position: absolute;
+  top: 8px;
+  left: 64px;
+  z-index: 2;
+  box-shadow: 0px 2px 8px rgba(22, 84, 197, 0.17);
+  border-radius: 8px;
+}
