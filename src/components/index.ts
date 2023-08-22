@@ -8,3 +8,4 @@ export { default as TuGraphAttributesFilter } from './AttributesFilter';
 export { default as TuGraphStatisticsFilter } from './StatisticsFilter';
 export { default as Demo } from './Demo';
 export { default as LayoutSwitchTool } from './LayoutSwitchTool';
+export { default as AdvanceNeighborsQuery } from './NeighborsQuery';
