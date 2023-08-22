@@ -1,6 +1,6 @@
 import { utils } from '@antv/gi-sdk';
-import { message } from 'antd';
 import request from './request';
+import { getQueryString } from '../components/utils'
 
 // import { CypherQuery } from './CypherQuery';
 import { refreshToken } from './TuGraphService';
@@ -27,7 +27,7 @@ export const GI_SERVICE_INTIAL_GRAPH = {
 
 export const GI_SERVICE_SCHEMA = {
   name: '查询图模型',
-  service: async (graphName: string = 'default') => {
+  service: async (graphName: string = getQueryString('graphName')) => {
     const { HTTP_SERVER_URL, CURRENT_SUBGRAPH } = utils.getServerEngineContext();
     try {
       const result = await request(HTTP_SERVER_URL + `/api/schema/${graphName}`, {

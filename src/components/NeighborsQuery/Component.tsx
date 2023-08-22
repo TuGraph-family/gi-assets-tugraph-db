@@ -4,6 +4,7 @@ import { Menu, message } from 'antd';
 import React, { useEffect, useRef } from 'react';
 import { getTransformByTemplate } from '../StyleSetting/utils';
 import AdvanceNeighborsQueryConfig from './AdvanceNeighborsConfig'
+import { getQueryString } from '../utils'
 
 const { SubMenu } = Menu;
 type ControlledValues = {
@@ -66,8 +67,7 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
   const service = utils.getService(services, serviceId);
   const languageService = utils.getService(services, languageServiceId);
 
-  // TODO：从 URL 中获取
-  const graphName = 'default'
+  const graphName = getQueryString('graphName')
   
   const { item: targetNode } = contextmenu;
   if (!service || targetNode?.destroyed || targetNode?.getType?.() !== 'node') {

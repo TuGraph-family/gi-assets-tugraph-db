@@ -59,7 +59,6 @@ const NodeConfigurationPanel = (props) => {
 
   // 点击确认按钮，获取到所有的配置项
   const handleSettingNodeConfig = async () => {
-    debugger
     const transform = getTransformByTemplate(elementStyles, schemaData);
 
     localStorage.setItem('CUSTOM_STYLE_CONFIG', JSON.stringify(elementStyles))

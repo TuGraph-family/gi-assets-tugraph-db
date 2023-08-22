@@ -1,8 +1,8 @@
 import { useContext, utils } from '@antv/gi-sdk';
 import { Modal, message } from 'antd';
 import React, { useState } from 'react';
-import './index.less';
 import { getTransformByTemplate } from '../StyleSetting/utils';
+import './index.less';
 
 const Demo: React.FC = () => {
   const { updateContext, services, schemaData } = useContext();
@@ -16,7 +16,7 @@ const Demo: React.FC = () => {
   const [state, setState] = useState({
     visible: true,
     index: 0,
-    graphName: 'default',
+    graphName: 'Movie',
     loading: false
   });
   const set = values => {
@@ -108,40 +108,40 @@ const Demo: React.FC = () => {
           <div
             className={`${state.index === 0 ? 'demoItemSelected' : 'demoItem'}`}
             onClick={() => {
-              set({ index: 0, graphName: 'default' });
+              set({ index: 0, graphName: 'Movie' });
             }}
           >
             <div className="picBox">
               <img src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*fobuSKSyNWwAAAAAAAAAAAAADgOBAQ/original" />
             </div>
             <div className="textBox">
-              <div className="demoText">反洗钱Demo</div>
+              <div className="demoText">电影关系网络</div>
             </div>
           </div>
           <div
             className={`${state.index === 1 ? 'demoItemSelected' : 'demoItem'}`}
             onClick={() => {
-              set({ index: 1, graphName: 'default' });
+              set({ index: 1, graphName: 'ThreeKingdoms' });
             }}
           >
             <div className="picBox">
               <img src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*fobuSKSyNWwAAAAAAAAAAAAADgOBAQ/original" />
             </div>
             <div className="textBox">
-              <div className="demoText">企业关系Demo</div>
+              <div className="demoText">三国人物关系网络</div>
             </div>
           </div>
           <div
             className={`${state.index === 2 ? 'demoItemSelected' : 'demoItem'}`}
             onClick={() => {
-              set({ index: 2, graphName: 'default' });
+              set({ index: 2, graphName: 'WanderingEarth' });
             }}
           >
             <div className="picBox">
               <img src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*fobuSKSyNWwAAAAAAAAAAAAADgOBAQ/original" />
             </div>
             <div className="textBox">
-              <div className="demoText">社交网络Demo</div>
+              <div className="demoText">流浪地球关系网络</div>
             </div>
           </div>
         </div>

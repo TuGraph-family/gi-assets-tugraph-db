@@ -4,9 +4,9 @@ import { CloseOutlined } from '@ant-design/icons';
 import { cloneDeep } from 'lodash';
 import { AttributesEditForm } from './AttributesEditForm/index';
 import { useContext, utils } from '@antv/gi-sdk';
-
-import './index.less';
 import { filterByTopRule } from '../StyleSetting/utils';
+import { getQueryString } from '../utils'
+import './index.less';
 
 export interface props {
   schemaServiceId: string;
@@ -25,12 +25,13 @@ const AttributesFilter: React.FC<props> = ({ schemaServiceId }) => {
     edges: []
   });
 
+  const graphName = getQueryString('graphName')
   const queryGraphSchema = async () => {
     if (!schemaService) {
       return;
     }
-    // TODO: graphName 需要从 URL 中获取
-    const result = await schemaService('default');
+
+    const result = await schemaService(graphName);
     const { data } = result;
     setSchemaList(data);
   };
@@ -83,7 +84,6 @@ const AttributesFilter: React.FC<props> = ({ schemaServiceId }) => {
   const handleSubmit = async () => {
     const values = await form.validateFields()
     const rules = transformObject(values)
-    // console.log('属性过滤规则', rules)
     // 筛选出符合条件的节点
     const graphData = graph.save()
 
@@ -126,7 +126,6 @@ const AttributesFilter: React.FC<props> = ({ schemaServiceId }) => {
         currentEdges.push(d)
       })
     })
-    console.log('符合条件的节点', currentNodes, currentNodes.map(d => d.id))
 
     const nodeIds = currentNodes.map(d => d.id)
 
