@@ -4,6 +4,7 @@ import { useImmer } from 'use-immer'
 import { useContext, utils } from "@antv/gi-sdk";
 import EdgeConfigurationPanel from "./EdgeConfiguration";
 import NodeConfigurationPanel from "./NodeConfiguration";
+import { getQueryString } from '../utils'
 import './index.less'
 
 const { TabPane } = Tabs;
@@ -35,11 +36,13 @@ const StyleSetting: React.FunctionComponent<IStyleSetting> = (props) => {
     },
   })
 
+  const graphName = getQueryString('graphName')
+
   const queryGraphSchema = async () => {
     if (!schemaService) {
       return
     }
-    const result = await schemaService('default')
+    const result = await schemaService(graphName)
     const { data } = result
     setState((draft) => {
       draft.schemaList = {
@@ -53,7 +56,6 @@ const StyleSetting: React.FunctionComponent<IStyleSetting> = (props) => {
     queryGraphSchema()
   }, [])
   
-  console.log('state.schemaList', state.schemaList)
   const handleChangeRadio = (evt) => {
     setState(draft => {
       draft.styleType = evt.target.value

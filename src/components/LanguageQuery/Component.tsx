@@ -3,9 +3,10 @@ import { Button, Radio, Tooltip, Checkbox, message } from "antd";
 import { FileTextOutlined } from '@ant-design/icons';
 import React from "react";
 import { useImmer } from "use-immer";
-import GraphEditor from "./LanguageEditor/index";
-import "./index.less";
 import { getTransformByTemplate } from "../StyleSetting/utils";
+import GraphEditor from "./LanguageEditor/index";
+import { getQueryString } from '../utils'
+import "./index.less";
 
 export interface ILanguageQueryProps {
   height?: string;
@@ -18,7 +19,7 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "220px", langua
 
   const languageService = utils.getService(services, languageServiceId);
 
-  const graphName = 'default'
+  const graphName = getQueryString('graphName')
 
   const [state, setState] = useImmer<{
     languageType: string;

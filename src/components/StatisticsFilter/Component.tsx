@@ -5,8 +5,9 @@ import FilterSelection from './StatisticsEditForm/index';
 import { HistogramOpt } from './StatisticsEditForm/type';
 import { nanoid } from 'nanoid';
 import { useContext, utils } from '@antv/gi-sdk';
-import './index.less';
 import { filterGraphData, highlightSubGraph } from './StatisticsEditForm/utils';
+import { getQueryString } from '../utils';
+import './index.less';
 
 export interface StatisticsFilterProps {
   histogramOptions?: HistogramOpt;
@@ -29,11 +30,13 @@ const StatisticsFilter: React.FC<StatisticsFilterProps> = ({ histogramOptions, s
     edges: []
   });
 
+  const graphName = getQueryString('graphName')
+
   const queryGraphSchema = async () => {
     if (!schemaService) {
       return;
     }
-    const result = await schemaService('default');
+    const result = await schemaService(graphName);
     const { data } = result;
     setSchemaList(data);
   };

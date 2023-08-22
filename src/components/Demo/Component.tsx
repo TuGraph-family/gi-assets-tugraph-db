@@ -1,8 +1,8 @@
 import { useContext, utils } from '@antv/gi-sdk';
 import { Modal, message } from 'antd';
 import React, { useState } from 'react';
-import './index.less';
 import { getTransformByTemplate } from '../StyleSetting/utils';
+import './index.less';
 
 const Demo: React.FC = () => {
   const { updateContext, services, schemaData } = useContext();

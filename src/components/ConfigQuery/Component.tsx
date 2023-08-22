@@ -4,7 +4,9 @@ import React, { useEffect } from "react";
 import { useImmer } from "use-immer";
 import { getTransformByTemplate } from "../StyleSetting/utils";
 import { getOperatorList, operatorMapping } from '../StyleSetting/Constant'
+import { getQueryString } from '../utils'
 import "./index.less";
+
 const { Option } = Select;
 const { CheckableTag } = Tag;
 
@@ -29,8 +31,7 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
 
   const schemaService = utils.getService(services, schemaServiceId);
 
-  // TODO: 从 URL 中获取当前子图名称
-  const graphName = 'default'
+  const graphName = getQueryString('graphName')
 
   const [state, setState] = useImmer<{
     btnLoading: boolean;
@@ -66,8 +67,8 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
     if (!schemaService) {
       return
     }
-    const result = await schemaService('default')
-    console.log(result)
+    const result = await schemaService(graphName)
+
     const { data } = result
     setState((draft) => {
       draft.schemaList = {

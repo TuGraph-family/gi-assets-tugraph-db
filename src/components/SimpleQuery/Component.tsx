@@ -4,6 +4,7 @@ import React from "react";
 import { SearchOutlined } from '@ant-design/icons';
 import { useImmer } from "use-immer";
 import "./index.less";
+
 const { Option } = Select;
 
 const SimpleQuery = () => {
@@ -12,9 +13,6 @@ const SimpleQuery = () => {
   const {
     graph,
   } = useContext();
-
-  // TODO: 从 URL 中获取当前子图名称
-  const graphName = 'default'
 
   const [state, setState] = useImmer<{
     dataList: any[];
@@ -96,7 +94,6 @@ const SimpleQuery = () => {
         result = filterData(value, filterEdgeData)
       }
 
-      console.log('filterData', result)
       // 将模糊匹配到值转成 label properties value
       // 将模糊匹配到值转成 label value 这个是匹配到了 label
       const formArrData = result.map(d => {

@@ -4,9 +4,9 @@ import { CloseOutlined } from '@ant-design/icons';
 import { cloneDeep } from 'lodash';
 import { AttributesEditForm } from './AttributesEditForm/index';
 import { useContext, utils } from '@antv/gi-sdk';
-
-import './index.less';
 import { filterByTopRule } from '../StyleSetting/utils';
+import { getQueryString } from '../utils'
+import './index.less';
 
 export interface props {
   schemaServiceId: string;
@@ -25,12 +25,13 @@ const AttributesFilter: React.FC<props> = ({ schemaServiceId }) => {
     edges: []
   });
 
+  const graphName = getQueryString('graphName')
   const queryGraphSchema = async () => {
     if (!schemaService) {
       return;
     }
-    // TODO: graphName 需要从 URL 中获取
-    const result = await schemaService('default');
+    
+    const result = await schemaService(graphName);
     const { data } = result;
     setSchemaList(data);
   };
