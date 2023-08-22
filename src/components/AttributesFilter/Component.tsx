@@ -30,7 +30,7 @@ const AttributesFilter: React.FC<props> = ({ schemaServiceId }) => {
     if (!schemaService) {
       return;
     }
-    
+
     const result = await schemaService(graphName);
     const { data } = result;
     setSchemaList(data);
@@ -84,7 +84,6 @@ const AttributesFilter: React.FC<props> = ({ schemaServiceId }) => {
   const handleSubmit = async () => {
     const values = await form.validateFields()
     const rules = transformObject(values)
-    // console.log('属性过滤规则', rules)
     // 筛选出符合条件的节点
     const graphData = graph.save()
 
@@ -127,7 +126,6 @@ const AttributesFilter: React.FC<props> = ({ schemaServiceId }) => {
         currentEdges.push(d)
       })
     })
-    console.log('符合条件的节点', currentNodes, currentNodes.map(d => d.id))
 
     const nodeIds = currentNodes.map(d => d.id)
 

@@ -71,7 +71,6 @@ const StatisticsFilter: React.FC<StatisticsFilterProps> = ({ histogramOptions, s
   };
 
   const handleFilterOptionsChange = (options) => {
-    console.log('options', options)
     let defaultData = {
       nodes: [],
       edges: [],

@@ -112,7 +112,6 @@ export const NodeForm: React.FC<NodeFormProps> = ({
   };
 
   const handleFormValueChange = (changedValues, allValues) => {
-    debugger
     if (onValuesChange) {
       onValuesChange(changedValues, allValues);
     }

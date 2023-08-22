@@ -50,7 +50,6 @@ const AdvanceNeighborsQueryConfig: React.FC<AdvanceNeighborsQueryProps> = ({ sch
 
   const transformObject = (params) => {
     const o: any = [];
-    debugger
     for (const key in params) {
       if (key.startsWith("label-")) {
         const labelValue = params[key];
