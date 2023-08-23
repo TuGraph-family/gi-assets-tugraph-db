@@ -3,6 +3,6 @@ import * as deploys from './deploys';
 import services from './services';
 import * as templates from './templates';
 
-// const icons = ['font_3146710_gf2hrnt3ge'];
+const icons = ['font_3146710_knfl83e3ui'];
 
-export { components, deploys, services, templates };
+export { components, deploys, icons, services, templates };
