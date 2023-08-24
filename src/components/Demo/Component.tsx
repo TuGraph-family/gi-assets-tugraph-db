@@ -10,14 +10,13 @@ const Demo: React.FC = () => {
     ? JSON.parse(localStorage.getItem('CUSTOM_STYLE_CONFIG') as string)
     : {};
 
-
   const languageService: any = utils.getService(services, 'TuGraph-DB/languageQueryService');
 
   const [state, setState] = useState({
     visible: true,
     index: 0,
     graphName: 'Movie',
-    loading: false
+    loading: false,
   });
   const set = values => {
     setState(pre => {
@@ -27,14 +26,14 @@ const Demo: React.FC = () => {
 
   const queryDataByDefaultGraphName = async () => {
     if (!languageService) {
-      message.error('没有找到TuGraph-DB/languageQueryService服务，请先注册该服务')
-      return
+      message.error('没有找到TuGraph-DB/languageQueryService服务，请先注册该服务');
+      return;
     }
-    
+
     setState({
       ...state,
-      loading: true
-    })
+      loading: true,
+    });
 
     const result = await languageService({
       script: 'match p=(n)-[*..1]-(m)  RETURN p LIMIT  50',
@@ -44,8 +43,8 @@ const Demo: React.FC = () => {
     setState({
       ...state,
       loading: false,
-      visible: false
-    })
+      visible: false,
+    });
 
     if (!result.success) {
       // 执行查询失败
@@ -75,7 +74,7 @@ const Demo: React.FC = () => {
       // @ts-ignore
       draft.source = res;
     });
-  }
+  };
 
   return (
     <div className="demo">
