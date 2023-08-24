@@ -123,6 +123,12 @@ const AdvanceNeighborsQueryConfig: React.FC<AdvanceNeighborsQueryProps> = ({ sch
     
   };
 
+  const initFormValue = {
+    direction: 'both',
+    sep: 2,
+    limit: 100
+  }
+
   return (
     <Modal 
       title='扩散高级配置'
@@ -132,7 +138,7 @@ const AdvanceNeighborsQueryConfig: React.FC<AdvanceNeighborsQueryProps> = ({ sch
       cancelText='取消'
       onOk={handleSubmit}>
         <div className='neighbors-attribute-filter-container' >
-          <Form form={form} layout="vertical">
+          <Form form={form} layout="vertical" initialValues={initFormValue}>
             {/* <Form.Item label='数据时间范围' name='dataRange' rules={[
               { type: 'array' as const, required: true, message: 'Please select time!' }
             ]}>
