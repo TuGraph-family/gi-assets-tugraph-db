@@ -8,6 +8,5 @@ const info = {
   desc: '返回按钮',
   cover: 'http://xxxx.jpg',
   type: Info.type.COMPONENT_ACTION,
-  services: [ASSET_ID],
 };
 export default info;

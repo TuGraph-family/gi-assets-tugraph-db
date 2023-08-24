@@ -1,35 +1,20 @@
 .style-setting-container {
   padding: 16px;
-  .tab-ant-radio-group {
-    padding: 4px;
-    background: #eaeff9;
-    border-radius: 8px;
-    width: 100%;
-  }
   .container-element {
     width: 50%;
     text-align: center;
     background: #eaeff9;
     border-color: #eaeff9;
   }
-  .ant-radio-button-wrapper-checked.container-element {
-    background: #fff !important;
-    border-color: #eaeff9 !important;
-    color: #000 !important;
-    border-right: none;
-    border-radius: 8px;
+  .ant-segmented {
+    background: #eaeff9;
+    padding: 4px;
   }
-  .ant-radio-button-wrapper:first-child {
-    border-left: none;
+  .ant-segmented:not(.ant-segmented-disabled):hover, .ant-segmented:not(.ant-segmented-disabled):focus {
+    background: #eaeff9;
   }
-  .ant-radio-button-wrapper-checked:first-child {
-    border-left: none;
-  }
-  .ant-radio-button-wrapper-checked.container-element:not(.ant-radio-button-wrapper-disabled)::before {
-    background-color: transparent;
-  }
-  .ant-radio-button-wrapper.container-element:not(:first-child)::before {
-    background-color: #eaeff9;
+  .ant-segmented-item {
+    width: 130px;;
   }
 }
 

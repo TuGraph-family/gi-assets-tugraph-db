@@ -5,7 +5,7 @@ import registerMeta from "./registerMeta";
 
 const info = {
   id: "TuGraphStyleSetting",
-  name: "样式设置",
+  name: "业务样式设置",
   category: "system-interaction",
   desc: "样式设置",
   cover: "http://xxxx.jpg",

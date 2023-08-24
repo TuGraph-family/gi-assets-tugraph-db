@@ -9,7 +9,6 @@ const info = {
   desc: '通过切换布局类型配置，渲染图数据',
   cover: 'http://xxxx.jpg',
   type: 'GIAC',
-  icon: 'icon-copyright',
 };
 
 export default {
