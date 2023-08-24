@@ -20,7 +20,7 @@ const Back = () => {
     setState({
       graphName: value
     })
-    location.href = `/admin/grfmreuravu?graphName=${value}`
+    location.href = `/admin/j50e6v2vivk?graphName=${value}`
   }
 
   return (

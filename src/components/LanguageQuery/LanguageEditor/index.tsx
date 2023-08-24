@@ -7,7 +7,7 @@ interface Props {
   isReadOnly?: boolean;
   width?: string | number;
   height?: string | number;
-  graphId?: number;
+  graphId?: string;
   onChange?: (content: string) => void;
   gremlinId?: string;
 }

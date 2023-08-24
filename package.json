@@ -1,6 +1,6 @@
 {
   "name": "@tugraph/gi-assets-tugraph-db",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "G6VP Assets for TuGraph-DB",
   "main": "lib/index.js",
   "module": "es/index.js",
