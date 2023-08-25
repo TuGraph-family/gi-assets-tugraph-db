@@ -27,6 +27,7 @@ const EdgeConfigurationPanel = (props) => {
   const onElementValuesChange = (changedValues: any, allValues: any = {}) => {
     const { edgeType } = allValues;
     const isEdgeTypeChange = "edgeType" in changedValues;
+
     if (!isEdgeTypeChange) {
       setState((draft) => {
         draft.elementStyles[edgeType || "allEdges"] = allValues;

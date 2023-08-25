@@ -1,5 +1,5 @@
 import { useContext, utils } from '@antv/gi-sdk';
-import { Modal, message } from 'antd';
+import { Modal, message, Button, Checkbox } from 'antd';
 import React, { useState } from 'react';
 import { getTransformByTemplate } from '../StyleSetting/utils';
 import './index.less';
@@ -10,14 +10,13 @@ const Demo: React.FC = () => {
     ? JSON.parse(localStorage.getItem('CUSTOM_STYLE_CONFIG') as string)
     : {};
 
-
   const languageService: any = utils.getService(services, 'TuGraph-DB/languageQueryService');
-
+  const isShow = localStorage.getItem('TuGraph_NO_SHOW');
   const [state, setState] = useState({
-    visible: true,
+    visible: isShow ? false : true,
     index: 0,
     graphName: 'Movie',
-    loading: false
+    loading: false,
   });
   const set = values => {
     setState(pre => {
@@ -27,14 +26,14 @@ const Demo: React.FC = () => {
 
   const queryDataByDefaultGraphName = async () => {
     if (!languageService) {
-      message.error('没有找到TuGraph-DB/languageQueryService服务，请先注册该服务')
-      return
+      message.error('没有找到TuGraph-DB/languageQueryService服务，请先注册该服务');
+      return;
     }
-    
+
     setState({
       ...state,
-      loading: true
-    })
+      loading: true,
+    });
 
     const result = await languageService({
       script: 'match p=(n)-[*..1]-(m)  RETURN p LIMIT  50',
@@ -44,8 +43,8 @@ const Demo: React.FC = () => {
     setState({
       ...state,
       loading: false,
-      visible: false
-    })
+      visible: false,
+    });
 
     if (!result.success) {
       // 执行查询失败
@@ -75,7 +74,15 @@ const Demo: React.FC = () => {
       // @ts-ignore
       draft.source = res;
     });
-  }
+  };
+
+  const handleShow = (e) => {
+    if (e.target.checked) {
+      localStorage.setItem('TuGraph_NO_SHOW', 'true');
+    } else {
+      localStorage.removeItem('TuGraph_NO_SHOW')
+    }
+  };
 
   return (
     <div className="demo">
@@ -83,12 +90,26 @@ const Demo: React.FC = () => {
         visible={state.visible}
         confirmLoading={state.loading}
         width={772}
-        cancelText="取消"
-        okText="确定"
+        footer={[
+          <>
+            <Checkbox className="noShow" style={{ float: 'left' }} onChange={handleShow}>
+              下次不再显示
+            </Checkbox>
+            <Button
+              onClick={() => {
+                set({ visible: false });
+              }}
+            >
+              取消
+            </Button>
+            <Button onClick={queryDataByDefaultGraphName} type="primary">
+              确定
+            </Button>
+          </>,
+        ]}
         onCancel={() => {
           set({ visible: false });
         }}
-        onOk={queryDataByDefaultGraphName}
         title={
           <div className="title">
             <div className="iconBox">

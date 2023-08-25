@@ -70,6 +70,11 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
     const result = await schemaService(graphName)
 
     const { data } = result
+    if (!data) {
+      // 如果请求失败，则直接 return
+      return
+    }
+    
     setState((draft) => {
       draft.schemaList = {
         nodes: data.nodes,

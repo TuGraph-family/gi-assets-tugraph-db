@@ -7,14 +7,15 @@
     border-color: #eaeff9;
   }
   .ant-segmented {
-    background: #eaeff9;
     padding: 4px;
+    background: #eaeff9;
   }
-  .ant-segmented:not(.ant-segmented-disabled):hover, .ant-segmented:not(.ant-segmented-disabled):focus {
+  .ant-segmented:not(.ant-segmented-disabled):hover,
+  .ant-segmented:not(.ant-segmented-disabled):focus {
     background: #eaeff9;
   }
   .ant-segmented-item {
-    width: 130px;;
+    width: 130px;
   }
 }
 
@@ -22,27 +23,23 @@
 .edgeConfigurationContainer {
   position: relative;
   height: calc(100vh - 260px);
+  margin-top: 16px;
+  padding: 8px;
   overflow: auto;
   background: #f5f7fb;
-  margin-top: 16px;
   .custom-ant-radio-wrapper {
     width: 20px;
     height: 20px;
     margin-right: 8px;
-    border-radius: 2px;
     background: #f5f8fc;
+    border-radius: 2px;
     .ant-radio {
       visibility: hidden;
     }
   }
-  .custom-ant-radio-wrapper.ant-radio-wrapper-checked::after {
-    position: absolute;
-    top: 0;
-    left: 6px;
-    width: 100%;
-    height: 100%;
-    color: white;
-    content: "√";
+  .custom-ant-radio-wrapper.ant-radio-wrapper-checked {
+    outline: 8px auto #fff;
+    box-shadow: 2px 2px 15px 2px #bfbfbf;
   }
   .ant-radio-button-wrapper:not(:first-child)::before {
     width: 0px;
@@ -86,5 +83,16 @@
   }
   .color {
     display: flex;
+  }
+
+  .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+    color: #96969b;
+    background: rgb(223 227 239);
+    border-color: rgb(223 227 239);
+  }
+  .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover {
+    color: #96969b;
+    background: rgb(223 227 239);
+    border-color: rgb(223 227 239);
   }
 }
