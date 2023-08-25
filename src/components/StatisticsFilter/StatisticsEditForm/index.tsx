@@ -57,7 +57,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     schemaList,
   } = props;
   const label = Form.useWatch(`label-${filterCriteria.id}`, form);
-  
+
   // 对于离散类型的数据支持切换图表类型
   const [enableChangeChartType, setEnableChangeChartType] = useState<boolean>(false);
   const [state, setState] = useState<{
@@ -314,10 +314,10 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
             </Select>
           </Form.Item>
           <p className="conditionIcon">选择属性</p>
-          <Space style={{ marginBottom: 8 }} align="baseline">
+          <Space style={{ marginBottom: 8, width: '100%' }} align="baseline" className='space-statistic-panel'>
             <Form.Item name='name' rules={[{ required: true, message: '请选择属性' }]}>
               <Select
-                style={{ width: enableChangeChartType ? 224 : 256 }}
+                style={{ width: enableChangeChartType ? '88%' : '100%' }}
                 onChange={onSelectChange}
                 className="tugraph-filter-panel-prop-select"
                 placeholder="选择元素属性"

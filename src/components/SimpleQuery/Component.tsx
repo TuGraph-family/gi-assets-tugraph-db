@@ -37,7 +37,7 @@ const SimpleQuery = () => {
 
   const handleChange = (value) => {
     graph.focusItem(value)
-    graph.setItemState(value, 'active', true)
+    graph.setItemState(value, 'selected', true)
   };
 
 

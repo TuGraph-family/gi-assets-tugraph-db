@@ -164,7 +164,7 @@ export interface NodeStyle {
     iconText: string;
     [key: string]: any;
   };
-  displyLabel: string;
+  displayLabel: string | undefined;
   advancedColor: string;
   advancedSize: number;
   labelVisible: boolean;
@@ -190,7 +190,7 @@ const defaultNodeStyles: NodeStyle = {
   icon: {
     iconText: ""
   },
-  displyLabel: "id",
+  displayLabel: "id",
   advancedColor: "#1890ff",
   advancedSize: 30,
   advancedIds: [],
@@ -203,7 +203,7 @@ export interface EdgeStyle {
   advancedColor: string;
   advancedLineWidth: number;
   color: string;
-  displyLabel: string;
+  displayLabel: string | undefined;
   edgeStrokeType: string;
   edgeType: string;
   elementType: "edge";
@@ -223,7 +223,7 @@ const defaultEdgeStyles: EdgeStyle = {
   advancedColor: "",
   advancedLineWidth: 1,
   color: "#87e8de",
-  displyLabel: "class",
+  displayLabel: undefined,
   edgeStrokeType: "line",
   edgeType: "subject",
   elementType: "edge",
@@ -247,7 +247,7 @@ export const getTransformByTemplate = (styles: any = {}, schemaData) => {
         styles[nodeType] || styles["allNodes"] || {}
       ) as NodeStyle;
       const {
-        displyLabel,
+        displayLabel,
         size: basicSize,
         color: basicColor,
         customColor,
@@ -286,12 +286,13 @@ export const getTransformByTemplate = (styles: any = {}, schemaData) => {
       const nodeColor = hasCurrentId ? advancedCustomColor || advancedColor : customColor || basicColor || node.style?.keyshape?.fill || nodeCfg.color
 
       // 兼容单选数据
-      const labelArr = typeof displyLabel === "string" ? [displyLabel] : displyLabel || [];
+      const labelArr = (displayLabel && typeof displayLabel === "string") ? [displayLabel] : displayLabel || [];
       let labelValueArr: string[] = [];
       if (typeAliasVisible && nodeSchema && nodeSchema.typeAlias) {
         labelValueArr.push(nodeSchema.typeAlias);
       }
       if (labelVisible) {
+        // @ts-ignore
         labelArr.forEach((label) => {
           console.log('node' ,node)
           if (node.data) {
@@ -354,7 +355,7 @@ export const getTransformByTemplate = (styles: any = {}, schemaData) => {
         styles[edgeType] || styles.allEdges || {}
       ) as EdgeStyle;
       const {
-        displyLabel,
+        displayLabel,
         fontStyle,
         color: basicColor,
         customColor,
@@ -393,12 +394,14 @@ export const getTransformByTemplate = (styles: any = {}, schemaData) => {
       const color = isAdvanced ? advancedCustomColor || advancedColor : customColor || basicColor || edge.style?.keyshape?.fill || edgeCfg.color
       
       // 兼容单选数据
-      const labelArr = typeof displyLabel === "string" ? [displyLabel] : displyLabel || [];
+      const labelArr = (displayLabel && typeof displayLabel === "string") ? [displayLabel] : displayLabel || [];
       let labelValueArr: string[] = [];
       if (typeAliasVisible && edgeSchema && edgeSchema.typeAlias) {
         labelValueArr.push(edgeSchema.typeAlias);
       }
+      
       if (labelVisible) {
+        // @ts-ignore
         labelArr.forEach((label) => {
           if (edge.data) {
             labelValueArr.push(edge.data[label] || edge.id);
