@@ -1,12 +1,12 @@
 export const DefaultColor = [
-  "#87e8de",
-  "#1890ff",
-  "#52c41a",
-  "#13c2c2",
-  "#2f54eb",
-  "#722ed1",
-  "#eb2f96",
-  "#faad14"
+  "rgb(64 137 255)",
+  "rgb(204 116 255)",
+  "rgb(6 184 168)",
+  "rgb(255 136 52)",
+  "rgb(88 136 195)",
+  "rgb(250 115 205)",
+  "rgb(7 188 224)",
+  // "#faad14"
 ];
 
 export const ICONS = [
@@ -114,19 +114,19 @@ export const getOperatorList = (value: string = '') => {
     return [
       {
         key: "CT",
-        value: "包括"
+        value: "∈"
       },
       {
         key: "NC",
-        value: "不包括"
+        value: "∉"
       },
       {
         key: "EQ",
-        value: "等于"
+        value: "="
       },
       {
         key: "NE",
-        value: "不等于"
+        value: "≠"
       }
     ];
   }
@@ -135,27 +135,27 @@ export const getOperatorList = (value: string = '') => {
     return [
       {
         key: "GT",
-        value: "大于"
+        value: ">"
       },
       {
         key: "LT",
-        value: "小于"
+        value: "<"
       },
       {
         key: "EQ",
-        value: "等于"
+        value: "="
       },
       {
         key: "NE",
-        value: "不等于"
+        value: "≠"
       },
       {
         key: "GE",
-        value: "大于等于"
+        value: "≥"
       },
       {
         key: "LE",
-        value: "小于等于"
+        value: "≤"
       }
     ];
   }
@@ -164,11 +164,11 @@ export const getOperatorList = (value: string = '') => {
     return [
       {
         key: "EQ",
-        value: "等于"
+        value: "="
       },
       {
         key: "NE",
-        value: "不等于"
+        value: "≠"
       }
     ];
   }

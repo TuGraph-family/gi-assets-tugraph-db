@@ -1,9 +1,15 @@
 import { EditOutlined } from "@ant-design/icons";
-import { Popover, Tooltip } from "antd";
+import { Popover, Tooltip, Button } from "antd";
 import React, { useEffect } from "react";
 import { SketchPicker } from "react-color";
 import { useImmer } from "use-immer";
 import "./index.less";
+
+const advanceColors = [
+  '#cb962a',
+  '#23ad61',
+  '#ff8075'
+]
 
 export interface ColorInputProps {
   value?: any;
@@ -42,7 +48,8 @@ const ColorInput: React.FC<ColorInputProps> = ({ onChange, value, defaultValue }
         }
       >
         <Tooltip title='自定义颜色'>
-          <EditOutlined />
+          {/* <EditOutlined /> */}
+          <div className="custom-color-btn">...</div>
         </Tooltip>
       </Popover>
     </div>

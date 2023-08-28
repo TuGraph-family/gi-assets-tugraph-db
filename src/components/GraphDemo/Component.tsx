@@ -10,8 +10,7 @@ export interface IProps {
   GIAC: IGIAC;
 }
 
-
-const Demo: React.FunctionComponent<IProps> = (props) => {
+const GraphDemo: React.FunctionComponent<IProps> = (props) => {
   const { GIAC } = props;
 
   const { updateContext, services, schemaData } = useContext();
@@ -101,7 +100,7 @@ const Demo: React.FunctionComponent<IProps> = (props) => {
   };
 
   return (
-    <div className="demo">
+    <>
       <GIAComponent GIAC={GIAC} onClick={showModal} />
       <Modal
         visible={state.visible}
@@ -184,8 +183,8 @@ const Demo: React.FunctionComponent<IProps> = (props) => {
           </div>
         </div>
       </Modal>
-    </div>
+    </>
   );
 };
 
-export default Demo;
+export default GraphDemo;
