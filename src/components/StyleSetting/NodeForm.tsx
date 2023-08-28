@@ -3,7 +3,7 @@ import { Button, Collapse, Form, FormInstance, FormProps, Input, Radio, Select }
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
 import CustomIcon from './CustomIcon';
-import ColorInput from './ColorInput';
+import ColorInput from './ColorInputRadio';
 import { DefaultColor, getOperatorList, ICONS } from './Constant';
 import IntegerStep from './IntegerStep';
 
@@ -62,15 +62,24 @@ export const NodeForm: React.FC<NodeFormProps> = ({
     });
   };
 
-  const handleColorChange = current => {
+  const handleColorChange = e => {
+    // setState(draft => {
+    //   draft.color = {
+    //     ...color,
+    //     basic: current,
+    //   };
+    // });
+    // form.setFieldsValue({
+    //   color: current,
+    // });
     setState(draft => {
       draft.color = {
         ...color,
-        basic: current,
+        basic: e.target.value,
       };
     });
-    form.setFieldsValue({
-      color: current,
+     form.setFieldsValue({
+      color: e.target.value,
     });
   };
 

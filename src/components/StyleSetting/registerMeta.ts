@@ -4,8 +4,7 @@ const { deepClone, GIAC_CONTENT_METAS } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.title.default = "外观";
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.icon.default = "icon-tugraph-styling";
-metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.tooltip.default =
-  "根据点上的属性值可指定颜色、大小、形状";
+metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.tooltip.default ="根据点上的属性值可指定颜色、大小、形状";
 metas.GI_CONTAINER_INDEX.default = -8;
 
 export default (context) => {
