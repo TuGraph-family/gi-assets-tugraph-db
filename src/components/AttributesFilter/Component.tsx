@@ -38,7 +38,7 @@ const AttributesFilter: React.FC<props> = ({ schemaServiceId }) => {
 
   useEffect(() => {
     queryGraphSchema();
-  }, []);
+  }, [graphName]);
 
   const addPanel = () => {
     const addData = cloneDeep(filterdata);
