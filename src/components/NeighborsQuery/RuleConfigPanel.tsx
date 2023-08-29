@@ -59,19 +59,23 @@ const RuleConfigPanel: React.FC<props> = ({ id, handleDelete, form, schemaList }
           marginBottom: 16,
           backgroundImage: 'linear-gradient(178deg, rgba(245,248,255,0.38) 11%, rgba(244,247,255,0.55) 96%)',
         }}
-        bordered={false}
         expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+        bordered={false}
       >
         <Panel
           header={
-            <span style={{ fontWeight: 600 }}>
+            <span>
               {label ? (
                 <span>
-                  <img src={state.currentSchema.labelType === 'node' ? typeImg.person : typeImg.amount} alt="" className="img" />
+                  <img
+                    src={state.currentSchema.labelType === 'node' ? typeImg.person : typeImg.amount}
+                    alt=""
+                    className="img"
+                  />
                   {label}
                 </span>
               ) : (
-                '未选择'
+                <b>未选择</b>
               )}
             </span>
           }
@@ -105,7 +109,7 @@ const RuleConfigPanel: React.FC<props> = ({ id, handleDelete, form, schemaList }
                         <Select
                           placeholder="请选择"
                           showSearch
-                           // @ts-ignore
+                          // @ts-ignore
                           filterOption={(input, option) => (option?.label ?? '').includes(input)}
                           style={{ width: '40%' }}
                           onChange={handlePropertyChange}
@@ -119,7 +123,11 @@ const RuleConfigPanel: React.FC<props> = ({ id, handleDelete, form, schemaList }
                           })}
                         </Select>
                       </Form.Item>
-                      <Form.Item noStyle name={[name, 'operator']} rules={[{ required: true, message: '请选择查询逻辑' }]}>
+                      <Form.Item
+                        noStyle
+                        name={[name, 'operator']}
+                        rules={[{ required: true, message: '请选择查询逻辑' }]}
+                      >
                         <Select placeholder="请选择" style={{ width: '30%' }} allowClear>
                           {getOperatorList(state.currentProperty?.type).map(logic => {
                             return (
@@ -152,4 +160,4 @@ const RuleConfigPanel: React.FC<props> = ({ id, handleDelete, form, schemaList }
   );
 };
 
-export default RuleConfigPanel
+export default RuleConfigPanel;
