@@ -1,12 +1,12 @@
-import { Tabs, Radio } from "antd";
+import { Segmented } from "antd";
 import React, { useEffect } from "react";
 import { useImmer } from 'use-immer'
 import { useContext, utils } from "@antv/gi-sdk";
 import EdgeConfigurationPanel from "./EdgeConfiguration";
 import NodeConfigurationPanel from "./NodeConfiguration";
+import { getQueryString } from '../utils'
 import './index.less'
 
-const { TabPane } = Tabs;
 export interface IStyleSetting {
   visible: boolean;
   schemaServiceId: string;
@@ -35,12 +35,19 @@ const StyleSetting: React.FunctionComponent<IStyleSetting> = (props) => {
     },
   })
 
+  const graphName = getQueryString('graphName')
+
   const queryGraphSchema = async () => {
-    if (!schemaService) {
+    if (!schemaService || !graphName) {
       return
     }
-    const result = await schemaService('default')
+    const result = await schemaService(graphName)
     const { data } = result
+    if (!data) {
+      // 如果请求失败，则直接 return
+      return
+    }
+    
     setState((draft) => {
       draft.schemaList = {
         nodes: data.nodes,
@@ -51,22 +58,21 @@ const StyleSetting: React.FunctionComponent<IStyleSetting> = (props) => {
   
   useEffect(() => {
     queryGraphSchema()
-  }, [])
-  
-  console.log('state.schemaList', state.schemaList)
-  const handleChangeRadio = (evt) => {
+  }, [graphName])
+
+  const handleChange = (value) => {
     setState(draft => {
-      draft.styleType = evt.target.value
+      draft.styleType = value
     })
   }
 
   return (
     <div className="style-setting-container" style={{ padding: 16 }}>
       <h4>外观样式</h4>
-      <Radio.Group className="tab-ant-radio-group" value={state.styleType} buttonStyle="solid" onChange={handleChangeRadio}>
-        <Radio.Button className="container-element" value="node">点</Radio.Button>
-        <Radio.Button className="container-element" value="edge">边</Radio.Button>
-      </Radio.Group>
+      <Segmented 
+        value={state.styleType} 
+        options={[{ label: '点', value: 'node'}, { label: '边', value: 'edge' }]}
+        onChange={handleChange} />
       {
         state.styleType === 'node'
         ?

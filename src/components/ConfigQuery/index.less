@@ -3,11 +3,10 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding-left: 4px;
   overflow: hidden;
   .quickQueryForm {
     flex: 1;
-    padding: 12px 16px;
+    padding: 12px 4px;
     .formContainer {
       padding: 16px;
       background: #fff;
@@ -32,10 +31,13 @@
     border-radius: 8px;
   }
   .buttonContainer {
+    position: absolute;
+    bottom: 2px;
+    right: 6px;
     width: 100%;
     padding: 12px 16px;
     text-align: right;
-    border-top: 1px solid #e3e4e6;
+    // border-top: 1px solid #e3e4e6;
     .ant-btn:not(:last-child) {
       margin-right: 10px;
     }

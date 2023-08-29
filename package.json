@@ -1,6 +1,6 @@
 {
   "name": "@tugraph/gi-assets-tugraph-db",
-  "version": "0.1.0",
+  "version": "0.6.2",
   "description": "G6VP Assets for TuGraph-DB",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -26,6 +26,7 @@
     "demo": "umi dev"
   },
   "dependencies": {
+    "@antv/g2plot": "^2.4.31",
     "@antv/g6": "4.x",
     "@antv/gi-sdk": "latest",
     "@antv/graphin": "2.x",
@@ -33,6 +34,7 @@
     "antd": "4.x",
     "deepmerge": "^4.3.1",
     "lodash": "^4.17.21",
+    "nanoid": "^4.0.2",
     "react": "17.x",
     "react-color": "^2.19.3",
     "react-dom": "17.x",

@@ -2,6 +2,7 @@ import { EngineBanner, utils } from '@antv/gi-sdk';
 import { Button, Col, Form, Input, Row } from 'antd';
 import * as React from 'react';
 import { GI_SERVICE_SCHEMA } from './Initializer';
+import { getQueryString } from '../components/utils'
 const { setServerEngineContext, getServerEngineContext } = utils;
 
 export interface ServerProps {
@@ -27,7 +28,9 @@ const Server: React.FunctionComponent<ServerProps> = props => {
     // 一定要先设置，否则schema查询是没有的
     setServerEngineContext(values);
 
-    const schema = await GI_SERVICE_SCHEMA.service('default');
+    const graphName = getQueryString('graphName')
+
+    const schema = await GI_SERVICE_SCHEMA.service(graphName);
     const engineContext = {
       engineId: ENGINE_ID,
       schemaData: schema,

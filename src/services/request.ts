@@ -16,7 +16,7 @@ const getLocalData = (key: string) => {
 const request = extend({
   headers: {
     'Content-Type': 'application/json',
-    Authorization: localStorage.getItem('TUGRAPH_TOKEN') || ''//getLocalData('TUGRAPH_TOKEN'),
+    Authorization: getLocalData('TUGRAPH_TOKEN')
   },
   withCredentials: true,
   credentials: 'include',

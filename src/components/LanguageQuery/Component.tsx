@@ -3,9 +3,10 @@ import { Button, Radio, Tooltip, Checkbox, message } from "antd";
 import { FileTextOutlined } from '@ant-design/icons';
 import React from "react";
 import { useImmer } from "use-immer";
-import GraphEditor from "./LanguageEditor/index";
-import "./index.less";
 import { getTransformByTemplate } from "../StyleSetting/utils";
+import GraphEditor from "./LanguageEditor/index";
+import { getQueryString } from '../utils'
+import "./index.less";
 
 export interface ILanguageQueryProps {
   height?: string;
@@ -16,11 +17,9 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "220px", langua
   const { updateContext, services, graph, schemaData } = useContext();
   const customStyleConfig = localStorage.getItem('CUSTOM_STYLE_CONFIG') ? JSON.parse(localStorage.getItem('CUSTOM_STYLE_CONFIG') as string) : {}
 
-  console.log('LanguageQuery', customStyleConfig, schemaData)
-
   const languageService = utils.getService(services, languageServiceId);
 
-  const graphName = 'default'
+  const graphName = getQueryString('graphName')
 
   const [state, setState] = useImmer<{
     languageType: string;
@@ -127,63 +126,61 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "220px", langua
     });
   };
   return (
-    <>
-      <div className='LanguageQueryPanel'>
-        <div className={"contentContainer"}>
-          <div style={{ marginBottom: 16 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
-              <span>查询语言</span>
-              <a
-                onClick={() => {
-                  window.open(
-                    "https://yuque.antfin-inc.com/guppiq/ezloha/pgrayyum1dwnpiga?singleDoc#"
-                  );
-                }}
-              >
-                <FileTextOutlined />
-                语法说明
-              </a>
-            </div>
-       
-            <Radio.Group onChange={handleChangeLangageType} value={languageType}>
-              <Radio value='Cypher'>Cypher</Radio>
-              <Tooltip title='敬请期待'>
-                <Radio value='ISOGQL' disabled>ISOGQL</Radio>
-              </Tooltip>
-            </Radio.Group>
-          </div>
-          <span style={{ display: 'inline-block', marginBottom: 8 }}>输入语句</span>
-          <div className={"blockContainer"}>
-            <div
-              style={{
-                border: "1px solid var(--main-editor-border-color)",
-                borderRadius: "2px"
+    <div className='LanguageQueryPanel'>
+      <div className={"contentContainer"}>
+        <div style={{ marginBottom: 16 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
+            <span>查询语言</span>
+            <a
+              onClick={() => {
+                window.open(
+                  "https://yuque.antfin-inc.com/guppiq/ezloha/pgrayyum1dwnpiga?singleDoc#"
+                );
               }}
             >
-              <GraphEditor
-                initialValue={editorValue}
-                height={height}
-                onChange={(value) => handleChangeEditorValue(value)}
-              />
-            </div>
+              <FileTextOutlined />
+              语法说明
+            </a>
           </div>
-
-          <Checkbox onChange={handleChange}>是否清空画布数据</Checkbox>
-
+      
+          <Radio.Group onChange={handleChangeLangageType} value={languageType}>
+            <Radio value='Cypher'>Cypher</Radio>
+            <Tooltip title='敬请期待'>
+              <Radio value='ISOGQL' disabled>ISOGQL</Radio>
+            </Tooltip>
+          </Radio.Group>
         </div>
-        <div className={"buttonContainer"}>
-          <Button
-            className={"queryButton"}
-            loading={btnLoading}
-            type='primary'
-            disabled={!editorValue}
-            onClick={handleClickQuery}
+        <span style={{ display: 'inline-block', marginBottom: 8 }}>输入语句</span>
+        <div className={"blockContainer"}>
+          <div
+            style={{
+              border: "1px solid var(--main-editor-border-color)",
+              borderRadius: "2px"
+            }}
           >
-            执行查询
-          </Button>
+            <GraphEditor
+              initialValue={editorValue}
+              height={height}
+              onChange={(value) => handleChangeEditorValue(value)}
+            />
+          </div>
         </div>
+
+        <Checkbox onChange={handleChange}>是否清空画布数据</Checkbox>
+
       </div>
-    </>
+      <div className={"buttonContainer"}>
+        <Button
+          className={"queryButton"}
+          loading={btnLoading}
+          type='primary'
+          disabled={!editorValue}
+          onClick={handleClickQuery}
+        >
+          执行查询
+        </Button>
+      </div>
+    </div>
   );
 };
 
