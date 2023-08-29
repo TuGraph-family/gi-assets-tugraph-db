@@ -1,10 +1,10 @@
 import React from 'react';
 import type { GILayoutConfig, IGIAC } from '@antv/gi-sdk';
 import { useImmer } from 'use-immer';
-import { useContext, utils } from '@antv/gi-sdk';
+import { useContext } from '@antv/gi-sdk';
 import { Popover } from 'antd';
-import './index.less';
 import GIAComponent from '@antv/gi-sdk/lib/components/GIAC';
+import './index.less';
 
 export interface LayoutSwitchProps {
   GIAC: IGIAC;
@@ -107,7 +107,7 @@ const LayoutSwitchTool: React.FC<LayoutSwitchProps> = props => {
       }
       placement="bottomRight"
     >
-      <GIAComponent GIAC={GIAC} />
+      <GIAComponent GIAC={GIAC} className='layout-switch-btn'/>
     </Popover>
   );
 };

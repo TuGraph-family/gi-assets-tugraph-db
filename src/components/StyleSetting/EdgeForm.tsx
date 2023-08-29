@@ -4,6 +4,7 @@ import { Button, Collapse, Form, FormInstance, FormProps, Input, Radio, Select }
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
 import { DefaultColor, getOperatorList } from './Constant';
+import IntegerStep from './IntegerStep';
 
 interface EdgeFormProps extends FormProps {
   form: FormInstance<any>;
@@ -16,6 +17,13 @@ interface EdgeFormProps extends FormProps {
 
 const { Option } = Select;
 const { Panel } = Collapse;
+
+const marks = {
+  1: '最细',
+  2: '细',
+  5: '中等',
+  10: '粗',
+};
 
 export const EdgeForm: React.FC<EdgeFormProps> = ({
   form,
@@ -200,6 +208,10 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
           <ColorInput onChange={handleColorChange} />
         </Form.Item>
       </div>
+
+      <Form.Item name="lineWidth" label="边宽" initialValue={1}>
+        <IntegerStep  marks={marks} min={1} max={10} />
+      </Form.Item>
 
       <Form.Item label="文本" name="labelText">
         <Radio.Group onChange={handleChangeLableText} value={state.labelText}>

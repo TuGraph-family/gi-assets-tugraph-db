@@ -19,6 +19,13 @@ interface NodeFormProps extends FormProps {
 const { Option } = Select;
 const { Panel } = Collapse;
 
+const marks = {
+  5: '最小',
+  30: '小',
+  60: '中等',
+  100: '大',
+};
+
 export const NodeForm: React.FC<NodeFormProps> = ({
   form,
   onValuesChange,
@@ -190,7 +197,7 @@ export const NodeForm: React.FC<NodeFormProps> = ({
         </Select>
       </Form.Item>
       <Form.Item name="size" label="大小" initialValue={30}>
-        <IntegerStep />
+        <IntegerStep marks={marks} />
       </Form.Item>
 
       <div className="color">

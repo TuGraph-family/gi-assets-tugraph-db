@@ -38,7 +38,7 @@ const StyleSetting: React.FunctionComponent<IStyleSetting> = (props) => {
   const graphName = getQueryString('graphName')
 
   const queryGraphSchema = async () => {
-    if (!schemaService) {
+    if (!schemaService || !graphName) {
       return
     }
     const result = await schemaService(graphName)
@@ -58,7 +58,7 @@ const StyleSetting: React.FunctionComponent<IStyleSetting> = (props) => {
   
   useEffect(() => {
     queryGraphSchema()
-  }, [])
+  }, [graphName])
 
   const handleChange = (value) => {
     setState(draft => {

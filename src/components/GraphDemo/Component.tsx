@@ -43,45 +43,55 @@ const GraphDemo: React.FunctionComponent<IProps> = (props) => {
       loading: true,
     });
 
-    const result = await languageService({
-      script: 'match p=(n)-[*..1]-(m)  RETURN p LIMIT  50',
-      graphName: state.graphName,
-    });
+    // 先跳转到具体子图再执行查询
+    const { origin, pathname } = location
+    const newURL = `${origin}${pathname}?graphName=${state.graphName}`
+    // GI 中测试使用
+    // const newURL = `http://dev.alipay.net:8000/#/workspace/d72a7985-292f-4dc5-a9c9-c38f3e3639e5?nav=components&graphName=${state.graphName}`
+    location.href = newURL
 
-    setState({
-      ...state,
-      loading: false,
-      visible: false,
-    });
-
-    if (!result.success) {
-      // 执行查询失败
-      message.error(`执行查询失败: ${result.errorMessage}`);
-      return;
-    }
-    const { formatData } = result.data;
-    // 处理 formData，添加 data 字段
-    formatData.nodes.forEach(d => {
-      d.data = d.properties;
-    });
-
-    formatData.edges.forEach(d => {
-      d.data = d.properties;
-    });
-    const transformData = getTransformByTemplate(customStyleConfig, schemaData);
-
-    // 清空数据
-    updateContext(draft => {
-      if (transformData) {
-        draft.transform = transformData;
+    setTimeout(async () => {
+      const result = await languageService({
+        script: 'match p=(n)-[*..1]-(m)  RETURN p LIMIT  50',
+        graphName: state.graphName,
+      });
+  
+      setState({
+        ...state,
+        loading: false,
+        visible: false,
+      });
+  
+      if (!result.success) {
+        // 执行查询失败
+        message.error(`执行查询失败: ${result.errorMessage}`);
+        return;
       }
+      const { formatData } = result.data;
+      // 处理 formData，添加 data 字段
+      formatData.nodes.forEach(d => {
+        d.data = d.properties;
+      });
+  
+      formatData.edges.forEach(d => {
+        d.data = d.properties;
+      });
+      const transformData = getTransformByTemplate(customStyleConfig, schemaData);
+  
+      // 清空数据
+      updateContext(draft => {
+        if (transformData) {
+          draft.transform = transformData;
+        }
+  
+        const res = transformData(formatData);
+        // @ts-ignore
+        draft.data = res;
+        // @ts-ignore
+        draft.source = res;
+      });
+    }, 10)
 
-      const res = transformData(formatData);
-      // @ts-ignore
-      draft.data = res;
-      // @ts-ignore
-      draft.source = res;
-    });
   };
 
   const handleShow = (e) => {

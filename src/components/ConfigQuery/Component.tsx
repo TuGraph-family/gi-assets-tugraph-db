@@ -64,7 +64,7 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
   } = state;
 
   const queryGraphSchema = async () => {
-    if (!schemaService) {
+    if (!schemaService || !graphName) {
       return
     }
     const result = await schemaService(graphName)
@@ -86,7 +86,7 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
 
   useEffect(() => {
     queryGraphSchema()
-  }, [])
+  }, [graphName])
 
   const handleValueChange = async (changeValues, allValues) => {
     const { label, property } = allValues;

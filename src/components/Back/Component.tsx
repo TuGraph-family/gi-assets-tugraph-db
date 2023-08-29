@@ -1,6 +1,7 @@
 import { ArrowLeftOutlined, CaretDownOutlined } from '@ant-design/icons';
 import { Button, Select } from 'antd';
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { getQueryString } from '../utils'
 
 import './index.less';
@@ -21,7 +22,15 @@ const Back = () => {
       graphName: value
     })
     location.href = `/admin/j50e6v2vivk?graphName=${value}`
+    // GI 中测试使用
+    // location.href = `http://dev.alipay.net:8000/#/workspace/d72a7985-292f-4dc5-a9c9-c38f3e3639e5?nav=components&graphName=${value}`
   }
+
+  useEffect(() => {
+    if (graphName) {
+      handleSwitchGraph(graphName)
+    }
+  }, [graphName])
 
   return (
     <div className="gea-back">

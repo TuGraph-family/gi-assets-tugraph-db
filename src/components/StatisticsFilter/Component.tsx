@@ -33,7 +33,7 @@ const StatisticsFilter: React.FC<StatisticsFilterProps> = ({ histogramOptions, s
   const graphName = getQueryString('graphName')
 
   const queryGraphSchema = async () => {
-    if (!schemaService) {
+    if (!schemaService || !graphName) {
       return;
     }
     const result = await schemaService(graphName);
@@ -43,7 +43,7 @@ const StatisticsFilter: React.FC<StatisticsFilterProps> = ({ histogramOptions, s
 
   useEffect(() => {
     queryGraphSchema();
-  }, []);
+  }, [graphName]);
 
   const addPanel = (defaultKey?: string, filterProps = {}) => {
     const filterCriteria = {
