@@ -3,7 +3,7 @@ const info = {
   id: 'TuGraphShortcutKeys',
   name: '图分析快捷键',
   desc: 'TuGraph图分析快捷键说明',
-  icon: 'icon-shortcut',
+  icon: 'icon-kuaijiejian',
   cover: 'http://xxxx.jpg',
   category: 'canvas-interaction',
   type: Info.type.COMPONENT_ACTION,
