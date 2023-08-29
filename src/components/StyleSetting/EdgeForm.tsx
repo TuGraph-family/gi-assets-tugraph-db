@@ -1,4 +1,4 @@
-import ColorInput from './ColorInput';
+import ColorInput from './ColorInputRadio';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Collapse, Form, FormInstance, FormProps, Input, Radio, Select } from 'antd';
 import React, { useEffect } from 'react';
@@ -57,15 +57,15 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
     });
   };
 
-  const handleColorChange = current => {
+  const handleColorChange = e => {
     setState(draft => {
       draft.color = {
         ...color,
-        basic: current,
+        basic: e.target.value,
       };
     });
     form.setFieldsValue({
-      color: current,
+      color: e.target.value,
     });
   };
 
@@ -211,7 +211,7 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
 
       {state.labelText === 'property' && (
         <Form.Item name="displayLabel" label="文本对应属性">
-          <Select placeholder="请选择属性" showSearch allowClear mode="multiple" disabled={!currentSchema.properties}>
+          <Select placeholder={currentSchema.properties ? "请选择属性" : '请先选择边类型'} showSearch allowClear mode="multiple" disabled={!currentSchema.properties}>
             {propertyOptions}
           </Select>
         </Form.Item>

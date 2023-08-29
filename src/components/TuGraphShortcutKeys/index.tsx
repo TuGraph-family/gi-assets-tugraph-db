@@ -1,6 +1,6 @@
 import Component from './Component';
+import info from './info';
 import registerMeta from './registerMeta';
-import info from './info'
 
 export default {
   info,

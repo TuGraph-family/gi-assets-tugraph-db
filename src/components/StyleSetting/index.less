@@ -9,13 +9,14 @@
   .ant-segmented {
     padding: 4px;
     background: #eaeff9;
+    width: 100%;
   }
   .ant-segmented:not(.ant-segmented-disabled):hover,
   .ant-segmented:not(.ant-segmented-disabled):focus {
     background: #eaeff9;
   }
   .ant-segmented-item {
-    width: 130px;
+    width: 100%;
   }
 }
 
@@ -31,6 +32,7 @@
     width: 25px;
     height: 25px;
     margin-right: 8px;
+    margin-bottom: 4px;
     background: #f5f8fc;
     border-radius: 2px;
     .ant-radio {
@@ -68,10 +70,21 @@
     line-height: 32px;
     background: #d9d9d9;
   }
+  .site-collapse-custom-panel {
+    .ant-collapse-header {
+      padding: 0px !important;
+    }
+    .ant-collapse-content > .ant-collapse-content-box {
+      padding: 4px;
+    }
+  }
   .btn-group {
     position: relative;
     margin-top: 16px;
     text-align: right;
+    .ant-btn {
+      width: 80px;
+    }
   }
   .choose-shape-type {
     .ant-radio-button-wrapper {
@@ -108,6 +121,7 @@
     color: #b3b3b9;
     line-height: 17px;
     cursor: pointer;
+    margin-top: -2px;
   }
 }
 .custom-ant-radio-wrapper {
