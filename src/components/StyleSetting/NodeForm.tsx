@@ -250,7 +250,7 @@ export const NodeForm: React.FC<NodeFormProps> = ({
 
       {state.labelText === 'property' && (
         <Form.Item name="displayLabel" label="文本对应属性">
-          <Select placeholder="请选择属性" showSearch allowClear mode="multiple" disabled={!currentSchema.properties}>
+          <Select placeholder={currentSchema.properties ? "请选择属性" : '请先选择点类型'} showSearch allowClear mode="multiple" disabled={!currentSchema.properties}>
             {propertyOptions}
           </Select>
         </Form.Item>
