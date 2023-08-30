@@ -28,7 +28,7 @@ const LayoutSwitchTool: React.FC<LayoutSwitchProps> = props => {
       },
       {
         id: 'circular',
-        src: 'https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*ezH8SaMfW64AAAAAAAAAAAAADgOBAQ/original',
+        src: 'https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*yJxxRpfky0cAAAAAAAAAAAAADgOBAQ/original',
         name: '圆形布局',
       },
       {
@@ -105,7 +105,7 @@ const LayoutSwitchTool: React.FC<LayoutSwitchProps> = props => {
           })}
         </div>
       }
-      placement="bottomRight"
+      placement="bottom"
     >
       <GIAComponent GIAC={GIAC} className='layout-switch-btn'/>
     </Popover>

@@ -136,6 +136,7 @@ const AdvanceNeighborsQueryConfig: React.FC<AdvanceNeighborsQueryProps> = ({ sch
       onCancel={close}
       okText='确定'
       cancelText='取消'
+      bodyStyle={{ padding: '24px 16px', background: '#FBFBFB' }}
       onOk={handleSubmit}>
         <div className='neighbors-attribute-filter-container' >
           <Form form={form} layout="vertical" initialValues={initFormValue}>

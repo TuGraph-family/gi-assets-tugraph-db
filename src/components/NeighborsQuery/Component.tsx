@@ -1,10 +1,10 @@
 import { useContext, utils } from '@antv/gi-sdk';
-import { useImmer } from 'use-immer'
+import { useImmer } from 'use-immer';
 import { Menu, message } from 'antd';
 import React, { useEffect, useRef } from 'react';
 import { getTransformByTemplate } from '../StyleSetting/utils';
-import AdvanceNeighborsQueryConfig from './AdvanceNeighborsConfig'
-import { getQueryString } from '../utils'
+import AdvanceNeighborsQueryConfig from './AdvanceNeighborsConfig';
+import { getQueryString } from '../utils';
 
 const { SubMenu } = Menu;
 type ControlledValues = {
@@ -57,33 +57,35 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
     ids: string[];
   }>({
     visible: false,
-    ids: []
-  })
+    ids: [],
+  });
 
   const { data, updateContext, updateHistory, graph, schemaData, services } = useContext();
 
-  const customStyleConfig = localStorage.getItem('CUSTOM_STYLE_CONFIG') ? JSON.parse(localStorage.getItem('CUSTOM_STYLE_CONFIG') as string) : {}
+  const customStyleConfig = localStorage.getItem('CUSTOM_STYLE_CONFIG')
+    ? JSON.parse(localStorage.getItem('CUSTOM_STYLE_CONFIG') as string)
+    : {};
 
   const service = utils.getService(services, serviceId);
   const languageService = utils.getService(services, languageServiceId);
 
-  const graphName = getQueryString('graphName')
-  
+  const graphName = getQueryString('graphName');
+
   const { item: targetNode } = contextmenu;
   if (!service || targetNode?.destroyed || targetNode?.getType?.() !== 'node') {
     return null;
   }
 
-  const handleClick = async (sep) => {
+  const handleClick = async sep => {
     const { ids, nodes, expandStartId } = getContextMenuParams(graph, contextmenu);
     if (sep === 'custom-query') {
       // 展示高级配置
       setState(draft => {
-        draft.visible = true
-        draft.ids = ids
-      })
+        draft.visible = true;
+        draft.ids = ids;
+      });
       contextmenu.onClose();
-      return
+      return;
     }
 
     updateContext(draft => {
@@ -103,37 +105,32 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
     };
     if (!propNodes) {
       nodes = ids.map(id => graph.findById(id)?.getModel()).filter(Boolean);
-      if (!nodes?.length)
-        handleUpateHistory(
-          historyProps,
-          false,
-          '当前画布中未找到指定的扩散起始节点',
-        );
+      if (!nodes?.length) handleUpateHistory(historyProps, false, '当前画布中未找到指定的扩散起始节点');
     }
     try {
       const result = await service({
         ids,
         graphName,
         sep,
-        limit: 200
+        limit: 200,
       });
 
       if (!result.success) {
         // 执行查询失败
-        message.error(`执行查询失败: ${result.errorMessage}`)
-        return
+        message.error(`执行查询失败: ${result.errorMessage}`);
+        return;
       }
-  
-      const { formatData } = result.data
-  
+
+      const { formatData } = result.data;
+
       // 处理 formData，添加 data 字段
       formatData.nodes.forEach(d => {
-        d.data = d.properties
-      })
-  
+        d.data = d.properties;
+      });
+
       formatData.edges.forEach(d => {
-        d.data = d.properties
-      })
+        d.data = d.properties;
+      });
 
       const newData = utils.handleExpand(data, formatData);
       const expandIds = result.nodes?.map(n => n.id) || [];
@@ -172,16 +169,11 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
     };
     if (!propNodes) {
       nodes = ids.map(id => graph.findById(id)?.getModel()).filter(Boolean);
-      if (!nodes?.length)
-        handleUpateHistory(
-          historyProps,
-          false,
-          '当前画布中未找到指定的扩散起始节点',
-        );
+      if (!nodes?.length) handleUpateHistory(historyProps, false, '当前画布中未找到指定的扩散起始节点');
     }
 
     if (!languageService) {
-      return
+      return;
     }
 
     try {
@@ -192,20 +184,20 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
 
       if (!result.success) {
         // 执行查询失败
-        message.error(`执行查询失败: ${result.errorMessage}`)
-        return
+        message.error(`执行查询失败: ${result.errorMessage}`);
+        return;
       }
-  
-      const { formatData } = result.data
-  
+
+      const { formatData } = result.data;
+
       // 处理 formData，添加 data 字段
       formatData.nodes.forEach(d => {
-        d.data = d.properties
-      })
-  
+        d.data = d.properties;
+      });
+
       formatData.edges.forEach(d => {
-        d.data = d.properties
-      })
+        d.data = d.properties;
+      });
 
       const newData = utils.handleExpand(data, formatData);
       const expandIds = result.nodes?.map(n => n.id) || [];
@@ -221,7 +213,7 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
         // @ts-ignore
         draft.source = res;
         draft.isLoading = false;
-        draft
+        draft;
         if (draft.layout.type === 'preset') {
           //兼容从save模式
           const { props: layoutProps } = draft.config.layout || { props: { type: 'graphin-force' } };
@@ -230,11 +222,10 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
       });
       handleUpateHistory(historyProps);
       // 关闭高级配置框
-      handleCloseConfig()
+      handleCloseConfig();
     } catch (error) {
       handleUpateHistory(historyProps, false, String(error));
     }
-
   };
 
   /**
@@ -294,21 +285,21 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
   const menus = [
     {
       label: '一度查询',
-      key: '1'
+      key: '1',
     },
     {
       label: '二度查询',
-      key: '2'
+      key: '2',
     },
     {
       label: '三度查询',
-      key: '3'
+      key: '3',
     },
     {
       label: '自定义查询',
-      key: 'custom-query'
+      key: 'custom-query',
     },
-  ]
+  ];
 
   const menuItem = menus.map(_item => {
     const { label, key } = _item;
@@ -322,9 +313,9 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
 
   const handleCloseConfig = () => {
     setState(draft => {
-      draft.visible = false
-    })
-  }
+      draft.visible = false;
+    });
+  };
 
   return (
     <>
@@ -332,19 +323,19 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
         key="expand"
         // @ts-ignore
         eventKey="expand"
-        title='扩展查询'
+        title="扩展查询"
       >
         {menuItem}
       </SubMenu>
-      {
-        state.visible &&
-        <AdvanceNeighborsQueryConfig 
-          schemaData={schemaData} 
-          visible={state.visible} 
-          close={handleCloseConfig} 
+      {state.visible && (
+        <AdvanceNeighborsQueryConfig
+          schemaData={schemaData}
+          visible={state.visible}
+          close={handleCloseConfig}
           expandNodeIds={state.ids}
-          languageService={advanceExpandNodes} />
-      }
+          languageService={advanceExpandNodes}
+        />
+      )}
     </>
   );
 };

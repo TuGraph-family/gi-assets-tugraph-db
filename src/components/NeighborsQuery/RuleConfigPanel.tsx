@@ -1,6 +1,6 @@
 import { Form, Input, Select, Collapse, Button } from 'antd';
 import React, { useState } from 'react';
-import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import { DeleteOutlined, PlusOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { getOperatorList } from '../StyleSetting/Constant';
 import './index.less';
 
@@ -59,6 +59,7 @@ const RuleConfigPanel: React.FC<props> = ({ id, handleDelete, form, schemaList }
           marginBottom: 16,
           backgroundImage: 'linear-gradient(178deg, rgba(245,248,255,0.38) 11%, rgba(244,247,255,0.55) 96%)',
         }}
+        expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
         bordered={false}
       >
         <Panel
@@ -66,11 +67,15 @@ const RuleConfigPanel: React.FC<props> = ({ id, handleDelete, form, schemaList }
             <span>
               {label ? (
                 <span>
-                  <img src={state.currentSchema.labelType === 'node' ? typeImg.person : typeImg.amount} alt="" className="img" />
+                  <img
+                    src={state.currentSchema.labelType === 'node' ? typeImg.person : typeImg.amount}
+                    alt=""
+                    className="img"
+                  />
                   {label}
                 </span>
               ) : (
-                '未选择'
+                <b>未选择</b>
               )}
             </span>
           }
@@ -93,7 +98,7 @@ const RuleConfigPanel: React.FC<props> = ({ id, handleDelete, form, schemaList }
               })}
             </Select>
           </Form.Item>
-          <p className="conditionIcon">属性条件</p>
+          <p className="conditionIcon" style={{ color: '#363740' }}>属性条件</p>
           <Form.List name={`rules-${id}`}>
             {(fields, { add, remove }) => (
               <>
@@ -104,7 +109,7 @@ const RuleConfigPanel: React.FC<props> = ({ id, handleDelete, form, schemaList }
                         <Select
                           placeholder="请选择"
                           showSearch
-                           // @ts-ignore
+                          // @ts-ignore
                           filterOption={(input, option) => (option?.label ?? '').includes(input)}
                           style={{ width: '40%' }}
                           onChange={handlePropertyChange}
@@ -118,7 +123,11 @@ const RuleConfigPanel: React.FC<props> = ({ id, handleDelete, form, schemaList }
                           })}
                         </Select>
                       </Form.Item>
-                      <Form.Item noStyle name={[name, 'operator']} rules={[{ required: true, message: '请选择查询逻辑' }]}>
+                      <Form.Item
+                        noStyle
+                        name={[name, 'operator']}
+                        rules={[{ required: true, message: '请选择查询逻辑' }]}
+                      >
                         <Select placeholder="请选择" style={{ width: '30%' }} allowClear>
                           {getOperatorList(state.currentProperty?.type).map(logic => {
                             return (
@@ -137,7 +146,7 @@ const RuleConfigPanel: React.FC<props> = ({ id, handleDelete, form, schemaList }
                     <DeleteOutlined style={{ marginLeft: 8 }} onClick={() => remove(name)} />
                   </div>
                 ))}
-                <Form.Item>
+                <Form.Item style={{ marginBottom: 8 }}>
                   <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
                     添加属性条件
                   </Button>
@@ -151,4 +160,4 @@ const RuleConfigPanel: React.FC<props> = ({ id, handleDelete, form, schemaList }
   );
 };
 
-export default RuleConfigPanel
+export default RuleConfigPanel;

@@ -3,7 +3,7 @@ const info = {
   id: 'GraphDemo',
   name: 'Graph Demo 示例',
   desc: '默认提供的示例',
-  icon: 'icon-gi-node-important',
+  icon: 'icon-xiaodengpao',
   cover: 'http://xxxx.jpg',
   category: 'canvas-interaction',
   type: Info.type.COMPONENT_ACTION,
