@@ -313,11 +313,10 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
               </OptGroup>
             </Select>
           </Form.Item>
-          <p className="conditionIcon">选择属性</p>
           <Space style={{ marginBottom: 8, width: '100%' }} align="baseline" className='space-statistic-panel'>
-            <Form.Item name='name' rules={[{ required: true, message: '请选择属性' }]}>
+            <Form.Item name='name' label='选择属性' rules={[{ required: true, message: '请选择属性' }]}>
               <Select
-                style={{ width: enableChangeChartType ? '88%' : '100%' }}
+                style={{ width: '100%' }}
                 onChange={onSelectChange}
                 className="tugraph-filter-panel-prop-select"
                 placeholder="选择元素属性"

@@ -1,11 +1,12 @@
 import { useContext, utils } from "@antv/gi-sdk";
-import { Button, Checkbox, Form, Input, Select, InputNumber, Space, Tag, message } from "antd";
+import { Button, Checkbox, Form, Input, Select, InputNumber, Space, Tag, message, Tooltip } from "antd";
 import React, { useEffect } from "react";
 import { useImmer } from "use-immer";
 import { getTransformByTemplate } from "../StyleSetting/utils";
 import { getOperatorList, operatorMapping } from '../StyleSetting/Constant'
 import { getQueryString } from '../utils'
 import "./index.less";
+import { typeImg } from "../StatisticsFilter/constants";
 
 const { Option } = Select;
 const { CheckableTag } = Tag;
@@ -127,7 +128,7 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
 
   const handleExecQuery = async () => {
     const values = await form.validateFields();
-    const { label, property, value, logic, limit, hasClearData } = values;
+    const { label, property, value, logic, limit = 10, hasClearData } = values;
     setState((draft) => {
       draft.btnLoading = true;
     });
@@ -276,6 +277,10 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
     }
   };
 
+  const handleResetForm = () => {
+    form.resetFields()
+  }
+
   return (
     <div className='quickQueryContainer'>
       <Form
@@ -304,6 +309,7 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
                     key={schema.labelName}
                     value={schema.labelName}
                   >
+                    <img src={typeImg['person']} alt="" className="img" />
                     {schema.labelName}
                   </Option>
                 );
@@ -335,7 +341,13 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
                   {getOperatorList(currentProperty.type).map((logic) => {
                     return (
                       <Option value={logic.key} key={logic.key}>
-                        {logic.value}
+                        {
+                            logic.text
+                            ?
+                            <Tooltip title={logic.text}>{logic.value}</Tooltip>
+                            :
+                            logic.value
+                          }
                       </Option>
                     );
                   })}
@@ -362,6 +374,7 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
                 key={tag}
                 checked={state.selectTag === tag}
                 onChange={(checked) => handleChange(tag, checked)}
+                style={{ backgroundColor: state.selectTag === tag ? '#3056E3' : '#E6EBF6'  }}
               >
                 {tag}
               </CheckableTag>
@@ -373,13 +386,19 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
         </div>
       </Form>
       <div className='buttonContainer'>
+       <Button
+          className='queryButton'
+          onClick={handleResetForm}
+        >
+          重置
+        </Button>
         <Button
           loading={btnLoading}
           className='queryButton'
           type='primary'
           onClick={handleExecQuery}
         >
-          执行查询
+          查询
         </Button>
       </div>
     </div>

@@ -125,16 +125,22 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "220px", langua
       draft.languageType = value;
     });
   };
+
+  const handleResetCypher = () => {
+    setState(draft => {
+      draft.editorValue = ''
+    })
+  }
   return (
     <div className='LanguageQueryPanel'>
       <div className={"contentContainer"}>
-        <div style={{ marginBottom: 16 }}>
+        <div style={{ marginBottom: 24 }}>
           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
             <span>查询语言</span>
             <a
               onClick={() => {
                 window.open(
-                  "https://yuque.antfin-inc.com/guppiq/ezloha/pgrayyum1dwnpiga?singleDoc#"
+                  "https://tugraph-db.readthedocs.io/zh_CN/latest/5.developer-manual/6.interface/1.query/index.html"
                 );
               }}
             >
@@ -170,6 +176,13 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "220px", langua
 
       </div>
       <div className={"buttonContainer"}>
+        {/* <Button
+          className={"queryButton"}
+          disabled={!editorValue}
+          onClick={handleResetCypher}
+        >
+          重置
+        </Button> */}
         <Button
           className={"queryButton"}
           loading={btnLoading}
@@ -177,7 +190,7 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "220px", langua
           disabled={!editorValue}
           onClick={handleClickQuery}
         >
-          执行查询
+          查询
         </Button>
       </div>
     </div>

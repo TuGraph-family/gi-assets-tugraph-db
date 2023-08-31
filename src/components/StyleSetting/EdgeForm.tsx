@@ -1,10 +1,11 @@
 import ColorInput from './ColorInputRadio';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Collapse, Form, FormInstance, FormProps, Input, Radio, Select } from 'antd';
+import { Button, Collapse, Form, FormInstance, FormProps, Input, Radio, Select, Tooltip } from 'antd';
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
 import { DefaultColor, getOperatorList } from './Constant';
 import IntegerStep from './IntegerStep';
+import { typeImg } from '../StatisticsFilter/constants';
 
 interface EdgeFormProps extends FormProps {
   form: FormInstance<any>;
@@ -182,6 +183,7 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
           {schemaData.edges?.map((edge: any) => {
             return (
               <Option value={edge.labelName} key={edge.labelName}>
+                <img src={typeImg['amount']} alt="" className="img" />
                 {edge.labelName}
               </Option>
             );
@@ -262,7 +264,13 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
                         ).map(op => {
                           return (
                             <Option value={op.key} key={op.key}>
-                              {op.value}
+                               {
+                                  op.text
+                                  ?
+                                  <Tooltip title={op.text}>{op.value}</Tooltip>
+                                  :
+                                  op.value
+                                }
                             </Option>
                           );
                         })}

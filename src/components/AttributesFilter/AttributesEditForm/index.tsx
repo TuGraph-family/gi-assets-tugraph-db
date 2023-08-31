@@ -1,4 +1,4 @@
-import { Form, Input, Select, Collapse, Button } from 'antd';
+import { Form, Input, Select, Collapse, Button, Tooltip } from 'antd';
 import React, { useState } from 'react';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { getOperatorList } from '../../StyleSetting/Constant';
@@ -135,7 +135,13 @@ export const AttributesEditForm: React.FC<props> = ({ id, handleDelete, form, sc
                           {getOperatorList(state.currentProperty?.type).map(logic => {
                             return (
                               <Option value={logic.key} key={logic.key}>
-                                {logic.value}
+                                 {
+                                    logic.text
+                                    ?
+                                    <Tooltip title={logic.text}>{logic.value}</Tooltip>
+                                    :
+                                    logic.value
+                                  }
                               </Option>
                             );
                           })}
@@ -149,7 +155,7 @@ export const AttributesEditForm: React.FC<props> = ({ id, handleDelete, form, sc
                     <DeleteOutlined style={{ marginLeft: 8 }} onClick={() => remove(name)} />
                   </div>
                 ))}
-                <Form.Item>
+                <Form.Item style={{ marginBottom: 16 }}>
                   <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
                     添加属性条件
                   </Button>

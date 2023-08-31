@@ -1,11 +1,12 @@
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Collapse, Form, FormInstance, FormProps, Input, Radio, Select } from 'antd';
+import { Button, Collapse, Form, FormInstance, FormProps, Input, Radio, Select, Tooltip } from 'antd';
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
 import CustomIcon from './CustomIcon';
 import ColorInput from './ColorInputRadio';
 import { DefaultColor, getOperatorList, ICONS } from './Constant';
 import IntegerStep from './IntegerStep';
+import { typeImg } from '../StatisticsFilter/constants';
 
 interface NodeFormProps extends FormProps {
   form: FormInstance<any>;
@@ -190,6 +191,7 @@ export const NodeForm: React.FC<NodeFormProps> = ({
           {schemaData.nodes?.map((node: any) => {
             return (
               <Option value={node.labelName} key={node.labelName}>
+                <img src={typeImg['person']} alt="" className="img" />
                 {node.labelName}
               </Option>
             );
@@ -297,7 +299,13 @@ export const NodeForm: React.FC<NodeFormProps> = ({
                           ).map(op => {
                             return (
                               <Option value={op.key} key={op.key}>
-                                {op.value}
+                                {
+                                  op.text
+                                  ?
+                                  <Tooltip title={op.text}>{op.value}</Tooltip>
+                                  :
+                                  op.value
+                                }
                               </Option>
                             );
                           })}

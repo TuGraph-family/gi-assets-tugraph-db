@@ -67,7 +67,7 @@ const StyleSetting: React.FunctionComponent<IStyleSetting> = (props) => {
   }
 
   return (
-    <div className="style-setting-container" style={{ padding: 16 }}>
+    <div className="style-setting-container">
       <h4>外观样式</h4>
       <Segmented 
         value={state.styleType} 

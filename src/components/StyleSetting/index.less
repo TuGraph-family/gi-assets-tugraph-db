@@ -1,5 +1,7 @@
 .style-setting-container {
-  padding: 16px;
+  position: relative;
+  padding: 8px;
+  height: calc(100vh - 150px);
   .container-element {
     width: 50%;
     text-align: center;
@@ -20,93 +22,95 @@
   }
 }
 
-.nodeConfigurationContainer,
-.edgeConfigurationContainer {
-  position: relative;
-  height: calc(100vh - 260px);
-  margin-top: 16px;
-  padding: 8px;
-  overflow: auto;
-  background: #f5f7fb;
-  .custom-ant-radio-wrapper {
-    width: 25px;
-    height: 25px;
-    margin-right: 8px;
-    margin-bottom: 4px;
-    background: #f5f8fc;
-    border-radius: 2px;
-    .ant-radio {
-      visibility: hidden;
+.style-setting-element-container {
+  .nodeConfigurationContainer,
+  .edgeConfigurationContainer {
+    position: relative;
+    height: calc(100vh - 300px);
+    margin-top: 16px;
+    padding: 8px;
+    overflow: auto;
+    background: #f5f7fb;
+    .custom-ant-radio-wrapper {
+      width: 25px;
+      height: 25px;
+      margin-right: 8px;
+      margin-bottom: 4px;
+      background: #f5f8fc;
+      border-radius: 2px;
+      .ant-radio {
+        visibility: hidden;
+      }
     }
-  }
-  .custom-ant-radio-wrapper.ant-radio-wrapper-checked {
-    outline: 8px auto #fff;
-    box-shadow: 2px 2px 15px 2px #bfbfbf;
-  }
-  .ant-radio-button-wrapper:not(:first-child)::before {
-    width: 0px;
-  }
-  .ant-slider-rail {
-    background-color: #d9d9d9;
-  }
-  .colorItem {
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    margin-right: 8px;
-    padding: 1px;
-  }
-  .colorPickerContainer {
-    position: absolute;
-    right: 8px;
-    bottom: 32px;
-    z-index: 2;
-    background: #fff;
-  }
-  .preElement {
-    display: inline-block;
-    height: 32px;
-    padding: 0 8px;
-    line-height: 32px;
-    background: #d9d9d9;
-  }
-  .site-collapse-custom-panel {
-    .ant-collapse-header {
-      padding: 0px !important;
+    .custom-ant-radio-wrapper.ant-radio-wrapper-checked {
+      outline: 8px auto #fff;
+      box-shadow: 2px 2px 15px 2px #bfbfbf;
     }
-    .ant-collapse-content > .ant-collapse-content-box {
-      padding: 4px;
+    .ant-radio-button-wrapper:not(:first-child)::before {
+      width: 0px;
+    }
+    .ant-slider-rail {
+      background-color: #d9d9d9;
+    }
+    .colorItem {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+      padding: 1px;
+    }
+    .colorPickerContainer {
+      position: absolute;
+      right: 8px;
+      bottom: 32px;
+      z-index: 2;
+      background: #fff;
+    }
+    .preElement {
+      display: inline-block;
+      height: 32px;
+      padding: 0 8px;
+      line-height: 32px;
+      background: #d9d9d9;
+    }
+    .site-collapse-custom-panel {
+      .ant-collapse-header {
+        padding: 0px !important;
+      }
+      .ant-collapse-content > .ant-collapse-content-box {
+        padding: 4px;
+      }
+    }
+    .choose-shape-type {
+      .ant-radio-button-wrapper {
+        width: 32px;
+        padding-left: 0px;
+        color: #fafafa !important;
+        border-radius: 50% !important;
+      }
+    }
+    .color {
+      display: flex;
+    }
+  
+    .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+      color: #96969b;
+      background: rgb(223 227 239);
+      border-color: rgb(223 227 239);
+    }
+    .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover {
+      color: #96969b;
+      background: rgb(223 227 239);
+      border-color: rgb(223 227 239);
     }
   }
   .btn-group {
-    position: relative;
-    margin-top: 16px;
-    text-align: right;
+    position: absolute;
+    bottom: 16px;
+    right: 8px;
     .ant-btn {
       width: 80px;
     }
-  }
-  .choose-shape-type {
-    .ant-radio-button-wrapper {
-      width: 32px;
-      padding-left: 0px;
-      color: #fafafa !important;
-      border-radius: 50% !important;
-    }
-  }
-  .color {
-    display: flex;
-  }
-
-  .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
-    color: #96969b;
-    background: rgb(223 227 239);
-    border-color: rgb(223 227 239);
-  }
-  .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover {
-    color: #96969b;
-    background: rgb(223 227 239);
-    border-color: rgb(223 227 239);
   }
 }
 

@@ -29,7 +29,6 @@ const SimpleQuery = () => {
   } = state;
 
   const handleTypeChange = (value) => {
-    console.log(value)
     setState(draft => {
       draft.schemaType = value
     })
@@ -171,9 +170,10 @@ const SimpleQuery = () => {
                 onSearch={handleSearch}
                 onChange={handleChange}
                 notFoundContent={null}
+                optionLabelProp='label'
                 options={[{
                   label: <Row>
-                    <Col style={{textAlign: 'center' }} span={6}>节点名称</Col>
+                    <Col style={{textAlign: 'center' }} span={6}>{state.schemaType === 'node' ? '节点名称' : '边名称'}</Col>
                     <Col style={{textAlign: 'center' }} span={8}>属性名称</Col>
                     <Col style={{textAlign: 'center' }} span={10}>属性值</Col>
                   </Row>,

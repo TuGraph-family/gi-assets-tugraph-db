@@ -147,48 +147,50 @@ const StatisticsFilter: React.FC<StatisticsFilterProps> = ({ histogramOptions, s
 
   return (
     <div className='statictics-filter-container'>
-      <Form form={form} layout="vertical">
-        {Object.values(filterdata).map((filterCriteria, index) => {
-          return (
-            <FilterSelection
-              filterCriteria={filterCriteria}
-              updateFilterCriteria={updateFilterCriteria}
-              removeFilterCriteria={handleDelete}
-              schemaList={schemaList}
-            />
-          );
-        })}
-        <Button
-          block
-          style={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: '#6A6B71',
-            height: 94,
-            backgroundImage: 'linear-gradient(174deg, rgba(245,248,255,0.38) 11%, rgba(244,247,255,0.55) 96%)',
-            border: 'none',
-          }}
-          onClick={() => {
-            addPanel();
-          }}
-        >
-          <img
-            src="https://mdn.alipayobjects.com/huamei_xn3ctq/afts/img/A*fHVRTq8rqlMAAAAAAAAAAAAADo6BAQ/original"
-            alt=""
-          />
-          <span>添加筛选组</span>
-        </Button>
-        <div className="button">
+      <div className='statictics-filter-container-form'>
+        <Form form={form} layout="vertical">
+          {Object.values(filterdata).map((filterCriteria, index) => {
+            return (
+              <FilterSelection
+                filterCriteria={filterCriteria}
+                updateFilterCriteria={updateFilterCriteria}
+                removeFilterCriteria={handleDelete}
+                schemaList={schemaList}
+              />
+            );
+          })}
           <Button
-            onClick={handleReset}
+            block
+            style={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#6A6B71',
+              height: 94,
+              backgroundImage: 'linear-gradient(174deg, rgba(245,248,255,0.38) 11%, rgba(244,247,255,0.55) 96%)',
+              border: 'none',
+            }}
+            onClick={() => {
+              addPanel();
+            }}
           >
-            重置
+            <img
+              src="https://mdn.alipayobjects.com/huamei_xn3ctq/afts/img/A*fHVRTq8rqlMAAAAAAAAAAAAADo6BAQ/original"
+              alt=""
+            />
+            <span>添加筛选组</span>
           </Button>
-        </div>
-      </Form>
+        </Form>
+      </div>
+      <div className="statictics-button-group">
+        <Button
+          onClick={handleReset}
+        >
+          重置
+        </Button>
+      </div>
     </div>
   );
 };
