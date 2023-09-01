@@ -1,8 +1,7 @@
-import { useContext, utils, extra } from '@antv/gi-sdk';
+import { extra } from '@antv/gi-sdk';
 import type { IGIAC } from '@antv/gi-sdk';
-import { Modal, message, Button, Checkbox } from 'antd';
+import { Modal, Button, Checkbox } from 'antd';
 import React, { useState } from 'react';
-import { getTransformByTemplate } from '../StyleSetting/utils';
 import './index.less';
 
 const { GIAComponent } = extra;
@@ -13,12 +12,6 @@ export interface IProps {
 const GraphDemo: React.FunctionComponent<IProps> = (props) => {
   const { GIAC } = props;
 
-  const { updateContext, services, schemaData } = useContext();
-  const customStyleConfig = localStorage.getItem('CUSTOM_STYLE_CONFIG')
-    ? JSON.parse(localStorage.getItem('CUSTOM_STYLE_CONFIG') as string)
-    : {};
-
-  const languageService: any = utils.getService(services, 'TuGraph-DB/languageQueryService');
   const isShow = GIAC.visible || !localStorage.getItem('TuGraph_NO_SHOW');
   const [state, setState] = useState({
     visible: isShow ? true : false,
@@ -33,65 +26,18 @@ const GraphDemo: React.FunctionComponent<IProps> = (props) => {
   };
 
   const queryDataByDefaultGraphName = async () => {
-    if (!languageService) {
-      message.error('没有找到TuGraph-DB/languageQueryService服务，请先注册该服务');
-      return;
-    }
-
     setState({
       ...state,
-      loading: true,
+      loading: false,
+      visible: false,
     });
 
     // 先跳转到具体子图再执行查询
     const { origin, pathname } = location
-    const newURL = `${origin}${pathname}?graphName=${state.graphName}`
+    const newURL = `${origin}${pathname}?graphName=${state.graphName}&demoGraphName=${state.graphName}`
     // GI 中测试使用
-    // const newURL = `http://dev.alipay.net:8000/#/workspace/d72a7985-292f-4dc5-a9c9-c38f3e3639e5?nav=components&graphName=${state.graphName}`
+    // const newURL = `http://dev.alipay.net:8000/#/workspace/d72a7985-292f-4dc5-a9c9-c38f3e3639e5?nav=components&graphName=${state.graphName}&demoGraphName=${state.graphName}`
     location.href = newURL
-
-    setTimeout(async () => {
-      const result = await languageService({
-        script: 'match p=(n)-[*..1]-(m)  RETURN p LIMIT  50',
-        graphName: state.graphName,
-      });
-  
-      setState({
-        ...state,
-        loading: false,
-        visible: false,
-      });
-  
-      if (!result.success) {
-        // 执行查询失败
-        message.error(`执行查询失败: ${result.errorMessage}`);
-        return;
-      }
-      const { formatData } = result.data;
-      // 处理 formData，添加 data 字段
-      formatData.nodes.forEach(d => {
-        d.data = d.properties;
-      });
-  
-      formatData.edges.forEach(d => {
-        d.data = d.properties;
-      });
-      const transformData = getTransformByTemplate(customStyleConfig, schemaData);
-  
-      // 清空数据
-      updateContext(draft => {
-        if (transformData) {
-          draft.transform = transformData;
-        }
-  
-        const res = transformData(formatData);
-        // @ts-ignore
-        draft.data = res;
-        // @ts-ignore
-        draft.source = res;
-      });
-    }, 10)
-
   };
 
   const handleShow = (e) => {

@@ -2,7 +2,6 @@ import { ArrowLeftOutlined, CaretDownOutlined } from '@ant-design/icons';
 import { Button, Select } from 'antd';
 import React from 'react';
 import { getQueryString } from '../utils'
-
 import './index.less';
 
 const Back = () => {

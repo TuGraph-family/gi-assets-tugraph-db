@@ -48,7 +48,7 @@ const LayoutSwitchTool: React.FC<LayoutSwitchProps> = props => {
       // },
       {
         id: 'grid',
-        src: 'https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*w_oiR5W9BBcAAAAAAAAAAAAADgOBAQ/original',
+        src: 'https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*floUSocpYIAAAAAAAAAAAAAADgOBAQ/original',
         name: '网格布局',
       },
     ],

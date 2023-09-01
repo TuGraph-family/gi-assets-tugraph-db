@@ -1,8 +1,10 @@
-import { useContext } from "@antv/gi-sdk";
-import { Row, Col, Form, Input, Select, Badge, Tag, Table } from "antd";
-import React from "react";
+import { useContext, utils } from "@antv/gi-sdk";
+import { Row, Col, Form, Input, Select, Badge, Tag, message } from "antd";
+import React, { useEffect } from "react";
 import { SearchOutlined } from '@ant-design/icons';
 import { useImmer } from "use-immer";
+import { getQueryString } from '../utils'
+import { getTransformByTemplate } from '../StyleSetting/utils'
 import "./index.less";
 
 const { Option } = Select;
@@ -10,9 +12,14 @@ const { Option } = Select;
 const SimpleQuery = () => {
   const [form] = Form.useForm();
 
-  const {
-    graph,
-  } = useContext();
+  const demoGraphName = getQueryString('demoGraphName')
+
+  const { updateContext, services, schemaData, graph } = useContext();
+  const languageService: any = utils.getService(services, 'TuGraph-DB/languageQueryService');
+
+  const customStyleConfig = localStorage.getItem('CUSTOM_STYLE_CONFIG')
+    ? JSON.parse(localStorage.getItem('CUSTOM_STYLE_CONFIG') as string)
+    : {};
 
   const getDefaultRow = (type) => {
     return <Row>
@@ -37,6 +44,48 @@ const SimpleQuery = () => {
   const {
     searchValue, dataList, schemaType
   } = state;
+
+  const autoQueryDataFromDemo = async () => {
+    const result = await languageService({
+      script: 'match p=(n)-[*..1]-(m)  RETURN p LIMIT  50',
+      graphName: demoGraphName,
+    });
+
+    if (!result.success) {
+      // 执行查询失败
+      message.error(`执行查询失败: ${result.errorMessage}`);
+      return;
+    }
+    const { formatData } = result.data;
+    // 处理 formData，添加 data 字段
+    formatData.nodes.forEach(d => {
+      d.data = d.properties;
+    });
+
+    formatData.edges.forEach(d => {
+      d.data = d.properties;
+    });
+    const transformData = getTransformByTemplate(customStyleConfig, schemaData);
+
+    // 清空数据
+    updateContext(draft => {
+      if (transformData) {
+        draft.transform = transformData;
+      }
+
+      const res = transformData(formatData);
+      // @ts-ignore
+      draft.data = res;
+      // @ts-ignore
+      draft.source = res;
+    });
+  }
+
+  useEffect(() => {
+    if (demoGraphName) {
+      autoQueryDataFromDemo()
+    }
+  }, [demoGraphName])
 
   const handleTypeChange = (value) => {
     setState(draft => {
