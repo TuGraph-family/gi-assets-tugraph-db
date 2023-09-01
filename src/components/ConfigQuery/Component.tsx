@@ -361,12 +361,11 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
           <Form.Item label='返回节点数目' name='limit'>
             <InputNumber placeholder='请输入' style={{ width: "100%" }} />
           </Form.Item>
-        </div>
-        <div className="otherContainer">
-          <Form.Item name='hasClearData' valuePropName='checked' wrapperCol={{ span: 16 }}>
+          <Form.Item name='hasClearData' valuePropName='checked' wrapperCol={{ span: 16 }} style={{ marginBottom: 0 }}>
             <Checkbox>是否清空画布数据</Checkbox>
           </Form.Item>
-
+        </div>
+        <div className="otherContainer">
           <span style={{ marginRight: 8 }}>示例:</span>
           <Space size={[0, 8]} wrap>
             {tagsData.map((tag) => (
