@@ -200,7 +200,7 @@ const AttributesFilter: React.FC<props> = ({ schemaServiceId }) => {
           确认
         </Button>
       </div>
-    </>
+    </div>
   );
 };
 
