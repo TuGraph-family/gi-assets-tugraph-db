@@ -80,8 +80,10 @@ const EdgeConfigurationPanel = (props) => {
   };
 
   return (
-    <div className='edgeConfigurationContainer'>
-      <EdgeForm form={form} initialValues={elementStyles} onValuesChange={onElementValuesChange} schemaData={schemaData} />
+    <div className="style-setting-element-container">
+      <div className='edgeConfigurationContainer'>
+        <EdgeForm form={form} initialValues={elementStyles} onValuesChange={onElementValuesChange} schemaData={schemaData} />
+      </div>
       <div className='btn-group'>
         <Button style={{ marginRight: 16 }} onClick={onClose}>
           取消

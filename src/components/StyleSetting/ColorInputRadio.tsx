@@ -33,13 +33,14 @@ const ColorInput: React.FC<ColorInputProps> = ({ onChange, value, defaultValue }
         content={
           <>
             <Radio.Group onChange={onChange}>
-              {advanceColors.map(color => (
+              {advanceColors.map((color, index) => (
                 <Radio
                   className="custom-ant-radio-wrapper"
                   key={color}
                   value={color}
                   style={{
                     background: color,
+                    marginRight: index === 2 ? 0 : 8
                   }}
                 />
               ))}

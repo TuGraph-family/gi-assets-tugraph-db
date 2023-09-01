@@ -1,11 +1,12 @@
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Collapse, Form, FormInstance, FormProps, Input, Radio, Select } from 'antd';
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Collapse, Form, FormInstance, FormProps, Input, Radio, Select, Tooltip } from 'antd';
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
 import CustomIcon from './CustomIcon';
 import ColorInput from './ColorInputRadio';
 import { DefaultColor, getOperatorList, ICONS } from './Constant';
 import IntegerStep from './IntegerStep';
+import { typeImg } from '../StatisticsFilter/constants';
 
 interface NodeFormProps extends FormProps {
   form: FormInstance<any>;
@@ -173,9 +174,9 @@ export const NodeForm: React.FC<NodeFormProps> = ({
     setState(draft => {
       draft.labelText = evt.target.value;
     });
+    // 切换到属性以后，将属性置空
+    form.setFieldValue('displayLabel', undefined)
   };
-
-  console.log('currentSchema', currentSchema);
 
   return (
     <Form
@@ -190,6 +191,7 @@ export const NodeForm: React.FC<NodeFormProps> = ({
           {schemaData.nodes?.map((node: any) => {
             return (
               <Option value={node.labelName} key={node.labelName}>
+                <img src={typeImg['person']} alt="" className="img" />
                 {node.labelName}
               </Option>
             );
@@ -249,8 +251,9 @@ export const NodeForm: React.FC<NodeFormProps> = ({
 
       <Form.Item label="文本" name="labelText" initialValue={'id'}>
         <Radio.Group onChange={handleChangeLableText} value={state.labelText}>
-          <Radio value="notShow">不显示</Radio>
+          {/* <Radio value="notShow">不显示</Radio> */}
           <Radio value="id">显示ID</Radio>
+          <Radio value="label">显示Label</Radio>
           <Radio value="property">显示属性</Radio>
         </Radio.Group>
       </Form.Item>
@@ -297,7 +300,13 @@ export const NodeForm: React.FC<NodeFormProps> = ({
                           ).map(op => {
                             return (
                               <Option value={op.key} key={op.key}>
-                                {op.value}
+                                {
+                                  op.text
+                                  ?
+                                  <Tooltip title={op.text}>{op.value}</Tooltip>
+                                  :
+                                  op.value
+                                }
                               </Option>
                             );
                           })}
@@ -306,10 +315,10 @@ export const NodeForm: React.FC<NodeFormProps> = ({
                       <Form.Item {...restField} name={[name, 'value']} noStyle>
                         <Input style={{ width: '19%', marginRight: 8 }} />
                       </Form.Item>
-                      <MinusCircleOutlined onClick={() => remove(name)} />
+                      <DeleteOutlined  onClick={() => remove(name)} />
                     </span>
                   ))}
-                  <Form.Item>
+                  <Form.Item style={{ width: '91%' }}>
                     <Button
                       type="dashed"
                       disabled={!currentSchema.properties}

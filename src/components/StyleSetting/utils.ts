@@ -286,22 +286,28 @@ export const getTransformByTemplate = (styles: any = {}, schemaData) => {
       const nodeColor = hasCurrentId ? advancedCustomColor || advancedColor : customColor || basicColor || node.style?.keyshape?.fill || nodeCfg.color
 
       // 兼容单选数据
-      const labelArr = (displayLabel && typeof displayLabel === "string") ? [displayLabel] : displayLabel || [];
       let labelValueArr: string[] = [];
-      if (typeAliasVisible && nodeSchema && nodeSchema.typeAlias) {
-        labelValueArr.push(nodeSchema.typeAlias);
+      if (displayLabel === 'label') {
+        // 显示类型
+        labelValueArr.push(nodeType)
+      } else {
+        const labelArr = (displayLabel && typeof displayLabel === "string") ? [displayLabel] : displayLabel || [];
+        if (typeAliasVisible && nodeSchema && nodeSchema.typeAlias) {
+          labelValueArr.push(nodeSchema.typeAlias);
+        }
+        if (labelVisible) {
+          // @ts-ignore
+          labelArr.forEach((label) => {
+            console.log('node' ,node)
+            if (node.data) {
+              labelValueArr.push(node.data[label] || node.id);  
+            } else if (node.properties) {
+              labelValueArr.push(node.properties[label] || node.id);
+            }
+          });
+        }
       }
-      if (labelVisible) {
-        // @ts-ignore
-        labelArr.forEach((label) => {
-          console.log('node' ,node)
-          if (node.data) {
-            labelValueArr.push(node.data[label] || node.id);  
-          } else if (node.properties) {
-            labelValueArr.push(node.properties[label] || node.id);
-          }
-        });
-      }
+
       const labelValue = labelValueArr.join("\n");
       const nodeLabelVisible = typeAliasVisible || labelVisible;
       return {

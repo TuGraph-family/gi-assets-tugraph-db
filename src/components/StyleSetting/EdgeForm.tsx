@@ -1,10 +1,11 @@
 import ColorInput from './ColorInputRadio';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Collapse, Form, FormInstance, FormProps, Input, Radio, Select } from 'antd';
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Collapse, Form, FormInstance, FormProps, Input, Radio, Select, Tooltip } from 'antd';
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
 import { DefaultColor, getOperatorList } from './Constant';
 import IntegerStep from './IntegerStep';
+import { typeImg } from '../StatisticsFilter/constants';
 
 interface EdgeFormProps extends FormProps {
   form: FormInstance<any>;
@@ -182,6 +183,7 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
           {schemaData.edges?.map((edge: any) => {
             return (
               <Option value={edge.labelName} key={edge.labelName}>
+                <img src={typeImg['amount']} alt="" className="img" />
                 {edge.labelName}
               </Option>
             );
@@ -262,7 +264,13 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
                         ).map(op => {
                           return (
                             <Option value={op.key} key={op.key}>
-                              {op.value}
+                               {
+                                  op.text
+                                  ?
+                                  <Tooltip title={op.text}>{op.value}</Tooltip>
+                                  :
+                                  op.value
+                                }
                             </Option>
                           );
                         })}
@@ -271,10 +279,10 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
                     <Form.Item {...restField} name={[name, 'value']} noStyle>
                       <Input style={{ width: '19%', marginRight: 8 }} />
                     </Form.Item>
-                    <MinusCircleOutlined onClick={() => remove(name)} />
+                    <DeleteOutlined onClick={() => remove(name)}  />
                   </span>
                 ))}
-                <Form.Item>
+                <Form.Item style={{ width: '91%' }}>
                   <Button
                     type="dashed"
                     disabled={!currentSchema.properties}

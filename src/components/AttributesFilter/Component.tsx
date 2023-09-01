@@ -157,47 +157,49 @@ const AttributesFilter: React.FC<props> = ({ schemaServiceId }) => {
 
   return (
     <div className='attribute-filter-container'>
-      <Form form={form} layout="vertical">
-        {filterdata.map((item, index) => {
-          return <AttributesEditForm id={item.id} handleDelete={handleDelete} form={form} schemaList={schemaList} />;
-        })}
-        <Button
-          block
-          style={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: '#6A6B71',
-            height: 94,
-            backgroundImage: 'linear-gradient(174deg, rgba(245,248,255,0.38) 11%, rgba(244,247,255,0.55) 96%)',
-            border: 'none',
-          }}
-          onClick={() => {
-            addPanel();
-          }}
-        >
-          <img
-            src="https://mdn.alipayobjects.com/huamei_xn3ctq/afts/img/A*fHVRTq8rqlMAAAAAAAAAAAAADo6BAQ/original"
-            alt=""
-          />
-          <span>添加筛选组</span>
-        </Button>
-        <div className="button">
+      <div className='attribute-filter-container-form'>
+        <Form form={form} layout="vertical">
+          {filterdata.map((item, index) => {
+            return <AttributesEditForm id={item.id} handleDelete={handleDelete} form={form} schemaList={schemaList} />;
+          })}
           <Button
-            style={{ marginRight: 16 }}
+            block
+            style={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#6A6B71',
+              height: 94,
+              backgroundImage: 'linear-gradient(174deg, rgba(245,248,255,0.38) 11%, rgba(244,247,255,0.55) 96%)',
+              border: 'none',
+            }}
             onClick={() => {
-              form.resetFields();
+              addPanel();
             }}
           >
-            重置
+            <img
+              src="https://mdn.alipayobjects.com/huamei_xn3ctq/afts/img/A*fHVRTq8rqlMAAAAAAAAAAAAADo6BAQ/original"
+              alt=""
+            />
+            <span>添加筛选组</span>
           </Button>
-          <Button htmlType="submit" type="primary" onClick={handleSubmit}>
-            确认
-          </Button>
-        </div>
-      </Form>
+        </Form>
+      </div>
+      <div className="attribute-button-group">
+        <Button
+          style={{ marginRight: 16 }}
+          onClick={() => {
+            form.resetFields();
+          }}
+        >
+          重置
+        </Button>
+        <Button htmlType="submit" type="primary" onClick={handleSubmit}>
+          确认
+        </Button>
+      </div>
     </div>
   );
 };

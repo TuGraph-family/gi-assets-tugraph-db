@@ -1,8 +1,10 @@
-import { useContext } from "@antv/gi-sdk";
-import { Row, Col, Form, Input, Select, Badge, Tag } from "antd";
-import React from "react";
+import { useContext, utils } from "@antv/gi-sdk";
+import { Row, Col, Form, Input, Select, Badge, Tag, message } from "antd";
+import React, { useEffect } from "react";
 import { SearchOutlined } from '@ant-design/icons';
 import { useImmer } from "use-immer";
+import { getQueryString } from '../utils'
+import { getTransformByTemplate } from '../StyleSetting/utils'
 import "./index.less";
 
 const { Option } = Select;
@@ -10,10 +12,25 @@ const { Option } = Select;
 const SimpleQuery = () => {
   const [form] = Form.useForm();
 
-  const {
-    graph,
-  } = useContext();
+  const demoGraphName = getQueryString('demoGraphName')
 
+  const { updateContext, services, schemaData, graph } = useContext();
+  const languageService: any = utils.getService(services, 'TuGraph-DB/languageQueryService');
+
+  const customStyleConfig = localStorage.getItem('CUSTOM_STYLE_CONFIG')
+    ? JSON.parse(localStorage.getItem('CUSTOM_STYLE_CONFIG') as string)
+    : {};
+
+  const getDefaultRow = (type) => {
+    return <Row>
+      <Col style={{textAlign: 'center' }} span={6}>{type === 'node' ? '节点名称' : '边名称' }</Col>
+      <Col span={1}></Col>
+      <Col style={{textAlign: 'center' }} span={6}>属性名称</Col>
+      <Col span={1}></Col>
+      <Col style={{textAlign: 'left' }} span={10}>属性值</Col>
+    </Row>
+  }
+  
   const [state, setState] = useImmer<{
     dataList: any[];
     searchValue: string;
@@ -28,8 +45,49 @@ const SimpleQuery = () => {
     searchValue, dataList, schemaType
   } = state;
 
+  const autoQueryDataFromDemo = async () => {
+    const result = await languageService({
+      script: 'match p=(n)-[*..1]-(m)  RETURN p LIMIT  50',
+      graphName: demoGraphName,
+    });
+
+    if (!result.success) {
+      // 执行查询失败
+      message.error(`执行查询失败: ${result.errorMessage}`);
+      return;
+    }
+    const { formatData } = result.data;
+    // 处理 formData，添加 data 字段
+    formatData.nodes.forEach(d => {
+      d.data = d.properties;
+    });
+
+    formatData.edges.forEach(d => {
+      d.data = d.properties;
+    });
+    const transformData = getTransformByTemplate(customStyleConfig, schemaData);
+
+    // 清空数据
+    updateContext(draft => {
+      if (transformData) {
+        draft.transform = transformData;
+      }
+
+      const res = transformData(formatData);
+      // @ts-ignore
+      draft.data = res;
+      // @ts-ignore
+      draft.source = res;
+    });
+  }
+
+  useEffect(() => {
+    if (demoGraphName) {
+      autoQueryDataFromDemo()
+    }
+  }, [demoGraphName])
+
   const handleTypeChange = (value) => {
-    console.log(value)
     setState(draft => {
       draft.schemaType = value
     })
@@ -123,12 +181,13 @@ const SimpleQuery = () => {
         draft.dataList = formArrData.map(d => {
           return {
             value: d.id,
+            originValue: <><Tag style={{ marginLeft: 4 }} color="green">{d.propertyKey}</Tag>{d.value}</>,
             text: <Row style={{ paddingTop: 4 }}>
-              <Col span={6}><Tag><div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 55 }}><Badge style={{ marginRight: 4 }} status="success" />{d.label}</div></Tag></Col>
+              <Col span={6} style={{ textAlign: 'center' }}><Tag><div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 55 }}><Badge style={{ marginRight: 4 }} status="success" />{d.label}</div></Tag></Col>
               <Col span={1}></Col>
-              <Col span={6}><Tag><div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 55 }}>{d.propertyKey}</div></Tag></Col>
+              <Col span={6} style={{ textAlign: 'center' }}><Tag><div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 55 }}>{d.propertyKey}</div></Tag></Col>
               <Col span={1}></Col>
-              <Col span={10}><Tag><div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 90 }}>{d.value}</div></Tag></Col>
+              <Col span={10} style={{ textAlign: 'left' }}><Tag><div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 90 }}>{d.value}</div></Tag></Col>
             </Row>
           }
         })
@@ -171,21 +230,21 @@ const SimpleQuery = () => {
                 onSearch={handleSearch}
                 onChange={handleChange}
                 notFoundContent={null}
-                options={[{
-                  label: <Row>
-                    <Col style={{textAlign: 'center' }} span={6}>节点名称</Col>
-                    <Col style={{textAlign: 'center' }} span={8}>属性名称</Col>
-                    <Col style={{textAlign: 'center' }} span={10}>属性值</Col>
-                  </Row>,
-                  options: (dataList || []).map(d => ({
-                    value: d.value,
-                    label: d.text,
-                  }))
-                }]}
+                optionLabelProp='label'
                 suffixIcon={
                   <SearchOutlined />
                 }
-              />
+              >
+                <Select.OptGroup key='simple-query' label={getDefaultRow(state.schemaType)}>
+                  {
+                    dataList.map(d => {
+                      return <Option key={d.id} value={d.value} label={d.originValue}>
+                        {d.text}
+                      </Option>
+                    })
+                  }
+                </Select.OptGroup>
+              </Select>
             </Form.Item>
           </Input.Group>
         </Form.Item>
