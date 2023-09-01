@@ -174,9 +174,9 @@ export const NodeForm: React.FC<NodeFormProps> = ({
     setState(draft => {
       draft.labelText = evt.target.value;
     });
+    // 切换到属性以后，将属性置空
+    form.setFieldValue('displayLabel', undefined)
   };
-
-  console.log('currentSchema', currentSchema);
 
   return (
     <Form
@@ -253,6 +253,7 @@ export const NodeForm: React.FC<NodeFormProps> = ({
         <Radio.Group onChange={handleChangeLableText} value={state.labelText}>
           {/* <Radio value="notShow">不显示</Radio> */}
           <Radio value="id">显示ID</Radio>
+          <Radio value="label">显示Label</Radio>
           <Radio value="property">显示属性</Radio>
         </Radio.Group>
       </Form.Item>

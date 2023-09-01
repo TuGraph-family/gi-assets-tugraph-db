@@ -26,9 +26,14 @@ const NodeConfigurationPanel = (props) => {
   const { elementStyles } = state;
 
   const onElementValuesChange = (changedValues: any, allValues: any = {}) => {
-    const { nodeType } = allValues;
+    const { nodeType, labelText } = allValues;
     const isNodeTypeChange = "nodeType" in changedValues;
     if (!isNodeTypeChange) {
+      // 如果展示 Label，则修改 displayLabel
+      if (labelText === 'label') {
+        allValues['displayLabel'] = labelText
+      }
+
       setState((draft) => {
         draft.elementStyles[nodeType || "allNodes"] = allValues;
       });
@@ -60,7 +65,7 @@ const NodeConfigurationPanel = (props) => {
   // 点击确认按钮，获取到所有的配置项
   const handleSettingNodeConfig = async () => {
     const transform = getTransformByTemplate(elementStyles, schemaData);
-
+debugger
     localStorage.setItem('CUSTOM_STYLE_CONFIG', JSON.stringify(elementStyles))
 
     updateContext((draft) => {
