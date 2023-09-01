@@ -1,5 +1,5 @@
 import { useContext } from "@antv/gi-sdk";
-import { Row, Col, Form, Input, Select, Badge, Tag } from "antd";
+import { Row, Col, Form, Input, Select, Badge, Tag, Table } from "antd";
 import React from "react";
 import { SearchOutlined } from '@ant-design/icons';
 import { useImmer } from "use-immer";
@@ -14,6 +14,16 @@ const SimpleQuery = () => {
     graph,
   } = useContext();
 
+  const getDefaultRow = (type) => {
+    return <Row>
+      <Col style={{textAlign: 'center' }} span={6}>{type === 'node' ? '节点名称' : '边名称' }</Col>
+      <Col span={1}></Col>
+      <Col style={{textAlign: 'center' }} span={6}>属性名称</Col>
+      <Col span={1}></Col>
+      <Col style={{textAlign: 'left' }} span={10}>属性值</Col>
+    </Row>
+  }
+  
   const [state, setState] = useImmer<{
     dataList: any[];
     searchValue: string;
@@ -122,12 +132,13 @@ const SimpleQuery = () => {
         draft.dataList = formArrData.map(d => {
           return {
             value: d.id,
+            originValue: <><Tag style={{ marginLeft: 4 }} color="green">{d.propertyKey}</Tag>{d.value}</>,
             text: <Row style={{ paddingTop: 4 }}>
-              <Col span={6}><Tag><div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 55 }}><Badge style={{ marginRight: 4 }} status="success" />{d.label}</div></Tag></Col>
+              <Col span={6} style={{ textAlign: 'center' }}><Tag><div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 55 }}><Badge style={{ marginRight: 4 }} status="success" />{d.label}</div></Tag></Col>
               <Col span={1}></Col>
-              <Col span={6}><Tag><div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 55 }}>{d.propertyKey}</div></Tag></Col>
+              <Col span={6} style={{ textAlign: 'center' }}><Tag><div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 55 }}>{d.propertyKey}</div></Tag></Col>
               <Col span={1}></Col>
-              <Col span={10}><Tag><div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 90 }}>{d.value}</div></Tag></Col>
+              <Col span={10} style={{ textAlign: 'left' }}><Tag><div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 90 }}>{d.value}</div></Tag></Col>
             </Row>
           }
         })
@@ -171,21 +182,20 @@ const SimpleQuery = () => {
                 onChange={handleChange}
                 notFoundContent={null}
                 optionLabelProp='label'
-                options={[{
-                  label: <Row>
-                    <Col style={{textAlign: 'center' }} span={6}>{state.schemaType === 'node' ? '节点名称' : '边名称'}</Col>
-                    <Col style={{textAlign: 'center' }} span={8}>属性名称</Col>
-                    <Col style={{textAlign: 'center' }} span={10}>属性值</Col>
-                  </Row>,
-                  options: (dataList || []).map(d => ({
-                    value: d.value,
-                    label: d.text,
-                  }))
-                }]}
                 suffixIcon={
                   <SearchOutlined />
                 }
-              />
+              >
+                <Select.OptGroup key='simple-query' label={getDefaultRow(state.schemaType)}>
+                  {
+                    dataList.map(d => {
+                      return <Option key={d.id} value={d.value} label={d.originValue}>
+                        {d.text}
+                      </Option>
+                    })
+                  }
+                </Select.OptGroup>
+              </Select>
             </Form.Item>
           </Input.Group>
         </Form.Item>
