@@ -399,23 +399,30 @@ export const getTransformByTemplate = (styles: any = {}, schemaData) => {
       
       const color = isAdvanced ? advancedCustomColor || advancedColor : customColor || basicColor || edge.style?.keyshape?.fill || edgeCfg.color
       
-      // 兼容单选数据
-      const labelArr = (displayLabel && typeof displayLabel === "string") ? [displayLabel] : displayLabel || [];
       let labelValueArr: string[] = [];
-      if (typeAliasVisible && edgeSchema && edgeSchema.typeAlias) {
-        labelValueArr.push(edgeSchema.typeAlias);
+
+      if (displayLabel === 'label') {
+        // 显示类型
+        labelValueArr.push(edgeType)
+      } else {
+        // 兼容单选数据
+        const labelArr = (displayLabel && typeof displayLabel === "string") ? [displayLabel] : displayLabel || [];
+        if (typeAliasVisible && edgeSchema && edgeSchema.typeAlias) {
+          labelValueArr.push(edgeSchema.typeAlias);
+        }
+        
+        if (labelVisible) {
+          // @ts-ignore
+          labelArr.forEach((label) => {
+            if (edge.data) {
+              labelValueArr.push(edge.data[label] || edge.id);
+            } else if (edge.properties) {
+              labelValueArr.push(edge.properties[label] || edge.id);
+            }
+          });
+        }
       }
       
-      if (labelVisible) {
-        // @ts-ignore
-        labelArr.forEach((label) => {
-          if (edge.data) {
-            labelValueArr.push(edge.data[label] || edge.id);
-          } else if (edge.properties) {
-            labelValueArr.push(edge.properties[label] || edge.id);
-          }
-        });
-      }
       const labelValue = labelValueArr.join("\n");
       const edgeLabelVisible = typeAliasVisible || labelVisible;
 

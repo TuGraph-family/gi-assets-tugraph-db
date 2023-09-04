@@ -1,6 +1,6 @@
 import { useContext } from "@antv/gi-sdk";
 import { Button, Form } from "antd";
-import React, { useEffect } from "react";
+import React from "react";
 import { useImmer } from "use-immer";
 import { getTransformByTemplate } from "./utils";
 import { EdgeForm } from "./EdgeForm";
@@ -25,10 +25,20 @@ const EdgeConfigurationPanel = (props) => {
   const { elementStyles } = state;
 
   const onElementValuesChange = (changedValues: any, allValues: any = {}) => {
-    const { edgeType } = allValues;
+    const { edgeType, labelText, isShowText } = allValues;
     const isEdgeTypeChange = "edgeType" in changedValues;
 
     if (!isEdgeTypeChange) {
+      // 如果展示 Label，则修改 displayLabel
+      if (isShowText) {
+        if (labelText === 'label' || labelText === 'id') {
+          allValues['displayLabel'] = labelText
+        }
+      } else {
+        // 不显示
+        allValues['displayLabel'] = ''
+      }
+
       setState((draft) => {
         draft.elementStyles[edgeType || "allEdges"] = allValues;
       });

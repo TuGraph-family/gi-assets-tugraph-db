@@ -1,6 +1,6 @@
 import { useContext } from "@antv/gi-sdk";
 import { Button, Form } from "antd";
-import React, { useEffect } from "react";
+import React from "react";
 import { useImmer } from "use-immer";
 import { getTransformByTemplate } from "./utils";
 import "./index.less";
@@ -26,12 +26,17 @@ const NodeConfigurationPanel = (props) => {
   const { elementStyles } = state;
 
   const onElementValuesChange = (changedValues: any, allValues: any = {}) => {
-    const { nodeType, labelText } = allValues;
+    const { nodeType, labelText, isShowText } = allValues;
     const isNodeTypeChange = "nodeType" in changedValues;
     if (!isNodeTypeChange) {
       // 如果展示 Label，则修改 displayLabel
-      if (labelText === 'label') {
-        allValues['displayLabel'] = labelText
+      if (isShowText) {
+        if (labelText === 'label' || labelText === 'id') {
+          allValues['displayLabel'] = labelText
+        }
+      } else {
+        // 不显示
+        allValues['displayLabel'] = ''
       }
 
       setState((draft) => {
@@ -65,7 +70,7 @@ const NodeConfigurationPanel = (props) => {
   // 点击确认按钮，获取到所有的配置项
   const handleSettingNodeConfig = async () => {
     const transform = getTransformByTemplate(elementStyles, schemaData);
-debugger
+
     localStorage.setItem('CUSTOM_STYLE_CONFIG', JSON.stringify(elementStyles))
 
     updateContext((draft) => {
