@@ -13,7 +13,7 @@ export interface ILanguageQueryProps {
   languageServiceId: string;
 }
 
-const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "220px", languageServiceId }) => {
+const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "320px", languageServiceId }) => {
   const { updateContext, services, graph, schemaData } = useContext();
   const customStyleConfig = localStorage.getItem('CUSTOM_STYLE_CONFIG') ? JSON.parse(localStorage.getItem('CUSTOM_STYLE_CONFIG') as string) : {}
 
@@ -135,7 +135,7 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "220px", langua
     <div className='LanguageQueryPanel'>
       <div className={"contentContainer"}>
         <div style={{ marginBottom: 24 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px", marginTop: 8 }}>
             <span>查询语言</span>
             <a
               onClick={() => {
@@ -172,7 +172,7 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "220px", langua
           </div>
         </div>
 
-        <Checkbox onChange={handleChange}>是否清空画布数据</Checkbox>
+        <Checkbox onChange={handleChange}>清空画布数据</Checkbox>
 
       </div>
       <div className={"buttonContainer"}>

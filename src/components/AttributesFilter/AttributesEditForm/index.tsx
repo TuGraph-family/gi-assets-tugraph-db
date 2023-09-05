@@ -88,7 +88,7 @@ export const AttributesEditForm: React.FC<props> = ({ id, handleDelete, form, sc
                 {schemaList?.nodes?.map(item => {
                   return (
                     <Option value={item.labelName} key={item.labelName}>
-                      <img src={typeImg['person']} alt="" className="img" />
+                      <img src={typeImg['person']} alt="" className="img" style={{ marginRight: 4 }} />
                       {item.labelName}
                     </Option>
                   );
@@ -112,7 +112,7 @@ export const AttributesEditForm: React.FC<props> = ({ id, handleDelete, form, sc
               <>
                 {fields.map(({ key, name, ...restField }) => (
                   <div key={key} className="formList">
-                    <Input.Group compact>
+                    <Input.Group compact style={{ width: '91%' }}>
                       <Form.Item noStyle name={[name, 'name']}>
                         <Select
                           placeholder="请选择"
@@ -156,7 +156,7 @@ export const AttributesEditForm: React.FC<props> = ({ id, handleDelete, form, sc
                     <DeleteOutlined style={{ marginLeft: 8 }} onClick={() => remove(name)} />
                   </div>
                 ))}
-                <Form.Item style={{ marginBottom: 16 }}>
+                <Form.Item style={{ marginBottom: 0, width: '91%' }}>
                   <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
                     添加属性条件
                   </Button>

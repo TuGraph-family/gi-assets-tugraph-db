@@ -203,7 +203,7 @@ export const NodeForm: React.FC<NodeFormProps> = ({
           {schemaData.nodes?.map((node: any) => {
             return (
               <Option value={node.labelName} key={node.labelName}>
-                <img src={typeImg['person']} alt="" className="img" />
+                <img src={typeImg['person']} alt="" className="img" style={{ marginRight: 4 }} />
                 {node.labelName}
               </Option>
             );

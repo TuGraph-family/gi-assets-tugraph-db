@@ -70,7 +70,7 @@ const StyleSetting: React.FunctionComponent<IStyleSetting> = (props) => {
     <div className="style-setting-container">
       <Segmented 
         value={state.styleType} 
-        options={[{ label: '点', value: 'node'}, { label: '边', value: 'edge' }]}
+        options={[{ label: '点样式', value: 'node'}, { label: '边样式', value: 'edge' }]}
         onChange={handleChange} />
       {
         state.styleType === 'node'
