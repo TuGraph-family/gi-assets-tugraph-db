@@ -4,7 +4,8 @@ import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
 import CustomIcon from './CustomIcon';
 import ColorInput from './ColorInputRadio';
-import { DefaultColor, getOperatorList, ICONS } from './Constant';
+import CustomIconComponent from './CustomIconCompnent'
+import { getOperatorList, ICONS, NodeDefaultColor } from './Constant';
 import IntegerStep from './IntegerStep';
 import { typeImg } from '../StatisticsFilter/constants';
 
@@ -78,6 +79,28 @@ export const NodeForm: React.FC<NodeFormProps> = ({
     });
   };
 
+  const handleIconChange = e => {
+    const currentNodeType = form.getFieldValue('nodeType')
+    form.setFieldsValue({
+      icon: {
+        iconText: e.target.value,
+      }
+    })
+    if (onValuesChange && currentNodeType) {
+      onValuesChange({
+        icon: {
+          iconText: e.target.value,
+        }
+      }, {
+        // @ts-ignore
+        ...initialValues[currentNodeType],
+        icon: {
+          iconText: e.target.value,
+        }
+      })
+    }
+  }
+
   const handleChangeAdvancedColor = e => {
     // 设置选择的默认颜色
     setState(draft => {
@@ -104,6 +127,12 @@ export const NodeForm: React.FC<NodeFormProps> = ({
   };
 
   const handleFormValueChange = (changedValues, allValues) => {
+    // 如果点击的是更多icon直接返回
+    const { icon } = changedValues
+    if (icon && icon.iconText === 'gengduo') {
+      return
+    }
+
     if (onValuesChange) {
       onValuesChange(changedValues, allValues);
     }
@@ -188,7 +217,7 @@ export const NodeForm: React.FC<NodeFormProps> = ({
       <div className="color">
         <Form.Item name="color" label="颜色">
           <Radio.Group onChange={handleChangeBasicColor}>
-            {DefaultColor.map(color => (
+            {NodeDefaultColor.map(color => (
               <Radio
                 className="custom-ant-radio-wrapper"
                 key={color}
@@ -207,28 +236,33 @@ export const NodeForm: React.FC<NodeFormProps> = ({
 
       <Form.Item name={['icon', 'iconText']} label="图标">
         <Radio.Group optionType="button" buttonStyle="solid">
-          {ICONS.map((icon: any) => (
-            <Radio.Button
-              key={icon.key}
-              value={icon.key}
-              className="custom-ant-radio-wrapper"
-              style={{
-                border: 'none',
-                lineHeight: '25px',
-                padding: '0 1px',
-                width: 25,
-                height: 25,
-              }}
-            >
-              <CustomIcon
-                type={icon.value}
+          {ICONS.map((icon: any, index) => {
+            if (index === ICONS.length - 1) {
+              return <CustomIconComponent onChange={handleIconChange} icon={icon} />
+            }
+            return (
+              <Radio.Button
+                key={icon.key}
+                value={icon.key}
+                className="custom-ant-radio-wrapper"
                 style={{
-                  fontSize: 23,
-                  cursor: 'pointer',
+                  border: 'none',
+                  lineHeight: '25px',
+                  padding: '0 1px',
+                  width: 25,
+                  height: 25,
                 }}
-              />
-            </Radio.Button>
-          ))}
+              >
+                <CustomIcon
+                  type={icon.value}
+                  style={{
+                    fontSize: 23,
+                    cursor: 'pointer',
+                  }}
+                />
+              </Radio.Button>
+            )
+          })}
         </Radio.Group>
       </Form.Item>
 
@@ -325,7 +359,7 @@ export const NodeForm: React.FC<NodeFormProps> = ({
           <div className="color">
             <Form.Item name="advancedColor" label="属性颜色">
               <Radio.Group onChange={handleChangeAdvancedColor}>
-                {DefaultColor.map(color => (
+                {NodeDefaultColor.map(color => (
                    <Radio
                     className="custom-ant-radio-wrapper"
                     key={color}

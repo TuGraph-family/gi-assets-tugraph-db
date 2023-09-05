@@ -8,7 +8,8 @@ import "./index.less";
 const advanceColors = [
   '#cb962a',
   '#23ad61',
-  '#ff8075'
+  '#ff8075',
+  '#07bce0'
 ]
 
 export interface ColorInputProps {
@@ -40,7 +41,7 @@ const ColorInput: React.FC<ColorInputProps> = ({ onChange, value, defaultValue }
                   value={color}
                   style={{
                     background: color,
-                    marginRight: index === 2 ? 0 : 8
+                    marginRight: index === 3 ? 0 : 8
                   }}
                 />
               ))}

@@ -28,6 +28,7 @@ const NodeConfigurationPanel = (props) => {
   const onElementValuesChange = (changedValues: any, allValues: any = {}) => {
     const { nodeType, labelText, isShowText } = allValues;
     const isNodeTypeChange = "nodeType" in changedValues;
+  
     if (!isNodeTypeChange) {
       // 如果展示 Label，则修改 displayLabel
       if (isShowText) {

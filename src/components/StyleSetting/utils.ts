@@ -1,7 +1,7 @@
 import { GraphinData, IUserEdge, IUserNode, Utils } from "@antv/graphin";
 import deepmerge from "deepmerge";
 import cloneDeep from "lodash/cloneDeep";
-import { iconLoader } from "./icons/iconLoader";
+import {icons} from '@antv/gi-sdk'
 
 import { Expression, Schema, SchemaItem } from "../ExpressionGroup";
 
@@ -333,7 +333,7 @@ export const getTransformByTemplate = (styles: any = {}, schemaData) => {
           icon: {
             type: "font" as "font",
             fontFamily: "iconfont",
-            value: iconLoader[icon.iconText],
+            value: icons[icon.iconText],
             fill: nodeColor,
             size: size * 0.7
           },
