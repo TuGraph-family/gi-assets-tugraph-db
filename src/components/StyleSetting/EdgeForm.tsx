@@ -1,6 +1,6 @@
 import ColorInput from './ColorInputRadio';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Collapse, Form, FormInstance, FormProps, Input, Radio, Select, Tooltip } from 'antd';
+import { Button, Collapse, Form, FormInstance, FormProps, Input, Radio, Select, Tooltip, Switch } from 'antd';
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
 import { DefaultColor, getOperatorList } from './Constant';
@@ -34,7 +34,6 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
   schemaData,
   ...othersProps
 }) => {
-  console.log('initialValues', initialValues)
   const [state, setState] = useImmer<{
     color: {
       basic: string;
@@ -43,7 +42,6 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
 
     currentSchema: any;
     property: any[];
-    labelText: string;
   }>({
     color: {
       basic: initialValues?.color,
@@ -52,7 +50,6 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
 
     currentSchema: {},
     property: [],
-    labelText: '',
   });
   const { color, currentSchema, property } = state;
 
@@ -127,7 +124,6 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
           draft.color.basic = curEdgeStyles.color;
           draft.color.advanced = curEdgeStyles.advancedColor;
           draft.property = curEdgeStyles.property;
-          draft.labelText = curEdgeStyles.labelText;
         });
       }
     }
@@ -151,23 +147,11 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
   });
 
   useEffect(() => {
-    onValuesChange?.({ nodeType: null }, initialValues);
+    onValuesChange?.({ edgeType: null }, initialValues);
   }, []);
 
-  const handleChangeLableText = evt => {
-    const value = evt.target.value
-    if (!value) {
-      form.setFieldsValue({
-        displayLabel: undefined
-      })
-    } else if (value === 'id') {
-      form.setFieldsValue({
-        displayLabel: 'id'
-      })
-    }
-    setState(draft => {
-      draft.labelText = evt.target.value;
-    });
+  const handleChangeLableText = () => {
+    form.setFieldValue('displayLabel', undefined)
   };
 
   return (
@@ -215,15 +199,22 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
         <IntegerStep  marks={marks} min={1} max={10} />
       </Form.Item>
 
-      <Form.Item label="文本" name="labelText">
-        <Radio.Group onChange={handleChangeLableText} value={state.labelText}>
-          <Radio value="">不显示</Radio>
-          <Radio value="id">显示ID</Radio>
-          <Radio value="property">显示属性</Radio>
-        </Radio.Group>
+      <Form.Item label='显示文本' name="isShowText">
+        <Switch checked={form.getFieldValue('isShowText')} />
       </Form.Item>
 
-      {state.labelText === 'property' && (
+      {
+        form.getFieldValue('isShowText') &&
+        <Form.Item label="文本" name="labelText" initialValue={'id'}>
+          <Radio.Group onChange={handleChangeLableText} value={form.getFieldValue('labelText')}>
+            <Radio value="id">显示ID</Radio>
+            <Radio value="label">显示Label</Radio>
+            <Radio value="property">显示属性</Radio>
+          </Radio.Group>
+        </Form.Item>
+      }
+
+      {form.getFieldValue('isShowText') && form.getFieldValue('labelText') === 'property' && (
         <Form.Item name="displayLabel" label="文本对应属性">
           <Select placeholder={currentSchema.properties ? "请选择属性" : '请先选择边类型'} showSearch allowClear mode="multiple" disabled={!currentSchema.properties}>
             {propertyOptions}

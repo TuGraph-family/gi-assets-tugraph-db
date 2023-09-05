@@ -68,7 +68,6 @@ const StyleSetting: React.FunctionComponent<IStyleSetting> = (props) => {
 
   return (
     <div className="style-setting-container">
-      <h4 style={{ margin: '0px 0px 16px 0px' }}>外观样式</h4>
       <Segmented 
         value={state.styleType} 
         options={[{ label: '点', value: 'node'}, { label: '边', value: 'edge' }]}
