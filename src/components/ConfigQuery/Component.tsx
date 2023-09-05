@@ -362,7 +362,7 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
             <InputNumber placeholder='请输入' style={{ width: "100%" }} />
           </Form.Item>
           <Form.Item name='hasClearData' valuePropName='checked' wrapperCol={{ span: 16 }} style={{ marginBottom: 0 }}>
-            <Checkbox>是否清空画布数据</Checkbox>
+            <Checkbox>清空画布数据</Checkbox>
           </Form.Item>
         </div>
         <div className="otherContainer">
