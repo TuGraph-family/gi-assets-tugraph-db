@@ -61,7 +61,7 @@ const GraphDemo: React.FunctionComponent<IProps> = (props) => {
       <Modal
         visible={state.visible}
         confirmLoading={state.loading}
-        width={772}
+        width={970}
         footer={[
           <>
             <Checkbox className="noShow" style={{ float: 'left' }} onChange={handleShow}>
@@ -105,7 +105,7 @@ const GraphDemo: React.FunctionComponent<IProps> = (props) => {
             }}
           >
             <div className="picBox">
-              <img src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*fobuSKSyNWwAAAAAAAAAAAAADgOBAQ/original" />
+              <img src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*5QzeRqTdlPUAAAAAAAAAAAAADgOBAQ/original" />
             </div>
             <div className="textBox">
               <div className="demoText">电影关系网络</div>
@@ -118,7 +118,7 @@ const GraphDemo: React.FunctionComponent<IProps> = (props) => {
             }}
           >
             <div className="picBox">
-              <img src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*fobuSKSyNWwAAAAAAAAAAAAADgOBAQ/original" />
+              <img src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*gYdUTLkJvZAAAAAAAAAAAAAADgOBAQ/original" />
             </div>
             <div className="textBox">
               <div className="demoText">三国人物关系网络</div>
@@ -131,10 +131,23 @@ const GraphDemo: React.FunctionComponent<IProps> = (props) => {
             }}
           >
             <div className="picBox">
-              <img src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*fobuSKSyNWwAAAAAAAAAAAAADgOBAQ/original" />
+              <img src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*5xJiS6WGlScAAAAAAAAAAAAADgOBAQ/original" />
             </div>
             <div className="textBox">
               <div className="demoText">流浪地球关系网络</div>
+            </div>
+          </div>
+          <div
+            className={`${state.index === 3 ? 'demoItemSelected' : 'demoItem'}`}
+            onClick={() => {
+              set({ index: 3, graphName: 'TheThreeBody' });
+            }}
+          >
+            <div className="picBox">
+              <img src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*dprKS7Y7CpwAAAAAAAAAAAAADgOBAQ/original" />
+            </div>
+            <div className="textBox">
+              <div className="demoText">三体关系网络</div>
             </div>
           </div>
         </div>
