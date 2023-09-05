@@ -1,6 +1,6 @@
 import { Form, Input, Select, Collapse, Button, Tooltip } from 'antd';
 import React, { useState } from 'react';
-import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import { DeleteOutlined, PlusOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { getOperatorList } from '../../StyleSetting/Constant';
 import '../index.less';
 
@@ -60,6 +60,7 @@ export const AttributesEditForm: React.FC<props> = ({ id, handleDelete, form, sc
           backgroundImage: 'linear-gradient(178deg, rgba(245,248,255,0.38) 11%, rgba(244,247,255,0.55) 96%)',
         }}
         bordered={false}
+        expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
       >
         <Panel
           header={

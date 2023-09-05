@@ -5,6 +5,7 @@ import {
   PieChartOutlined,
   SelectOutlined,
   FireTwoTone,
+  CaretRightOutlined
 } from '@ant-design/icons';
 import { useContext, utils } from '@antv/gi-sdk';
 import { Button, Dropdown, Menu, Select, Row, Col, Collapse, Form, Space } from 'antd';
@@ -268,6 +269,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
           backgroundImage: 'linear-gradient(178deg, rgba(245,248,255,0.38) 11%, rgba(244,247,255,0.55) 96%)',
         }}
         bordered={false}
+        expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
       >
         <Panel
           header={
