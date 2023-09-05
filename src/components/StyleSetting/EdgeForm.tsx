@@ -167,7 +167,7 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
           {schemaData.edges?.map((edge: any) => {
             return (
               <Option value={edge.labelName} key={edge.labelName}>
-                <img src={typeImg['amount']} alt="" className="img" />
+                <img src={typeImg['amount']} alt="" className="img" style={{ marginRight: 4 }} />
                 {edge.labelName}
               </Option>
             );

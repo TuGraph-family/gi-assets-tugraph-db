@@ -108,7 +108,7 @@ const GraphDemo: React.FunctionComponent<IProps> = (props) => {
               <img src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*5QzeRqTdlPUAAAAAAAAAAAAADgOBAQ/original" />
             </div>
             <div className="textBox">
-              <div className="demoText">电影关系网络</div>
+              <div className="demoText">Movie（电影）</div>
             </div>
           </div>
           <div
@@ -118,10 +118,10 @@ const GraphDemo: React.FunctionComponent<IProps> = (props) => {
             }}
           >
             <div className="picBox">
-              <img src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*gYdUTLkJvZAAAAAAAAAAAAAADgOBAQ/original" />
+              <img style={{ height: '90%' }} src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*gYdUTLkJvZAAAAAAAAAAAAAADgOBAQ/original" />
             </div>
             <div className="textBox">
-              <div className="demoText">三国人物关系网络</div>
+              <div className="demoText">ThreeKingdoms（三国）</div>
             </div>
           </div>
           <div
@@ -131,10 +131,10 @@ const GraphDemo: React.FunctionComponent<IProps> = (props) => {
             }}
           >
             <div className="picBox">
-              <img src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*5xJiS6WGlScAAAAAAAAAAAAADgOBAQ/original" />
+              <img style={{ height: '92%' }}  src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*5xJiS6WGlScAAAAAAAAAAAAADgOBAQ/original" />
             </div>
             <div className="textBox">
-              <div className="demoText">流浪地球关系网络</div>
+              <div className="demoText">WanderingEarth（流浪地球）</div>
             </div>
           </div>
           <div
@@ -147,7 +147,7 @@ const GraphDemo: React.FunctionComponent<IProps> = (props) => {
               <img src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*dprKS7Y7CpwAAAAAAAAAAAAADgOBAQ/original" />
             </div>
             <div className="textBox">
-              <div className="demoText">三体关系网络</div>
+              <div className="demoText">TheThreeBody（三体）</div>
             </div>
           </div>
         </div>

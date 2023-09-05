@@ -297,7 +297,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
                 {schemaList?.nodes?.map((item: any) => {
                   return (
                     <Option value={item.labelName} key={item.labelName}>
-                      <img src={typeImg['person']} alt="" className="img" />
+                      <img src={typeImg['person']} alt="" className="img" style={{ marginRight: 4 }} />
                       {item.labelName}
                     </Option>
                   );
@@ -342,7 +342,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
             </Form.Item>
           </Space>
 
-          <div className="tugraph-filter-panel-value" id={`${filterCriteria.id}-chart-container`}>
+          <div className="tugraph-filter-panel-value" id={`${filterCriteria.id}-chart-container`} style={{ marginTop: -20 }}>
             {filterCriteria.analyzerType == 'SELECT' && (
               <Select
                 style={{ width: '100%' }}

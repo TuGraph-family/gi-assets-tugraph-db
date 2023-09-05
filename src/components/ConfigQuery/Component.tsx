@@ -309,7 +309,7 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
                     key={schema.labelName}
                     value={schema.labelName}
                   >
-                    <img src={typeImg['person']} alt="" className="img" />
+                    <img src={typeImg['person']} alt="" className="img" style={{ marginRight: 4 }} />
                     {schema.labelName}
                   </Option>
                 );
