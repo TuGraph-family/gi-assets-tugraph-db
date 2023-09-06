@@ -11,3 +11,4 @@ export { default as LayoutSwitchTool } from './LayoutSwitchTool';
 export { default as AdvanceNeighborsQuery } from './NeighborsQuery';
 export { default as TuGraphShortcutKeys } from './TuGraphShortcutKeys'
 export { default as PointEdgeView } from './PointEdgeView';
+export { default as TuGraphPathQuery } from './PathQuery'
