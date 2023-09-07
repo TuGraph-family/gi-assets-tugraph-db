@@ -32,7 +32,7 @@
         }
       }
     }
-  
+
     .tugraph-path-analysis-title {
       font-size: 14px;
       font-weight: 500;
@@ -77,4 +77,14 @@
 
 .tugraph-filter-rule-container {
   width: 300px;
+}
+.container {
+  padding: 8px;
+  overflow: auto;
+
+  :global {
+    .ant-steps-item-tail::after {
+      margin-right: 10px;
+    }
+  }
 }

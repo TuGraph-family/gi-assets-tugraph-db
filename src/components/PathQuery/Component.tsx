@@ -12,6 +12,8 @@ import './index.less';
 import { IHighlightElement, IState } from './typing';
 import { getPathByWeight } from './utils';
 
+import { StepComponent } from './StepComponent';
+
 const { Panel } = Collapse;
 
 export interface IPathAnalysisProps {
@@ -78,7 +80,7 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
       try {
         const { allPath: allNodePath, allEdgePath }: any = findShortestPath(graphData, source, target, direction);
         if (!allNodePath?.length) {
-          let info ='无符合条件的路径';
+          let info = '无符合条件的路径';
           if (direction) {
             info = '{info}，可尝试将“是否有向”设置为“无向”，或改变起点与终点';
           } else {
@@ -102,9 +104,8 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
           };
           draft.selecting = '';
         });
-
       } catch (error) {
-        console.log(`错误信息：${error}`)
+        console.log(`错误信息：${error}`);
       }
     });
   };
@@ -266,12 +267,10 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
   ];
 
   return (
-    <div className='tugraph-path-analysis'>
+    <div className="tugraph-path-analysis">
       <div className="tugraph-path-analysis-form">
         <div className="tugraph-path-analysis-container">
-          <div className="tugraph-path-analysis-title">
-          路径配置
-          </div>
+          <div className="tugraph-path-analysis-title">路径配置</div>
           <Form form={form}>
             <NodeSelectionWrap
               graph={graph}
@@ -283,27 +282,13 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
             />
 
             {hasDirection && (
-              <Form.Item
-                wrapperCol={{ span: 24 }}
-                labelCol={{ span: 24 }}
-                name="direction"
-                label='是否有向'
-              >
-                <Switch
-                  checkedChildren='有向'
-                  unCheckedChildren='无向'
-                  defaultChecked
-                />
+              <Form.Item wrapperCol={{ span: 24 }} labelCol={{ span: 24 }} name="direction" label="是否有向">
+                <Switch checkedChildren="有向" unCheckedChildren="无向" defaultChecked />
               </Form.Item>
             )}
 
-            <Form.Item
-              name="maxdeep"
-              label='最大深度'
-              wrapperCol={{ span: 24 }}
-              labelCol={{ span: 24 }}
-            >
-              <InputNumber min={1} max={50} placeholder='请输入最大深度（上限50）' style={{ width: '100%' }} />
+            <Form.Item name="maxdeep" label="最大深度" wrapperCol={{ span: 24 }} labelCol={{ span: 24 }}>
+              <InputNumber min={1} max={50} placeholder="请输入最大深度（上限50）" style={{ width: '100%' }} />
             </Form.Item>
           </Form>
         </div>
@@ -330,13 +315,14 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
                     //   <PanelExtra pathId={index} highlightPath={state.highlightPath} onSwitchChange={onSwitchChange} />
                     // }
                   >
-                    <Timeline>
+                    <StepComponent path={path} />
+                    {/* <Timeline>
                       {path.map(nodeId => {
                         const nodeConfig = sourceDataMap.nodes[nodeId];
                         const data = nodeConfig?.data || {};
                         return <Timeline.Item>{data[pathNodeLabel] || nodeId}</Timeline.Item>;
                       })}
-                    </Timeline>
+                    </Timeline> */}
                   </Panel>
                 );
               })}
@@ -346,10 +332,9 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
 
         {state.isAnalysis && state.nodePath.length === 0 && <Empty />}
       </div>
-      <Space className='path-query-btn-group'>
-        <Button onClick={handleResetForm}>
-          重置
-        </Button>
+
+      <Space className="path-query-btn-group">
+        <Button onClick={handleResetForm}>重置</Button>
         <Button type="primary" onClick={handleSearch}>
           查询
         </Button>
