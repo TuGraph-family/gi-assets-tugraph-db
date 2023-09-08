@@ -1,38 +1,33 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Steps } from 'antd';
-import { LoadingOutlined, SmileOutlined, SolutionOutlined, UserOutlined } from '@ant-design/icons';
+import React from 'react';
+import { Space } from 'antd';
 import './index.less';
+import CustomIcon from '../StyleSetting/CustomIcon';
 
 interface props {
   path: any;
 }
-const { Step } = Steps;
 export const StepComponent: React.FC<props> = ({ path }) => {
   return (
     <div className="container">
-      <Steps current={0} labelPlacement="vertical">
+      <Space>
         {path?.map((item, index) => {
+          if (index === 0) {
+            return (
+              <div className="custom-step-item">
+                <CustomIcon type="icon-dot" style={{ fontSize: '12px', color: '#2463EC' }} />
+                <div>{item}</div>
+              </div>
+            );
+          }
           return (
-            <Step
-              title={item}
-              style={{ marginLeft: -8 }}
-              icon={
-                <div
-                  style={{
-                    background: index === 0 ? '#2463EC' : 'orange',
-                    width: 12,
-                    height: 12,
-                    borderRadius: '50%',
-                    position: 'relative',
-                    top: 9,
-                    left: 12,
-                  }}
-                ></div>
-              }
-            />
+            <div className="custom-step-item">
+              <div className="custom-step-item-line"></div>
+              <CustomIcon type="icon-dot" style={{ fontSize: '12px', color: 'orange', zIndex: 2 }} />
+              <div>{item}</div>
+            </div>
           );
         })}
-      </Steps>
+      </Space>
     </div>
   );
 };

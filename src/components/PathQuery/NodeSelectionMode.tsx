@@ -1,26 +1,16 @@
-/**
- * @file 节点选择组件
- * 用于获取目标节点，提供 2 种方式：从列表中选择节点或从画布中点选节点
- */
-import { FormOutlined } from '@ant-design/icons';
 import { Graph } from '@antv/g6';
 import type { FormInstance } from 'antd';
-import { Button, Form, Select, Tooltip } from 'antd';
-import React, { memo, useMemo, useState } from 'react';
+import { Button, Form, Select, Row, Col, Tag, Badge } from 'antd';
+import React, { memo, useState } from 'react';
 import CustomIcon from '../StyleSetting/CustomIcon';
+import { hexToRGBA } from '../utils';
 import './index.less';
-
-export enum NodeSelectionMode {
-  List = 'List', // 从列表中选择节点
-  Canvas = ''//'Canvas', // 从画布中点选节点
-}
 
 interface NodeSelectionProps {
   graph: Graph;
   form: FormInstance<any>;
   data: Record<string, any>[];
   nodeLabel: string;
-  nodeSelectionMode: string[];
 }
 
 interface NodeSelectionWrapProps extends NodeSelectionProps {
@@ -39,37 +29,24 @@ interface NodeSelectionFormItemProps extends NodeSelectionProps {
   setSelecting: React.Dispatch<React.SetStateAction<string>>;
 }
 
-let nodeClickListener = e => {};
-
 const NodeSelectionFormItem: React.FC<NodeSelectionFormItemProps> = memo(props => {
-  const { graph, nodeSelectionMode, nodeLabel, key, name, label, form, data, setSelecting, selecting, color } = props;
-  const isList = nodeSelectionMode.includes(NodeSelectionMode.List);
-  const isCanvas = nodeSelectionMode.includes(NodeSelectionMode.Canvas);
+  const { nodeLabel, key, name, label, data, setSelecting, color } = props;
 
-  const beginSelect = () => {
-    setSelecting(name);
-    graph && graph.off('node:click', nodeClickListener);
-
-    nodeClickListener = e => {
-      setSelecting('');
-      const { item } = e;
-      if (!item || item.destroyed) return;
-      form.setFieldsValue({ [name]: item.getID() });
-    };
-    graph.once('node:click', nodeClickListener);
+  const getDefaultRow = () => {
+    return (
+      <Row>
+        <Col style={{ textAlign: 'center' }} span={7}>
+          节点ID
+        </Col>
+        <Col span={1}></Col>
+        <Col style={{ textAlign: 'left' }} span={16}>
+          属性值
+        </Col>
+      </Row>
+    );
   };
 
-  const selectProps = useMemo(
-    () => ({
-      showArrow: isList,
-      open: isList ? undefined : false,
-      onFocus: () => {
-        isCanvas && beginSelect();
-      },
-    }),
-    [isList, isCanvas],
-  );
-
+  console.log('path data', data, nodeLabel);
   return (
     <div className="nodeSelectionFromItem">
       <Form.Item
@@ -91,32 +68,55 @@ const NodeSelectionFormItem: React.FC<NodeSelectionFormItemProps> = memo(props =
           onChange={() => {
             setSelecting('');
           }}
-          {...selectProps}
+          optionLabelProp="label"
         >
-          {data.map(node => (
-            <Select.Option key={node.id} value={node.id}>
-              {node[nodeLabel]}
-            </Select.Option>
-          ))}
+          <Select.OptGroup key="simple-path-query" label={getDefaultRow()}>
+            {data.map(node => (
+              <Select.Option
+                key={node.id}
+                value={node.id}
+                label={
+                  <>
+                    <Tag color="green">{node.id}</Tag>
+                    {node?.style.label.value}
+                  </>
+                }
+              >
+                <Row>
+                  <Col span={7} style={{ textAlign: 'left' }}>
+                    <Tag
+                      style={{
+                        background: hexToRGBA(node?.style.keyshape.fill, 0.06),
+                        border: 'none',
+                        borderRadius: '25px',
+                      }}
+                    >
+                      <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 55 }}>
+                        <Badge style={{ marginRight: 4 }} status="success" />
+                        {node.id}
+                      </div>
+                    </Tag>
+                  </Col>
+                  <Col span={1}></Col>
+                  <Col span={16} style={{ textAlign: 'left' }}>
+                    <Tag style={{ background: hexToRGBA('#F6f6f6', 1), border: 'none', borderRadius: '25px' }}>
+                      <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 100 }}>
+                        {node?.style.label.value || node.label}
+                      </div>
+                    </Tag>
+                  </Col>
+                </Row>
+              </Select.Option>
+            ))}
+          </Select.OptGroup>
         </Select>
       </Form.Item>
-      {isCanvas && (
-        <Tooltip
-          title={`可点选画布节点，快速选择${label}`}
-        >
-          <FormOutlined
-            className="operation"
-            style={{ cursor: 'pointer', color: selecting === name ? '#1890ff' : 'rgba(0, 0, 0, 0.65)' }}
-            onClick={beginSelect}
-          />
-        </Tooltip>
-      )}
     </div>
   );
 });
 
 const NodeSelectionWrap: React.FC<NodeSelectionWrapProps> = memo(props => {
-  const { graph, nodeSelectionMode, nodeLabel, items, form, data } = props;
+  const { graph, nodeLabel, items, form, data } = props;
   const [selecting, setSelecting] = useState('');
   const colors = ['#1650FF', '#FFC53D'];
   const handleSwap = async () => {
@@ -138,7 +138,6 @@ const NodeSelectionWrap: React.FC<NodeSelectionWrapProps> = memo(props => {
           label={item.label}
           data={data}
           nodeLabel={nodeLabel}
-          nodeSelectionMode={nodeSelectionMode}
           selecting={selecting}
           setSelecting={setSelecting}
         />

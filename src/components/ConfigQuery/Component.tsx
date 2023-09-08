@@ -373,7 +373,7 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
                 key={tag}
                 checked={state.selectTag === tag}
                 onChange={(checked) => handleChange(tag, checked)}
-                style={{ backgroundColor: state.selectTag === tag ? '#3056E3' : '#E6EBF6'  }}
+                style={{ backgroundColor: state.selectTag === tag ? '#3056E3' : '#E6EBF6', borderRadius: 20 }}
               >
                 {tag}
               </CheckableTag>

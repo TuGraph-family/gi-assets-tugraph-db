@@ -1,6 +1,5 @@
 import Engine, { ENGINE_ID } from './Engine';
 import * as Initializer from './Initializer';
-import * as TuGraphBack from './TuGraphBack';
 import * as TuGraphAnalisisService from './TuGraphAnalysis'
 
 export default {
@@ -12,7 +11,6 @@ export default {
   component: Engine,
   services: {
     ...Initializer,
-    ...TuGraphBack,
     ...TuGraphAnalisisService
   },
 };
