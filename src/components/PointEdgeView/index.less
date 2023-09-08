@@ -1,43 +1,43 @@
 .pointEdgeView {
   position: absolute;
-  left: 24px;
   bottom: 24px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   width: 100%;
   height: 24px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
 }
 
 .nodesItem {
   display: flex;
-  justify-content: flex-start;
   align-items: center;
+  justify-content: flex-start;
   margin-right: 8px;
   cursor: pointer;
   .icon {
-    height: 8px;
     width: 8px;
-    border-radius: 50%;
+    height: 8px;
     margin-right: 4px;
+    border-radius: 50%;
   }
   .text {
-    font-family: PingFangSC;
+    color: #6a6b71;
     font-weight: 400;
     font-size: 12px;
-    color: #6a6b71;
+    font-family: PingFangSC;
   }
 }
 
 .openIcon {
-  height: 20px;
-  width: 20px;
-  border-radius: 4px;
-  cursor: pointer;
   display: flex;
-  padding: 2px;
   align-items: center;
   justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 2px;
+  border-radius: 4px;
+  cursor: pointer;
   & img {
     display: block;
     width: 100%;
@@ -46,186 +46,190 @@
 }
 
 .pointEdgeViewCard {
-  height: 240px;
+  position: absolute;
+  top: -250px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 300px;
+  height: 240px;
+  padding: 16px;
+  overflow-x: hidden;
+  overflow-y: auto;
   background-color: #ffffff;
   border-radius: 8px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  position: absolute;
-  left: 0;
-  top: -264px;
   box-shadow: 0 2px 8px #f0f1f2;
-  padding: 16px;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
   .type {
     display: flex;
+    align-items: center;
     justify-content: space-between;
     .nodeType {
-      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
       width: 138px;
+      height: 32px;
+
       background-image: linear-gradient(171deg, rgba(225, 231, 245, 0.38) 11%, rgba(225, 231, 246, 0.55) 95%);
       border-radius: 8px;
-      justify-content: space-around;
-      align-items: center;
-      display: flex;
       .typeActive {
-        height: 24px;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
         width: 54px;
-        background-color: #ffffff;
-        border-radius: 6px;
+        height: 24px;
+        padding: 0 6px;
+        color: #363740;
         font-weight: 400;
         font-size: 12px;
-        color: #363740;
-        justify-content: space-around;
-        align-items: center;
-        display: flex;
         text-align: center;
+        background-color: #ffffff;
+        border-radius: 6px;
         cursor: pointer;
-        z-index: 9999;
         & span {
           display: inline-block;
         }
         .text {
+          color: #363740;
           font-weight: 400;
           font-size: 12px;
-          color: #363740;
         }
         .num {
-          text-align: center;
-          height: 16px;
-          line-height: 16px;
           width: 29px;
+          height: 16px;
+          color: #363740;
           font-weight: 400;
           font-size: 12px;
-          color: #363740;
+          line-height: 16px;
+          text-align: center;
           background-image: linear-gradient(176deg, rgba(225, 231, 245, 0.38) 11%, rgba(225, 231, 246, 0.55) 95%);
           border-radius: 10px;
         }
       }
       .typeNormal {
-        height: 24px;
-        width: 54px;
-        cursor: pointer;
         z-index: 9999;
-        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 54px;
+        height: 24px;
+        padding: 0 6px;
+        color: #6a6b71;
         font-weight: 400;
         font-size: 12px;
-        color: #6a6b71;
-        justify-content: space-around;
-        align-items: center;
-        display: flex;
         text-align: center;
+        border-radius: 6px;
+        cursor: pointer;
         & span {
           display: inline-block;
         }
         .text {
+          color: #6a6b71;
           font-weight: 400;
           font-size: 12px;
-          color: #6a6b71;
         }
         .num {
-          text-align: center;
-          height: 16px;
-          line-height: 16px;
           width: 29px;
+          height: 16px;
+          color: #6a6b71;
           font-weight: 400;
           font-size: 12px;
-          color: #6a6b71;
+          line-height: 16px;
+          text-align: center;
           background-image: linear-gradient(176deg, rgba(255, 255, 255, 0.38) 11%, rgba(255, 255, 255, 0.55) 95%);
           border-radius: 10px;
         }
       }
     }
     .viewType {
-      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
       width: 62px;
+      height: 32px;
       background-image: linear-gradient(176deg, rgba(225, 231, 245, 0.38) 11%, rgba(225, 231, 246, 0.55) 95%);
       border-radius: 8px;
-      justify-content: space-around;
-      align-items: center;
-      display: flex;
       .viewTypeActive {
-        cursor: pointer;
-        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 28px;
+        height: 24px;
         background-color: #ffffff;
         border-radius: 6px;
-        justify-content: center;
-        align-items: center;
-        display: flex;
+        cursor: pointer;
         .icon {
           display: inline-block;
-          height: 12.8px;
           width: 12.8px;
+          height: 12.8px;
         }
       }
       .viewTypeNormal {
-        height: 24px;
-        width: 28px;
-        border-radius: 6px;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
         display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 24px;
+        border-radius: 6px;
+        cursor: pointer;
         .icon {
           display: inline-block;
-          height: 12.8px;
           width: 12.8px;
+          height: 12.8px;
         }
       }
     }
   }
 }
 .list {
-  width: 100%;
-  height: 188%;
-  overflow-y: auto;
-  overflow-x: hidden;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: 188%;
   margin-top: 12px;
+  overflow-x: hidden;
+  overflow-y: auto;
   .listItem {
-    overflow-x: hidden;
     display: flex;
     justify-content: space-between;
     height: 32px;
-    border-radius: 8px;
     padding: 6px;
+    overflow-x: hidden;
+    border-radius: 8px;
     .left {
       display: flex;
       align-items: center;
       .icon {
-        height: 8px;
         width: 8px;
-        border-radius: 50%;
+        height: 8px;
         margin-right: 8px;
+        border-radius: 50%;
       }
       .text {
-        font-family: PingFangSC;
+        color: #6a6b71;
         font-weight: 400;
         font-size: 12px;
-        color: #6a6b71;
+        font-family: PingFangSC;
       }
     }
     .right {
-      font-weight: 400;
-      font-size: 12px;
-      color: #363740;
       display: flex;
       align-items: center;
+      color: #363740;
+      font-weight: 400;
+      font-size: 12px;
     }
   }
   .listEdgesItem {
-    height: 56px;
     display: flex;
     flex-direction: column;
+    height: 56px;
     .top {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       .left {
         display: flex;
         .icon {
@@ -233,24 +237,24 @@
           margin-right: 10px;
         }
         .text {
+          color: #363740;
           font-weight: 400;
           font-size: 12px;
-          color: #363740;
         }
       }
       .right {
+        color: #98989d;
         font-weight: 400;
         font-size: 12px;
-        color: #98989d;
       }
     }
     .bottom {
       display: flex;
       margin-left: 24px;
       .text {
+        color: #98989d;
         font-weight: 400;
         font-size: 12px;
-        color: #98989d;
       }
       .icon {
         margin: 0 4px;
