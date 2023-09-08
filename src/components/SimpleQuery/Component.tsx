@@ -3,7 +3,7 @@ import { Row, Col, Form, Input, Select, Badge, Tag, message } from "antd";
 import React, { useEffect } from "react";
 import { SearchOutlined } from '@ant-design/icons';
 import { useImmer } from "use-immer";
-import { getQueryString } from '../utils'
+import { getQueryString, hexToRGBA } from '../utils'
 import { getTransformByTemplate } from '../StyleSetting/utils'
 import "./index.less";
 
@@ -14,7 +14,7 @@ const SimpleQuery = () => {
 
   const demoGraphName = getQueryString('demoGraphName')
 
-  const { updateContext, services, schemaData, graph } = useContext();
+  const { updateContext, services, schemaData, graph, data } = useContext();
   const languageService: any = utils.getService(services, 'TuGraph-DB/languageQueryService');
 
   const customStyleConfig = localStorage.getItem('CUSTOM_STYLE_CONFIG')
@@ -23,11 +23,11 @@ const SimpleQuery = () => {
 
   const getDefaultRow = (type) => {
     return <Row>
-      <Col style={{textAlign: 'center' }} span={6}>{type === 'node' ? '节点名称' : '边名称' }</Col>
+      {/* <Col style={{textAlign: 'center' }} span={6}>{type === 'node' ? '节点名称' : '边名称' }</Col>
+      <Col span={1}></Col> */}
+      <Col style={{textAlign: 'center' }} span={7}>属性名称</Col>
       <Col span={1}></Col>
-      <Col style={{textAlign: 'center' }} span={6}>属性名称</Col>
-      <Col span={1}></Col>
-      <Col style={{textAlign: 'left' }} span={10}>属性值</Col>
+      <Col style={{textAlign: 'left' }} span={16}>属性值</Col>
     </Row>
   }
   
@@ -130,18 +130,24 @@ const SimpleQuery = () => {
   const handleSearch = (value: string) => {    
     if (value) {
       // 计算数据
-      const { nodes, edges } = graph.save()
+      const { nodes, edges } = data//graph.save()
       const filterNodeData = (nodes as any).map(d => {
-        const { id, label, properties } = d 
+        const { id, label, properties, style } = d 
         return {
-          id, label, properties
+          id, 
+          label, 
+          properties,
+          color: style?.keyshape?.fill || 'green'
         }
       })
 
       const filterEdgeData = (edges as any).map(d => {
-        const { label, id, properties } = d
+        const { label, id, properties, style } = d
         return {
-          id, label, properties
+          id, 
+          label, 
+          properties,
+          color: style?.keyshape?.stroke || 'green'
         }
       })
       let result: any = []
@@ -164,7 +170,8 @@ const SimpleQuery = () => {
             id,
             label: value.label,
             propertyKey: v,
-            value: value[p][v]
+            value: value[p][v],
+            color: value.color
           }
         } 
         
@@ -173,7 +180,8 @@ const SimpleQuery = () => {
           id,
           label: value.label,
           propertyKey: key,
-          value: value[key]
+          value: value[key],
+          color: value.color
         }
       })
 
@@ -183,11 +191,11 @@ const SimpleQuery = () => {
             value: d.id,
             originValue: <><Tag style={{ marginLeft: 4 }} color="green">{d.propertyKey}</Tag>{d.value}</>,
             text: <Row style={{ paddingTop: 4 }}>
-              <Col span={6} style={{ textAlign: 'center' }}><Tag><div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 55 }}><Badge style={{ marginRight: 4 }} status="success" />{d.label}</div></Tag></Col>
+              {/* <Col span={6} style={{ textAlign: 'left' }}><div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 55 }}><Badge style={{ marginRight: 4 }} color={d.color} />{d.label}</div></Col>
+              <Col span={1}></Col> */}
+              <Col span={7} style={{ textAlign: 'left' }}><Tag style={{ background: hexToRGBA(d.color, 0.06), border: 'none', borderRadius: '25px' }}><div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 40 }}><Badge style={{ marginRight: 4 }} color={d.color} />{d.propertyKey}</div></Tag></Col>
               <Col span={1}></Col>
-              <Col span={6} style={{ textAlign: 'center' }}><Tag><div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 55 }}>{d.propertyKey}</div></Tag></Col>
-              <Col span={1}></Col>
-              <Col span={10} style={{ textAlign: 'left' }}><Tag><div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 90 }}>{d.value}</div></Tag></Col>
+              <Col span={16} style={{ textAlign: 'left' }}><Tag style={{ background: hexToRGBA('#F6f6f6', 1), border: 'none', borderRadius: '25px' }}><div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 115 }}>{d.value}</div></Tag></Col>
             </Row>
           }
         })

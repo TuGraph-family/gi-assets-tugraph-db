@@ -3,6 +3,7 @@ import type { FormInstance } from 'antd';
 import { Button, Form, Select, Row, Col, Tag, Badge } from 'antd';
 import React, { memo, useState } from 'react';
 import CustomIcon from '../StyleSetting/CustomIcon';
+import { hexToRGBA } from '../utils';
 import './index.less';
 
 interface NodeSelectionProps {
@@ -67,9 +68,17 @@ const NodeSelectionFormItem: React.FC<NodeSelectionFormItemProps> = memo(props =
             {data.map(node => (
               <Select.Option key={node.id} value={node.id} label={<><Tag color="green">{node.id}</Tag>{node?.style.label.value}</>}>
                 <Row>
-                  <Col span={7} style={{ textAlign: 'left' }}><Tag><div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 55 }}><Badge style={{ marginRight: 4 }} status="success" />{node.id}</div></Tag></Col>
+                  <Col span={7} style={{ textAlign: 'left' }}>
+                    <Tag style={{ background: hexToRGBA(node?.style.keyshape.fill, 0.06), border: 'none', borderRadius: '25px' }}>
+                      <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 55 }}><Badge style={{ marginRight: 4 }} status="success" />{node.id}</div>
+                    </Tag>
+                  </Col>
                   <Col span={1}></Col>
-                  <Col span={16} style={{ textAlign: 'left' }}><Tag><div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 100 }}>{node?.style.label.value || node.label}</div></Tag></Col>
+                  <Col span={16} style={{ textAlign: 'left' }}>
+                    <Tag style={{ background: hexToRGBA('#F6f6f6', 1), border: 'none', borderRadius: '25px' }}>
+                      <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 100 }}>{node?.style.label.value || node.label}</div>
+                    </Tag>
+                  </Col>
                 </Row>
               </Select.Option>
             ))}
