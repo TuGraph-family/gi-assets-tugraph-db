@@ -67,11 +67,15 @@ export const AttributesEditForm: React.FC<props> = ({ id, handleDelete, form, sc
             <span>
               {label ? (
                 <span>
-                  <img src={state.currentSchema.labelType === 'node' ? typeImg.person : typeImg.amount} alt="" className="img" />
+                  <img
+                    src={state.currentSchema.labelType === 'node' ? typeImg.person : typeImg.amount}
+                    alt=""
+                    className="img"
+                  />
                   {label}
                 </span>
               ) : (
-                '未选择'
+                <span style={{ color: '#1A1B25' }}>未选择</span>
               )}
             </span>
           }
@@ -117,7 +121,7 @@ export const AttributesEditForm: React.FC<props> = ({ id, handleDelete, form, sc
                         <Select
                           placeholder="请选择"
                           showSearch
-                           // @ts-ignore
+                          // @ts-ignore
                           filterOption={(input, option) => (option?.label ?? '').includes(input)}
                           style={{ width: '40%' }}
                           onChange={handlePropertyChange}
@@ -131,18 +135,16 @@ export const AttributesEditForm: React.FC<props> = ({ id, handleDelete, form, sc
                           })}
                         </Select>
                       </Form.Item>
-                      <Form.Item noStyle name={[name, 'operator']} rules={[{ required: true, message: '请选择查询逻辑' }]}>
+                      <Form.Item
+                        noStyle
+                        name={[name, 'operator']}
+                        rules={[{ required: true, message: '请选择查询逻辑' }]}
+                      >
                         <Select placeholder="请选择" style={{ width: '30%' }} allowClear>
                           {getOperatorList(state.currentProperty?.type).map(logic => {
                             return (
                               <Option value={logic.key} key={logic.key}>
-                                 {
-                                    logic.text
-                                    ?
-                                    <Tooltip title={logic.text}>{logic.value}</Tooltip>
-                                    :
-                                    logic.value
-                                  }
+                                {logic.text ? <Tooltip title={logic.text}>{logic.value}</Tooltip> : logic.value}
                               </Option>
                             );
                           })}
@@ -157,7 +159,13 @@ export const AttributesEditForm: React.FC<props> = ({ id, handleDelete, form, sc
                   </div>
                 ))}
                 <Form.Item style={{ marginBottom: 0, width: '91%' }}>
-                  <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                  <Button
+                    type="dashed"
+                    onClick={() => add()}
+                    block
+                    icon={<PlusOutlined color="#6A6B71" />}
+                    style={{ color: '#6A6B71' }}
+                  >
                     添加属性条件
                   </Button>
                 </Form.Item>

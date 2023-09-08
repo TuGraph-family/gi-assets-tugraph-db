@@ -5,37 +5,37 @@
 
 .title {
   display: flex;
-  justify-content: flex-start;
   align-items: center;
+  justify-content: flex-start;
 
   .iconBox {
-    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 46px;
+    height: 46px;
+    margin-right: 12px;
     background-color: #ffffff;
     border: 1.1px solid rgba(242, 242, 242, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
     border-radius: 50%;
-    margin-right: 12px;
     .icon {
       margin: 0 auto;
     }
   }
   .text {
     display: flex;
-    justify-content: flex-start;
     flex-direction: column;
+    justify-content: flex-start;
     .main {
+      color: #363740;
       font-weight: 600;
       font-size: 16px;
-      color: #363740;
       line-height: 22px;
     }
     .sub {
+      color: #98989d;
       font-weight: 400;
       font-size: 14px;
-      color: #98989d;
       line-height: 22px;
     }
   }
@@ -44,33 +44,33 @@
 .demoContent {
   display: flex;
   align-items: center;
-  width: 100%;
   justify-content: space-between;
+  width: 100%;
   padding-bottom: 8px;
   .demoItemSelected {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     flex-direction: column;
-    height: 244px;
+    align-items: center;
+    justify-content: space-between;
     width: 220px;
+    height: 244px;
     overflow: hidden;
     background-color: #ffffff;
+    border: 1px solid rgb(22, 80, 255, 0.6);
     border-radius: 8px;
     box-shadow: 0 2px 8px #f0f1f2;
     cursor: pointer;
-    border: 1px solid rgb(22, 80, 255, 0.6);
     &:hover {
       border: 1px solid rgb(22, 80, 255, 0.6);
     }
   }
   .demoItem {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     flex-direction: column;
-    height: 244px;
+    align-items: center;
+    justify-content: space-between;
     width: 220px;
+    height: 244px;
     overflow: hidden;
     background-color: #ffffff;
     border-radius: 8px;
@@ -83,12 +83,12 @@
 }
 
 .picBox {
-  height: 182px;
-  width: 220px;
-  background-color: rgb(242, 245, 254);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  width: 220px;
+  height: 182px;
+  background-color: rgb(242, 245, 254);
   & img {
     display: block;
     width: 169.7px;
@@ -96,16 +96,16 @@
   }
 }
 .textBox {
-  height: 62px;
-  width: 220px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  width: 220px;
+  height: 62px;
   text-align: center;
   .demoText {
+    color: #363740;
     font-weight: 500;
     font-size: 14px;
-    color: #363740;
     line-height: 22px;
   }
 }

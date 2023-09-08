@@ -98,7 +98,9 @@ const RuleConfigPanel: React.FC<props> = ({ id, handleDelete, form, schemaList }
               })}
             </Select>
           </Form.Item>
-          <p className="conditionIcon" style={{ color: '#363740' }}>属性条件</p>
+          <p className="conditionIcon" style={{ color: '#363740' }}>
+            属性条件
+          </p>
           <Form.List name={`rules-${id}`}>
             {(fields, { add, remove }) => (
               <>
@@ -147,7 +149,13 @@ const RuleConfigPanel: React.FC<props> = ({ id, handleDelete, form, schemaList }
                   </div>
                 ))}
                 <Form.Item style={{ marginBottom: 8 }}>
-                  <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                  <Button
+                    type="dashed"
+                    onClick={() => add()}
+                    block
+                    icon={<PlusOutlined color="#6A6B71" />}
+                    style={{ color: '#6A6B71' }}
+                  >
                     添加属性条件
                   </Button>
                 </Form.Item>

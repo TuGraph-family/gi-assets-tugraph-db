@@ -1,58 +1,58 @@
 .tugraph-path-analysis {
   position: relative;
-  height: calc(100vh - 210px);
+  height: 100%;
+  padding: 16px;
+  overflow: hidden;
+  background-color: #f3f5f9;
   .tugraph-path-analysis-form {
-    margin: 0px !important;
+    padding: 16px;
+    background: linear-gradient(#F5F8FF(45%), #F4F7FF(65%));
+    border: 1px solid #ffffff;
+    border-radius: 4px;
+    border-radius: 8px;
+    border-image: linear-gradient(#FFFFFF(100%), #FFFFFF(60%));
+    opacity: 85%;
     .tugraph-path-analysis-container {
-      padding: 12px 12px 8px 12px;
-      border-radius: 4px;
-      background: #fafbfe;
-      margin: 8px 0px;
       position: relative;
     }
     .tugraph-path-analysis-result-container {
-      padding: 12px 12px 8px 12px;
-      border-radius: 4px;
-      background: #fafbfe;
-      margin: 8px 0px;
       position: relative;
-      height: calc(100vh - 520px);
       .tugraph-collapse-container {
+        height: 87%;
         margin: 1px !important;
         padding: 4px 4px !important;
-        border-radius: 4px !important;
-        height: 87%;
         overflow: auto;
+        border-radius: 4px !important;
         .tugraph-collapse-container-panel {
-          background: #ffffff;
           margin: 8px 0;
+          background: #ffffff;
+          border-radius: 8px;
           box-shadow: -1px -1px 4px 0 hsla(0, 0%, 87.5%, 0.5), -2px 2px 4px 0 hsla(0, 0%, 95.7%, 0.5),
             2px 3px 8px 2px hsla(0, 0%, 59.2%, 0.05);
-          border-radius: 8px;
         }
       }
     }
 
     .tugraph-path-analysis-title {
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 22px;
-      height: 22px;
-      margin-bottom: 12px;
       display: flex;
       justify-content: space-between;
+      height: 22px;
+      margin-bottom: 12px;
       color: #363740;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 22px;
       .ant-segmented {
-        background: #eaeff9;
-        padding: 4px;
         width: 100%;
+        padding: 4px;
+        background: #eaeff9;
         .ant-segmented-item {
           width: 60px;
         }
         .ant-segmented-item-label {
           color: #363740;
-          font-size: 12px;
           font-weight: 400;
+          font-size: 12px;
         }
       }
       .ant-segmented:not(.ant-segmented-disabled):hover,
@@ -67,8 +67,8 @@
   }
   .path-query-btn-group {
     position: absolute;
-    bottom: 0;
-    right: 0;
+    right: 16px;
+    bottom: 16px;
     .ant-btn {
       width: 80px;
     }
