@@ -8,9 +8,9 @@ import React, { memo, useEffect, useRef } from 'react';
 import { useImmer } from 'use-immer';
 import PanelExtra from './PanelExtra';
 import SegementFilter from './SegmentFilter';
-import './index.less';
 import { IHighlightElement, IState } from './typing';
 import { getPathByWeight } from './utils';
+import './index.less';
 
 import { StepComponent } from './StepComponent';
 
@@ -18,7 +18,6 @@ const { Panel } = Collapse;
 
 export interface IPathAnalysisProps {
   hasDirection: boolean;
-  nodeSelectionMode: string[];
   pathNodeLabel: string;
   controlledValues?: {
     source: string;
@@ -31,7 +30,7 @@ export interface IPathAnalysisProps {
 // enableMapSet();
 
 const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
-  const { nodeSelectionMode, pathNodeLabel, controlledValues, onOpen = () => {}, hasDirection } = props;
+  const { pathNodeLabel, controlledValues, onOpen = () => {}, hasDirection } = props;
   const { data: graphData, graph, sourceDataMap } = useContext();
 
   const [state, updateState] = useImmer<IState>({
@@ -46,7 +45,6 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
     },
     selecting: '',
   });
-  let nodeClickListener = e => {};
 
   // 缓存被高亮的节点和边
   const highlightElementRef = useRef<IHighlightElement>({
@@ -278,7 +276,6 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
               items={items}
               data={graphData.nodes}
               nodeLabel={pathNodeLabel}
-              nodeSelectionMode={nodeSelectionMode}
             />
 
             {hasDirection && (
@@ -287,8 +284,11 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
               </Form.Item>
             )}
 
-            <Form.Item name="maxdeep" label="最大深度" wrapperCol={{ span: 24 }} labelCol={{ span: 24 }}>
+            {/* <Form.Item name="maxdeep" label="最大深度" wrapperCol={{ span: 24 }} labelCol={{ span: 24 }}>
               <InputNumber min={1} max={50} placeholder="请输入最大深度（上限50）" style={{ width: '100%' }} />
+            </Form.Item> */}
+            <Form.Item name="direction" label="是否有向" wrapperCol={{ span: 24 }} labelCol={{ span: 24 }}>
+              <Switch />
             </Form.Item>
           </Form>
         </div>

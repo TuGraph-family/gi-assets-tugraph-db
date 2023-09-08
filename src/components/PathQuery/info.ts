@@ -1,6 +1,6 @@
 const info = {
   id: 'TuGraphPathQuery',
-  name: 'TuGraph 路径查询',
+  name: '路径查询',
   desc: '选择起点和终点，进行分析路径',
   icon: 'icon-path-analysis',
   cover: 'http://xxxx.jpg',

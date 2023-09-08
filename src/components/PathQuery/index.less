@@ -1,6 +1,6 @@
 .tugraph-path-analysis {
   position: relative;
-  height: calc(100vh - 210px);
+  height: calc(100vh - 205px);
   .tugraph-path-analysis-form {
     margin: 0px !important;
     .tugraph-path-analysis-container {
@@ -81,6 +81,19 @@
 .container {
   padding: 8px;
   overflow: auto;
+  .custom-step-item {
+    position: relative;
+    text-align: center;
+    width: 45px;
+    .custom-step-item-line {
+      position: absolute;
+      top: 11px;
+      width: 42px;
+      left: -25px;
+      height: 1px;
+      background: #99ADD1;
+    }
+  }
 
   :global {
     .ant-steps-item-tail::after {
