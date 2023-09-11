@@ -153,7 +153,7 @@ export const AttributesEditForm: React.FC<props> = ({ id, handleDelete, form, sc
                       </Form.Item>
                     </Input.Group>
 
-                    <DeleteOutlined style={{ marginLeft: 8 }} onClick={() => remove(name)} />
+                    <DeleteOutlined onClick={() => remove(name)} />
                   </div>
                 ))}
                 <Form.Item style={{ marginBottom: 0, width: '91%' }}>

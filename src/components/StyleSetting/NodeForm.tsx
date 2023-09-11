@@ -295,51 +295,54 @@ export const NodeForm: React.FC<NodeFormProps> = ({
         // expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
         className="site-collapse-custom-collapse"
       >
-        <Panel header="高级自定义" key="1" className="site-collapse-custom-panel" forceRender>
+        <Panel header="高级配置" key="1" className="site-collapse-custom-panel" forceRender>
           <div style={{ marginBottom: 16 }}>属性</div>
           <Form.List name="property">
             {(fields, { add, remove }) => {
               return (
                 <>
                   {fields.map(({ key, name, ...restField }) => (
-                    <span key={key} style={{ display: 'inline-block', marginBottom: 8 }}>
-                      <Form.Item {...restField} name={[name, 'name']} noStyle>
-                        <Select
-                          placeholder="请选择"
-                          showSearch
-                          allowClear
-                          style={{ width: '33%', marginRight: 8 }}
-                          disabled={!currentSchema.properties}
-                        >
-                          {propertyOptions}
-                        </Select>
-                      </Form.Item>
-                      <Form.Item {...restField} name={[name, 'operator']} noStyle>
-                        <Select placeholder="请选择" showSearch allowClear style={{ width: '33%', marginRight: 8 }}>
-                          {getOperatorList(
-                            property && property[key]?.name
-                              ? currentSchema.properties.find(d => d.name === property[key]?.name)?.type
-                              : undefined,
-                          ).map(op => {
-                            return (
-                              <Option value={op.key} key={op.key}>
-                                {
-                                  op.text
-                                  ?
-                                  <Tooltip title={op.text}>{op.value}</Tooltip>
-                                  :
-                                  op.value
-                                }
-                              </Option>
-                            );
-                          })}
-                        </Select>
-                      </Form.Item>
-                      <Form.Item {...restField} name={[name, 'value']} noStyle>
-                        <Input style={{ width: '19%', marginRight: 8 }} />
-                      </Form.Item>
+                    <div className='property-list'>
+                      <Input.Group compact>
+                        <Form.Item {...restField} name={[name, 'name']} noStyle>
+                          <Select
+                            placeholder="请选择"
+                            showSearch
+                            allowClear
+                            style={{ width: '40%' }}
+                            disabled={!currentSchema.properties}
+                          >
+                            {propertyOptions}
+                          </Select>
+                        </Form.Item>
+                        <Form.Item {...restField} name={[name, 'operator']} noStyle>
+                          <Select placeholder="请选择" showSearch allowClear style={{ width: '30%' }}>
+                            {getOperatorList(
+                              property && property[key]?.name
+                                ? currentSchema.properties.find(d => d.name === property[key]?.name)?.type
+                                : undefined,
+                            ).map(op => {
+                              return (
+                                <Option value={op.key} key={op.key}>
+                                  {
+                                    op.text
+                                    ?
+                                    <Tooltip title={op.text}>{op.value}</Tooltip>
+                                    :
+                                    op.value
+                                  }
+                                </Option>
+                              );
+                            })}
+                          </Select>
+                        </Form.Item>
+                        <Form.Item {...restField} name={[name, 'value']} noStyle>
+                          <Input style={{ width: '30%' }} />
+                        </Form.Item>
+                      </Input.Group>
+
                       <DeleteOutlined  onClick={() => remove(name)} />
-                    </span>
+                    </div>
                   ))}
                   <Form.Item style={{ width: '91%' }}>
                     <Button
@@ -347,7 +350,8 @@ export const NodeForm: React.FC<NodeFormProps> = ({
                       disabled={!currentSchema.properties}
                       onClick={() => add()}
                       block
-                      icon={<PlusOutlined />}
+                      icon={<PlusOutlined color="#6A6B71" />}
+                      style={{ color: '#6A6B71' }}
                     >
                       添加属性过滤条件
                     </Button>
