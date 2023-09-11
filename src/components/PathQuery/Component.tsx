@@ -287,7 +287,7 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
             {/* <Form.Item name="maxdeep" label="最大深度" wrapperCol={{ span: 24 }} labelCol={{ span: 24 }}>
               <InputNumber min={1} max={50} placeholder="请输入最大深度（上限50）" style={{ width: '100%' }} />
             </Form.Item> */}
-            <Form.Item name="direction" label="是否有向" wrapperCol={{ span: 24 }} labelCol={{ span: 24 }}>
+            <Form.Item style={{ marginBottom: 8 }} name="direction" label="是否有向" wrapperCol={{ span: 24 }} labelCol={{ span: 24 }}>
               <Switch />
             </Form.Item>
           </Form>

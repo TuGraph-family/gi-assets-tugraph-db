@@ -1,6 +1,7 @@
 .style-setting-container {
   position: relative;
   height: calc(100vh - 150px);
+  background-color: #f3f5f9;
   .container-element {
     width: 50%;
     text-align: center;
@@ -43,7 +44,7 @@
     }
     .custom-ant-radio-wrapper.ant-radio-wrapper-checked {
       outline: 8px auto #fff;
-      box-shadow: 2px 2px 15px 2px #bfbfbf;
+      box-shadow: 2px 2px 2px 2px #ccc;
     }
     .ant-radio-button-wrapper:not(:first-child)::before {
       width: 0px;
@@ -94,13 +95,13 @@
   
     .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
       color: #96969b;
-      background: rgb(223 227 239);
-      border-color: rgb(223 227 239);
+      background: #fff;
+      box-shadow: 2px 2px 8px 2px #ccc;
+      outline: 8px auto #fff;
     }
     .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover {
       color: #96969b;
-      background: rgb(223 227 239);
-      border-color: rgb(223 227 239);
+      background: #fff;
     }
   }
   .btn-group {
@@ -128,6 +129,10 @@
   }
 }
 
+.custom-icon-container {
+  display: inline-block;
+}
+
 .custom-ant-radio-wrapper {
   width: 25px;
   height: 25px;
@@ -140,23 +145,24 @@
 }
 .custom-ant-radio-wrapper.ant-radio-wrapper-checked {
   outline: 8px auto #fff;
-  box-shadow: 2px 2px 15px 2px #bfbfbf;
+  box-shadow: 2px 2px 2px 2px #ccc;
 }
 
 .popover-icon-container {
   width: 340px;
+  padding: 0;
   .ant-radio-button-wrapper:not(:first-child)::before {
     width: 0px !important;
   }
   .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
     color: #96969b;
-    background: rgb(223 227 239);
-    border-color: rgb(223 227 239);
+    background: #fff;
+    box-shadow: 2px 2px 8px 2px #ccc;
+    outline: 8px auto #fff;
   }
   .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover {
     color: #96969b;
-    background: rgb(223 227 239);
-    border-color: rgb(223 227 239);
+    background: #fff;
   }
   .custom-ant-radio-wrapper {
     margin: 8px;
@@ -165,8 +171,15 @@
       visibility: hidden;
     }
   }
+  .custom-icon-btn {
+    margin: 8px;
+    border-radius: 2px;
+    .ant-radio {
+      visibility: hidden;
+    }
+  }
   .custom-ant-radio-wrapper.ant-radio-wrapper-checked {
     outline: 8px auto #fff;
-    box-shadow: 2px 2px 15px 2px #bfbfbf;
+    box-shadow: 2px 2px 8px 2px #ccc;
   }
 }

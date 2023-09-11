@@ -71,7 +71,7 @@ export const AttributesEditForm: React.FC<props> = ({ id, handleDelete, form, sc
                   {label}
                 </span>
               ) : (
-                '未选择'
+                <span style={{ color: '#1A1B25' }}>未选择</span>
               )}
             </span>
           }
@@ -157,7 +157,13 @@ export const AttributesEditForm: React.FC<props> = ({ id, handleDelete, form, sc
                   </div>
                 ))}
                 <Form.Item style={{ marginBottom: 0, width: '91%' }}>
-                  <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                  <Button 
+                    type="dashed" 
+                    onClick={() => add()} 
+                    block 
+                    icon={<PlusOutlined color="#6A6B71" />}
+                    style={{ color: '#6A6B71' }}
+                  >
                     添加属性条件
                   </Button>
                 </Form.Item>

@@ -235,7 +235,7 @@ export const NodeForm: React.FC<NodeFormProps> = ({
       </div>
 
       <Form.Item name={['icon', 'iconText']} label="图标">
-        <Radio.Group optionType="button" buttonStyle="solid">
+        <Radio.Group buttonStyle="solid">
           {ICONS.map((icon: any, index) => {
             if (index === ICONS.length - 1) {
               return <CustomIconComponent onChange={handleIconChange} icon={icon} />
