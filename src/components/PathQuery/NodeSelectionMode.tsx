@@ -40,7 +40,6 @@ const NodeSelectionFormItem: React.FC<NodeSelectionFormItemProps> = memo(props =
     </Row>
   }
 
-  console.log('path data', data, nodeLabel)
   return (
     <div className="nodeSelectionFromItem">
       <Form.Item

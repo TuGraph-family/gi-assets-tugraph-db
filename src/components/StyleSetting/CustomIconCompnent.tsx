@@ -1,18 +1,9 @@
-import { EditOutlined } from "@ant-design/icons";
-import { Popover, Tooltip, Radio, Tabs, Input } from "antd";
+import { Popover, Radio, Tabs } from "antd";
 import React, { useEffect } from "react";
-import { SketchPicker } from "react-color";
 import { useImmer } from "use-immer";
 import { IconGroups } from './Constant'
 import CustomIcon from './CustomIcon';
 import "./index.less";
-
-const advanceColors = [
-  '#cb962a',
-  '#23ad61',
-  '#ff8075',
-  '#07bce0'
-]
 
 export interface ColorInputProps {
   value?: any;
@@ -52,6 +43,9 @@ const IconSelectComponent = ({ onChange }) => {
                         style={{
                           fontSize: 23,
                           cursor: 'pointer',
+                          position: 'absolute',
+                          bottom: 2,
+                          left: 1,
                         }}
                       />
                     </Radio.Button>
@@ -66,7 +60,7 @@ const IconSelectComponent = ({ onChange }) => {
   )
 }
 
-const ColorInput: React.FC<ColorInputProps> = ({ onChange, value, defaultValue, icon }) => {
+const CustomIconCompnent: React.FC<ColorInputProps> = ({ onChange, value, defaultValue, icon }) => {
   const [state, setState] = useImmer<{ color?: string }>({ color: defaultValue });
   const { color } = state;
   useEffect(() => {
@@ -76,13 +70,13 @@ const ColorInput: React.FC<ColorInputProps> = ({ onChange, value, defaultValue, 
   }, [value]);
   
   return (
-    <div style={{ display: 'inline-block' }}>
+    <div className='custom-icon-container'>
       <Popover
         trigger='click'
         overlayClassName='color-input-popover'
         content={<IconSelectComponent onChange={onChange} />}
       >
-        <Radio.Button
+        {/* <Radio.Button
           key={icon.key}
           value={icon.key}
           className="custom-ant-radio-wrapper"
@@ -101,11 +95,17 @@ const ColorInput: React.FC<ColorInputProps> = ({ onChange, value, defaultValue, 
               cursor: 'pointer',
             }}
           />
-        </Radio.Button>
-          {/* <div className="custom-icon-btn">...</div> */}
+        </Radio.Button> */}
+        <CustomIcon
+            type={icon.value}
+            style={{
+              fontSize: 23,
+              cursor: 'pointer',
+            }}
+          />
       </Popover>
     </div>
   );
 };
 
-export default ColorInput;
+export default CustomIconCompnent;
