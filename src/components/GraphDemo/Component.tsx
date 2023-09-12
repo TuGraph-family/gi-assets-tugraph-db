@@ -15,11 +15,12 @@ const GraphDemo: React.FunctionComponent<IProps> = (props) => {
   const isShow = GIAC.visible || !localStorage.getItem('TuGraph_NO_SHOW');
   const [state, setState] = useState({
     visible: isShow ? true : false,
-    index: 0,
+    index: -1,
     graphName: 'Movie',
     loading: false,
   });
   const set = values => {
+    localStorage.setItem('TuGraph_NO_SHOW', 'true');
     setState(pre => {
       return { ...pre, ...values };
     });
