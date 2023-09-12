@@ -22,7 +22,7 @@ const IconSelectComponent = ({ onChange }) => {
           return {
             label: d.label,
             key: d.key,
-            children: <div style={{ margin: '16px 0' }}>
+            children: <div>
               <Radio.Group optionType="button" buttonStyle="solid" onChange={onChange}>
                 {d.icons.map((icon: any) => {
                   return (
@@ -73,7 +73,7 @@ const CustomIconCompnent: React.FC<ColorInputProps> = ({ onChange, value, defaul
     <div className='custom-icon-container'>
       <Popover
         trigger='click'
-        overlayClassName='color-input-popover'
+        overlayClassName='icon-input-popover-container'
         content={<IconSelectComponent onChange={onChange} />}
       >
         {/* <Radio.Button
