@@ -1,5 +1,5 @@
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Collapse, Form, FormInstance, FormProps, Input, Radio, Select, Tooltip, Switch } from 'antd';
+import { Button, Collapse, Form, FormInstance, FormProps, Input, Radio, Select, Tooltip, Switch, Checkbox } from 'antd';
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
 import CustomIcon from './CustomIcon';
@@ -43,6 +43,10 @@ export const NodeForm: React.FC<NodeFormProps> = ({
     };
     currentSchema: any;
     property: any[];
+    tag: {
+      checked: boolean;
+      value: string;
+    };
   }>({
     color: {
       basic: initialValues?.customColor || initialValues?.color,
@@ -51,6 +55,10 @@ export const NodeForm: React.FC<NodeFormProps> = ({
 
     currentSchema: {},
     property: [],
+    tag: {
+      checked: false,
+      value: ''
+    }
   });
   const { color, currentSchema, property } = state;
 
@@ -361,20 +369,30 @@ export const NodeForm: React.FC<NodeFormProps> = ({
             }}
           </Form.List>
           <div className="color">
-            <Form.Item name="advancedColor" label="属性颜色">
-              <Radio.Group onChange={handleChangeAdvancedColor}>
-                {NodeDefaultColor.map(color => (
-                   <Radio
-                    className="custom-ant-radio-wrapper"
-                    key={color}
-                    value={color}
-                    style={{ background: color }}
-                  />
-                ))}
-              </Radio.Group>
-            </Form.Item>
-            <Form.Item name="advancedCustomColor" label=" ">
-              <ColorInput onChange={handleAdvancedColorChange} />
+            <Form.Item name="badgeValue" label="属性标签">
+              <Checkbox.Group>
+                <Checkbox 
+                  value='shuxingbiaoqian' 
+                  className="custom-ant-checkbox-wrapper"
+                  style={{
+                      border: 'none',
+                      lineHeight: '25px',
+                      width: 24,
+                      height: 25,
+                    }}
+                  >
+                  <CustomIcon
+                      type='icon-shuxingbiaoqian'
+                      style={{
+                        fontSize: 23,
+                        cursor: 'pointer',
+                        position: 'absolute',
+                        bottom: 4,
+                        left: 0,
+                      }}
+                    />
+                </Checkbox>
+              </Checkbox.Group>
             </Form.Item>
           </div>
         </Panel>
