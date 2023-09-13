@@ -3,313 +3,36 @@ import {
   Drawer,
   Table,
   Empty,
-  Input,
   Space,
-  Form,
-  InputProps,
-  Checkbox,
-  CheckboxProps,
-  Select,
-  Tooltip,
-  SelectProps,
-  Radio,
+  Descriptions,
+  Collapse,
 } from 'antd';
-import { QuestionCircleOutlined, SearchOutlined } from '@ant-design/icons';
-import type { IGIAC } from '@antv/gi-sdk';
-import { extra, useContext } from '@antv/gi-sdk';
-import React, { memo, useEffect, useState } from 'react';
-import type { CheckboxValueType } from 'antd/es/checkbox/Group';
+import {
+  CaretDownOutlined,
+  CaretUpOutlined,
+  SearchOutlined,
+} from '@ant-design/icons';
+
+import { extra, useContext, utils } from '@antv/gi-sdk';
+import React, { useState } from 'react';
+import { data, mockList, mockResultList } from './data';
+
 import type { ColumnsType } from 'antd/es/table';
 const { GIAComponent } = extra;
-const CheckboxGroup = Checkbox.Group;
-import { selectAlgorithm } from './content';
+const { Panel } = Collapse;
+import { DataType, IProps, LinksFn, RootConfig } from './interface';
 import './index.less';
-import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import SearchItem from './components/SearchItem';
+import ActiveForm from './components/ActiveForm';
 
-export interface IProps {
-  GIAC: IGIAC;
-}
-export interface Label {
-  label: string;
-  value: string;
-  disabled?: boolean;
-  defaultChecked?: boolean;
-}
-export interface CheckAllRadioProps extends Partial<CheckboxProps> {
-  checkAllVisible?: boolean;
-  value?: string[];
-  defaultValue: any[];
-  onChange?: (value: CheckboxValueType[] | CheckboxChangeEvent | Label[]) => void;
-}
-export interface DescriptionInput extends InputProps {
-  description: string;
-}
-export interface DescriptionSelect extends SelectProps {
-  description: string;
-}
-export interface RootConfig {
-  modalOpen: boolean;
-  width: number;
-  modalTitle: string;
-  actionType: string;
-}
-export interface DataType {
-  algorithmId: string;
-  name: string;
-  algorithmName: string;
-  executionStatus: 'running' | 'stop';
-  algorithmExecutionTime: string;
-  creator: string;
-  createTime: string;
-}
-export interface AlItemProps extends DescriptionInput {
-  mT: string;
-  sT: string;
-  alValue: string | number | undefined;
-  onAlChange: (value: any) => void;
-}
-const SearchItem = ({ name }: { name: string }) => {
-  return (
-    <div className="searchItem">
-      <Input />
-      <div className="tool">
-        <Button icon={<SearchOutlined color="#fff" />} type="primary" style={{ width: '80px' }}>
-          搜索
-        </Button>
-        <Button style={{ width: '80px' }}>重置</Button>
-      </div>
-    </div>
-  );
-};
-const DescriptionInput = ({ description, ...other }: Partial<DescriptionInput>) => {
-  return (
-    <div className="description">
-      <div className="input">
-        <Input {...other} />
-      </div>
-      <div className="text">{description}</div>
-    </div>
-  );
-};
-const DescriptionSelect = ({ description, ...other }: Partial<DescriptionSelect>) => {
-  return (
-    <div className="description">
-      <div className="input">
-        <Select {...other} />
-      </div>
-      <div className="text">{description}</div>
-    </div>
-  );
-};
-const AlItem = ({ mT, sT, alValue, onAlChange, description, ...alOther }: AlItemProps) => {
-  return (
-    <div className="alItem">
-      <div className="alTitle">
-        <div className="mT">{mT}</div>
-        <div className="sT">{sT}</div>
-      </div>
-      <DescriptionInput description={description} value={alValue} onChange={onAlChange} {...alOther} />
-    </div>
-  );
-};
-const AlgorithmParamsMap = props => {
-  return (
-    <>
-      <AlItem
-        mT="src_id"
-        sT="(起点ID)"
-        alValue={props?.value?.src_id}
-        description="同类型ID不能重复"
-        onAlChange={(alValue: any) => {
-          props?.onChange({ ...props?.value, src_id: alValue?.target?.value });
-        }}
-      />
-      <AlItem
-        mT="target_id"
-        sT="(目标ID)"
-        alValue={props?.map?.target_id}
-        description="同类型ID不能重复"
-        onAlChange={(alValue: any) => {
-          props?.onChange({ ...props?.value, target_id: alValue?.target?.value });
-        }}
-      />
-      <AlItem
-        mT="iterations"
-        sT="(迭代轮数)"
-        alValue={props?.value?.iterations}
-        description=""
-        onAlChange={(alValue: any) => {
-          props?.onChange({ ...props?.value, iterations: alValue?.target?.value });
-        }}
-      />
-    </>
-  );
-};
-const SelectAlgorithm = props => {
-  return (
-    <Select {...props}>
-      {selectAlgorithm.map(item => (
-        <Select.Option key={item.value} title={item?.label}>
-          <Space>
-            <div className="txt">
-              {item?.label}({item?.value})
-            </div>
-            <div className="tip">
-              &nbsp; | &nbsp;
-              <Tooltip title={item?.tooltip}>
-                <span className="lTxt">
-                  算法说明 &nbsp;
-                  <QuestionCircleOutlined rev={undefined} className="tIc" />
-                </span>
-              </Tooltip>
-            </div>
-          </Space>
-        </Select.Option>
-      ))}
-    </Select>
-  );
-};
-const CheckAllRadio = ({ value, defaultValue, onChange, checkAllVisible = true, ...other }: CheckAllRadioProps) => {
-  const checkAll = defaultValue?.length === value?.length;
-  const indeterminate = value && value?.length > 0 && value?.length < defaultValue?.length;
-  return (
-    <>
-      <Space direction="vertical">
-        {checkAllVisible ? (
-          <Checkbox
-            indeterminate={indeterminate}
-            checked={checkAll}
-            onChange={(e: CheckboxChangeEvent) => {
-              onChange &&
-                onChange(e.target.checked ? defaultValue?.map((item: Label | CheckboxValueType) => item?.value) : []);
-            }}
-          >
-            以下全部类型
-          </Checkbox>
-        ) : null}
-        <CheckboxGroup {...other} options={defaultValue} value={value} onChange={onChange} />
-      </Space>
-    </>
-  );
-};
-const ActiveForm = ({ type, preSet }: { type: string; preSet?: any }) => {
-  const [form] = Form.useForm();
-  useEffect(() => {
-    if (form) {
-      form.setFieldsValue(preSet);
-    }
-  }, []);
-  return (
-    <Form
-      name="activeForm"
-      labelCol={{ span: 24 }}
-      wrapperCol={{ span: 24 }}
-      style={{ width: 524, paddingTop: '44px', margin: '0 auto' }}
-      initialValues={{ remember: true }}
-      autoComplete="off"
-      layout="vertical"
-      form={form}
-    >
-      <Form.Item label="算法配置名称" name="algorithmName" rules={[{ required: true, message: '请输入' }]}>
-        <DescriptionInput description={'由中文、英文数字、下划线组成，50字符以内。'} />
-      </Form.Item>
-      <Form.Item label="选择节点类型" name="nodeType" rules={[{ required: true, message: '请选择' }]}>
-        <CheckAllRadio
-          value={['Test']}
-          defaultValue={[
-            { label: '测试', value: 'Test' },
-            { label: '大众点评数据', value: 'Dpdata' },
-            { label: '返璞TEst事件1', value: 'FanpuTestEvent1' },
-          ]}
-        />
-      </Form.Item>
-      <Form.Item label="选择边类型" name="edgeType" rules={[{ required: true, message: '请选择' }]}>
-        <CheckAllRadio
-          defaultValue={[
-            { label: '测试', value: 'Test' },
-            { label: '大众点评数据', value: 'Dpdata' },
-            { label: '返璞TEst事件1', value: 'FanpuTestEvent1' },
-          ]}
-        />
-      </Form.Item>
-      <Form.Item label="算法配置类型" name="algorithmConfigType" rules={[{ required: true, message: '请选择' }]}>
-        <Radio.Group
-          options={[
-            { label: '内置算法', value: '0' },
-            { label: '自定义算法', value: '1', disabled: true },
-          ]}
-        />
-      </Form.Item>
-      <Form.Item label="选择算法" name="selectAlgorithm" rules={[{ required: true, message: '请选择' }]}>
-        <SelectAlgorithm />
-      </Form.Item>
-      <Form.Item label="算法参数映射" name="algorithmParamsMap" rules={[{ required: true, message: '请选择' }]}>
-        <AlgorithmParamsMap />
-      </Form.Item>
-      <Form.Item
-        label="选择输出数据源类型"
-        name="selectOutputDataOriginType"
-        rules={[{ required: true, message: '请选择' }]}
-      >
-        <Radio.Group
-          options={[
-            { label: '写入Tugraph', value: '0' },
-            { label: '写入数据文件', value: '1' },
-          ]}
-        />
-      </Form.Item>
-      <Form.Item
-        label="数据源路径"
-        hidden={form.getFieldValue('selectOutputDataOriginType') !== '1'}
-        name="dataOriginPath"
-        rules={[{ required: true, message: '请输入' }]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        label={
-          <>
-            <div className="tName">
-              <div className="tLabel">选择图名称</div>
-              <Button type="link">新建图名称</Button>
-            </div>
-          </>
-        }
-        name="tugrapthName"
-        rules={[{ required: true, message: '请选择' }]}
-      >
-        <Select></Select>
-      </Form.Item>
-      <Space>
-        <Button
-          onClick={() => {
-            console.log(form.getFieldsValue(), 'form');
-            form.setFieldValue('nodeType', ['Test', 'Dpdata']);
-          }}
-          type="primary"
-        >
-          确认
-        </Button>
-        <Button
-          onClick={() => {
-            form.resetFields();
-          }}
-        >
-          重置
-        </Button>
-      </Space>
-    </Form>
-  );
-};
-const stop = id => {};
-const details = id => {};
-const result = id => {};
-const List = ({ onAdd }: { onAdd: () => void }) => {
+const stop = (id) => {};
+
+const List = ({ goAdd, goList, goDetails, goResult }: LinksFn) => {
   const [config, setConfig] = useState<{
     list: DataType[];
     loading: boolean;
   }>({
-    list: [],
+    list: mockList,
     loading: false,
   });
   const isFullList = config?.list?.length > 0;
@@ -323,12 +46,16 @@ const List = ({ onAdd }: { onAdd: () => void }) => {
           style={{
             fontSize: '16px',
           }}
+          rev={undefined}
         />
       ),
       filterDropdown: <SearchItem name="name" />,
       render: (value: string, row: DataType) => {
         return (
-          <Button type="link" onClick={() => details(row?.algorithmId)}>
+          <Button
+            type="link"
+            onClick={() => goDetails && goDetails(row?.algorithmId, row)}
+          >
             {value}
           </Button>
         );
@@ -360,6 +87,7 @@ const List = ({ onAdd }: { onAdd: () => void }) => {
           style={{
             fontSize: '16px',
           }}
+          rev={undefined}
         />
       ),
       filterDropdown: <SearchItem name="creator" />,
@@ -369,7 +97,8 @@ const List = ({ onAdd }: { onAdd: () => void }) => {
       dataIndex: 'createTime',
       key: 'createTime',
       showSorterTooltip: false,
-      sorter: (a: DataType, b: DataType) => a?.createTime - b?.createTime,
+      sorter: (a: DataType, b: DataType) =>
+        Number(a?.createTime) - Number(b?.createTime),
     },
     {
       title: '操作',
@@ -381,7 +110,10 @@ const List = ({ onAdd }: { onAdd: () => void }) => {
                 停止
               </Button>
             ) : (
-              <Button type="link" onClick={() => result(row?.algorithmId)}>
+              <Button
+                type="link"
+                onClick={() => goResult && goResult(row?.algorithmId, row)}
+              >
                 结果查看
               </Button>
             )}
@@ -395,21 +127,30 @@ const List = ({ onAdd }: { onAdd: () => void }) => {
       <div className="title">
         <div>算法配置列表</div>
         {isFullList ? (
-          <Button type="primary" onClick={onAdd}>
+          <Button type="primary" onClick={goAdd}>
             新建算法配置
           </Button>
         ) : null}
       </div>
-      <Table className={isFullList ? 'f_table' : 'e_table'} columns={columns} dataSource={config.list} />
+      <Table
+        className={isFullList ? 'f_table' : 'e_table'}
+        columns={columns}
+        dataSource={config.list}
+      />
       {!isFullList ? (
         <div className="e_node">
           <Empty
             image={Empty.PRESENTED_IMAGE_SIMPLE}
-            imageStyle={{ width: '64px', height: '40px', textAlign: 'center', display: 'inline-block' }}
+            imageStyle={{
+              width: '64px',
+              height: '40px',
+              textAlign: 'center',
+              display: 'inline-block',
+            }}
             description={
               <>
                 <div className="text">暂无数据</div>
-                <Button type="primary" onClick={onAdd}>
+                <Button type="primary" onClick={goAdd}>
                   新建算法配置
                 </Button>
               </>
@@ -421,11 +162,18 @@ const List = ({ onAdd }: { onAdd: () => void }) => {
   );
 };
 
-const Add = () => {
+const Add = ({ goList }: LinksFn) => {
   return (
-    <div className="add">
+    <div className="activePage">
       <div className="nav">
-        <div className="link">算法配置列表</div>
+        <div
+          className="link"
+          onClick={() => {
+            goList && goList();
+          }}
+        >
+          算法配置列表
+        </div>
         <div className="normal">新建算法配置</div>
       </div>
       <div className="content">
@@ -445,39 +193,287 @@ const Add = () => {
   );
 };
 
-const AlgorithmConfig: React.FunctionComponent<IProps> = props => {
+const Edit = ({ goList, goDetails, name, id }: LinksFn) => {
+  return (
+    <div className="activePage">
+      <div className="nav">
+        <div
+          className="link"
+          onClick={() => {
+            goList && goList();
+          }}
+        >
+          算法配置列表
+        </div>
+        <div
+          className="link"
+          onClick={() => {
+            goDetails && goDetails(id || '', {});
+          }}
+        >
+          算法配置详情
+        </div>
+        <div className="normal">{name}</div>
+      </div>
+      <div className="content">
+        <ActiveForm
+          type="add"
+          preSet={{
+            algorithmConfigType: '0',
+            algorithmParamsMap: {
+              src_id: '',
+              target_id: '',
+              iterations: 10,
+            },
+          }}
+        />
+      </div>
+    </div>
+  );
+};
+
+const Detail = ({ goList, name, id, goEdit, goDetails }: LinksFn) => {
+  return (
+    <div className="activePage">
+      <div className="nav">
+        <div
+          className="link"
+          onClick={() => {
+            goList && goList();
+          }}
+        >
+          算法配置列表
+        </div>
+
+        <div className="normal">{name}</div>
+      </div>
+      <div className="content">
+        <Descriptions
+          className="activePageDescription"
+          layout="horizontal"
+          bordered={false}
+          title={
+            <div className="detailTitle">
+              <div className="text">数据信息</div>
+              <Button onClick={() => goEdit && goEdit(id || '', {})}>
+                编辑
+              </Button>
+            </div>
+          }
+        >
+          <Descriptions.Item label="算法配置名称">
+            pagerank算法测试
+          </Descriptions.Item>
+          <Descriptions.Item label="边类型">全部类型</Descriptions.Item>
+          <Descriptions.Item label="节点类型">全部类型</Descriptions.Item>
+          <Descriptions.Item label="算法配置类型">内置算法</Descriptions.Item>
+          <Descriptions.Item label="算法名称">
+            广度优先搜索(bfs)
+          </Descriptions.Item>
+          <Descriptions.Item label="边类型">全部类型</Descriptions.Item>
+          <Descriptions.Item label="src_id（起点ID）">
+            84573949094205
+          </Descriptions.Item>
+          <Descriptions.Item label="target_id（目标ID）">
+            85609505697-4835
+          </Descriptions.Item>
+          <Descriptions.Item label="iterations（迭代轮数）">
+            10
+          </Descriptions.Item>
+          <Descriptions.Item label="输出数据源类型">
+            写入TuGraph
+          </Descriptions.Item>
+          <Descriptions.Item label="图名称">会员欺诈分析图谱</Descriptions.Item>
+          <Descriptions.Item label="写入到TuGraph的点/边/属性">
+            common—_name
+          </Descriptions.Item>
+        </Descriptions>
+      </div>
+    </div>
+  );
+};
+
+const Result = ({ goList, name, id }: LinksFn) => {
+  return (
+    <div className="activePage">
+      <div className="nav">
+        <div
+          className="link"
+          onClick={() => {
+            goList && goList();
+          }}
+        >
+          算法配置列表
+        </div>
+        <div className="normal">{name}</div>
+      </div>
+      <div className="content">
+        <Collapse
+          bordered={false}
+          className="activePageCollapse"
+          defaultActiveKey={['0']}
+          expandIcon={(props) => {
+            return props?.isActive ? (
+              <CaretUpOutlined rev="" style={{ fontSize: '14px' }} />
+            ) : (
+              <CaretDownOutlined rev="" style={{ fontSize: '14px' }} />
+            );
+          }}
+        >
+          {mockResultList.map((item, index) => {
+            return (
+              <Panel header={item?.algorithmName} key={index}>
+                <Table
+                  columns={Object.entries(item.data[0]).map(([key, value]) => ({
+                    title: key,
+                    render: () => value,
+                    dataIndex: key,
+                    key,
+                  }))}
+                  pagination={false}
+                  dataSource={item?.data}
+                />
+              </Panel>
+            );
+          })}
+        </Collapse>
+      </div>
+    </div>
+  );
+};
+const AlgorithmConfig: React.FunctionComponent<IProps> = (props) => {
   const { GIAC } = props;
   const [rootConfig, setRootConfig] = useState<RootConfig>({
     modalOpen: GIAC?.visible || false,
     width: 1200,
     modalTitle: '算法配置',
     actionType: 'list',
+    actionId: '',
+    actionFormData: null,
   });
+  const { updateContext, services, schemaData, graph } = useContext();
+  const languageService: any = utils.getService(
+    services,
+    'GI/GI_SERVICE_SCHEMA'
+  );
+  languageService()?.then((d) => {
+    console.log(d);
+  });
+  console.log(utils, useContext(), services, 'getSDK');
+
   const set = (values: Partial<RootConfig>) => {
     setRootConfig((pre: RootConfig) => ({ ...pre, ...values }));
   };
-  const list = () => {
-    set({ modalOpen: true, width: 1200, modalTitle: '算法配置列表', actionType: 'list' });
+  const goList = () => {
+    set({
+      modalOpen: true,
+      width: 1200,
+      modalTitle: '算法配置列表',
+      actionType: 'list',
+    });
   };
-  const add = () => {
-    set({ modalOpen: true, width: 1148, modalTitle: '新建算法配置', actionType: 'add' });
+  const goAdd = () => {
+    set({
+      modalOpen: true,
+      width: 1148,
+      modalTitle: '新建算法配置',
+      actionType: 'add',
+    });
   };
 
+  const goDetails = (id: string, other: any) => {
+    set({
+      modalOpen: true,
+      width: 1200,
+      modalTitle: other?.name + '算法结果',
+      actionType: 'detail',
+      actionId: id,
+    });
+  };
+  const goEdit = (id: string, other: any) => {
+    set({
+      modalOpen: true,
+      width: 1148,
+      modalTitle: '编辑',
+      actionType: 'edit',
+      actionId: id,
+    });
+  };
+  const goResult = (id: string, other: any) => {
+    set({
+      modalOpen: true,
+      width: window.document.documentElement.clientWidth,
+      modalTitle: other?.name + '算法结果',
+      actionType: 'result',
+      actionId: id,
+    });
+  };
   const close = () => {
     set({ modalOpen: false });
   };
 
   const activeNodeMap = {
-    list: <List onAdd={add} />,
-    add: <Add />,
+    list: (
+      <List
+        goAdd={goAdd}
+        goList={goList}
+        goDetails={goDetails}
+        goResult={goResult}
+      />
+    ),
+    add: (
+      <Add
+        goAdd={goAdd}
+        goList={goList}
+        goDetails={goDetails}
+        goResult={goResult}
+      />
+    ),
+    result: (
+      <Result
+        goAdd={goAdd}
+        goList={goList}
+        goDetails={goDetails}
+        goResult={goResult}
+        name={rootConfig?.modalTitle}
+        id={rootConfig?.actionId}
+      />
+    ),
+    detail: (
+      <Detail
+        goAdd={goAdd}
+        goList={goList}
+        goDetails={goDetails}
+        goResult={goResult}
+        name={rootConfig?.modalTitle}
+        id={rootConfig?.actionId}
+        goEdit={goEdit}
+      />
+    ),
+    edit: (
+      <Edit
+        goAdd={goAdd}
+        goList={goList}
+        goDetails={goDetails}
+        goResult={goResult}
+        name={rootConfig?.modalTitle}
+        id={rootConfig?.actionId}
+        goEdit={goEdit}
+      />
+    ),
   };
   return (
     <>
-      <GIAComponent GIAC={GIAC} onClick={list} />
-      <Button className="algorithmConfig" onClick={list}>
+      <GIAComponent GIAC={GIAC} onClick={goList} />
+      <Button className="algorithmConfig" onClick={goList}>
         算法配置
       </Button>
-      <Drawer open={rootConfig?.modalOpen} width={rootConfig?.width} title={rootConfig?.modalTitle} onClose={close}>
+      <Drawer
+        open={rootConfig?.modalOpen}
+        width={rootConfig?.width}
+        title={rootConfig?.modalTitle}
+        onClose={close}
+      >
         {activeNodeMap[rootConfig?.actionType]}
       </Drawer>
     </>

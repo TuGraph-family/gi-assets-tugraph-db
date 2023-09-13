@@ -55,37 +55,6 @@
   }
 }
 
-.nav {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  .link {
-    position: relative;
-    padding-right: 12px;
-    color: #98989d;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 22px;
-    cursor: pointer;
-    &::after {
-      position: relative;
-      width: fit-content;
-      padding-left: 12px;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 22px;
-      content: '/';
-    }
-  }
-  .normal {
-    color: #363740;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 22px;
-  }
-}
-
 .description {
   display: flex;
   flex-direction: column;
@@ -175,5 +144,100 @@
     color: #363740;
     font-weight: 400;
     font-size: 14px;
+  }
+}
+
+.activePage {
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    margin-bottom: 40px;
+    .link {
+      position: relative;
+      padding-right: 12px;
+      color: #98989d;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 22px;
+      cursor: pointer;
+      &::after {
+        position: relative;
+        width: fit-content;
+        padding-left: 12px;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 22px;
+        content: '/';
+      }
+    }
+    .normal {
+      color: #363740;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 22px;
+    }
+  }
+  .content {
+    .detailTitle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .activePageCollapse {
+      width: auto;
+      background-color: #fff;
+      border-radius: 8px;
+      .ant-collapse-item {
+        margin-bottom: 16px;
+        background-color: #fbfbfb;
+        border: none;
+        border-radius: 8px;
+      }
+      .ant-collapse-header-text {
+        color: rgba(26, 27, 37, 0.88);
+        font-weight: 500;
+        font-size: 14px;
+      }
+      .ant-table-thead > tr > th {
+        color: #363740;
+        font-weight: 500;
+        font-size: 14px;
+        background-color: #ffffff;
+        border-radius: 8px 8px 0 0;
+      }
+      .ant-table-cell {
+        background-color: #fff;
+      }
+      .ant-table-cell-row-hover {
+        background-color: rgba(22, 80, 255, 0.06);
+      }
+      .ant-table-row {
+        &:hover {
+          background-color: rgba(22, 80, 255, 0.06);
+        }
+      }
+    }
+    .activePageDescription {
+      box-sizing: border-box;
+      width: 1156px;
+      height: auto;
+      min-height: 224px;
+      padding: 16px;
+
+      .ant-descriptions-item-label {
+        color: rgba(0, 0, 0, 0.85);
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 22px;
+      }
+      .ant-descriptions-item-content {
+        color: rgba(0, 0, 0, 0.65);
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 22px;
+      }
+    }
   }
 }
