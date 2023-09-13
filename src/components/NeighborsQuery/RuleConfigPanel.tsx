@@ -147,7 +147,13 @@ const RuleConfigPanel: React.FC<props> = ({ id, handleDelete, form, schemaList }
                   </div>
                 ))}
                 <Form.Item style={{ marginBottom: 8 }}>
-                  <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                  <Button 
+                    type="dashed" 
+                    onClick={() => add()} 
+                    block 
+                    icon={<PlusOutlined color="#6A6B71" />}
+                    style={{ color: '#6A6B71' }}
+                  >
                     添加属性条件
                   </Button>
                 </Form.Item>

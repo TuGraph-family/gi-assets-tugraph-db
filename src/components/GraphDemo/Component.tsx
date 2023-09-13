@@ -15,11 +15,12 @@ const GraphDemo: React.FunctionComponent<IProps> = (props) => {
   const isShow = GIAC.visible || !localStorage.getItem('TuGraph_NO_SHOW');
   const [state, setState] = useState({
     visible: isShow ? true : false,
-    index: 0,
+    index: -1,
     graphName: 'Movie',
     loading: false,
   });
   const set = values => {
+    localStorage.setItem('TuGraph_NO_SHOW', 'true');
     setState(pre => {
       return { ...pre, ...values };
     });
@@ -118,7 +119,7 @@ const GraphDemo: React.FunctionComponent<IProps> = (props) => {
             }}
           >
             <div className="picBox">
-              <img style={{ height: '90%' }} src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*gYdUTLkJvZAAAAAAAAAAAAAADgOBAQ/original" />
+              <img style={{ height: '80%', width: 148 }} src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*gYdUTLkJvZAAAAAAAAAAAAAADgOBAQ/original" />
             </div>
             <div className="textBox">
               <div className="demoText">ThreeKingdoms（三国）</div>
@@ -131,7 +132,7 @@ const GraphDemo: React.FunctionComponent<IProps> = (props) => {
             }}
           >
             <div className="picBox">
-              <img style={{ height: '92%' }}  src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*5xJiS6WGlScAAAAAAAAAAAAADgOBAQ/original" />
+              <img style={{ height: '80%' }} src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*5xJiS6WGlScAAAAAAAAAAAAADgOBAQ/original" />
             </div>
             <div className="textBox">
               <div className="demoText">WanderingEarth（流浪地球）</div>

@@ -13,3 +13,4 @@ export { default as TuGraphShortcutKeys } from './TuGraphShortcutKeys';
 export { default as PointEdgeView } from './PointEdgeView';
 export { default as TuGraphPathQuery } from './PathQuery';
 export { default as AlgorithmConfig } from './AlgorithmConfig';
+export { default as DoubleClickExpandNode } from './DoubleClickExpandNode';

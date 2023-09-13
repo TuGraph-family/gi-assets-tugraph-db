@@ -1,5 +1,5 @@
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Collapse, Form, FormInstance, FormProps, Input, Radio, Select, Tooltip, Switch } from 'antd';
+import { Button, Collapse, Form, FormInstance, FormProps, Input, Radio, Select, Tooltip, Switch, Checkbox } from 'antd';
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
 import CustomIcon from './CustomIcon';
@@ -43,6 +43,10 @@ export const NodeForm: React.FC<NodeFormProps> = ({
     };
     currentSchema: any;
     property: any[];
+    tag: {
+      checked: boolean;
+      value: string;
+    };
   }>({
     color: {
       basic: initialValues?.customColor || initialValues?.color,
@@ -51,6 +55,10 @@ export const NodeForm: React.FC<NodeFormProps> = ({
 
     currentSchema: {},
     property: [],
+    tag: {
+      checked: false,
+      value: ''
+    }
   });
   const { color, currentSchema, property } = state;
 
@@ -235,7 +243,7 @@ export const NodeForm: React.FC<NodeFormProps> = ({
       </div>
 
       <Form.Item name={['icon', 'iconText']} label="图标">
-        <Radio.Group optionType="button" buttonStyle="solid">
+        <Radio.Group buttonStyle="solid">
           {ICONS.map((icon: any, index) => {
             if (index === ICONS.length - 1) {
               return <CustomIconComponent onChange={handleIconChange} icon={icon} />
@@ -266,8 +274,8 @@ export const NodeForm: React.FC<NodeFormProps> = ({
         </Radio.Group>
       </Form.Item>
 
-      <Form.Item label='显示文本' name="isShowText">
-        <Switch checked={form.getFieldValue('isShowText')} />
+      <Form.Item label='显示文本' name="isShowText" style={{ height: 30, marginBottom: 16 }}>
+        <Switch size='small' style={{ position: 'absolute', left: 70, top: -26 }} checked={form.getFieldValue('isShowText')} />
       </Form.Item>
 
       {
@@ -295,51 +303,54 @@ export const NodeForm: React.FC<NodeFormProps> = ({
         // expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
         className="site-collapse-custom-collapse"
       >
-        <Panel header="高级自定义" key="1" className="site-collapse-custom-panel" forceRender>
+        <Panel header="高级配置" key="1" className="site-collapse-custom-panel" forceRender>
           <div style={{ marginBottom: 16 }}>属性</div>
           <Form.List name="property">
             {(fields, { add, remove }) => {
               return (
                 <>
                   {fields.map(({ key, name, ...restField }) => (
-                    <span key={key} style={{ display: 'inline-block', marginBottom: 8 }}>
-                      <Form.Item {...restField} name={[name, 'name']} noStyle>
-                        <Select
-                          placeholder="请选择"
-                          showSearch
-                          allowClear
-                          style={{ width: '33%', marginRight: 8 }}
-                          disabled={!currentSchema.properties}
-                        >
-                          {propertyOptions}
-                        </Select>
-                      </Form.Item>
-                      <Form.Item {...restField} name={[name, 'operator']} noStyle>
-                        <Select placeholder="请选择" showSearch allowClear style={{ width: '33%', marginRight: 8 }}>
-                          {getOperatorList(
-                            property && property[key]?.name
-                              ? currentSchema.properties.find(d => d.name === property[key]?.name)?.type
-                              : undefined,
-                          ).map(op => {
-                            return (
-                              <Option value={op.key} key={op.key}>
-                                {
-                                  op.text
-                                  ?
-                                  <Tooltip title={op.text}>{op.value}</Tooltip>
-                                  :
-                                  op.value
-                                }
-                              </Option>
-                            );
-                          })}
-                        </Select>
-                      </Form.Item>
-                      <Form.Item {...restField} name={[name, 'value']} noStyle>
-                        <Input style={{ width: '19%', marginRight: 8 }} />
-                      </Form.Item>
+                    <div className='property-list'>
+                      <Input.Group compact>
+                        <Form.Item {...restField} name={[name, 'name']} noStyle>
+                          <Select
+                            placeholder="请选择"
+                            showSearch
+                            allowClear
+                            style={{ width: '40%' }}
+                            disabled={!currentSchema.properties}
+                          >
+                            {propertyOptions}
+                          </Select>
+                        </Form.Item>
+                        <Form.Item {...restField} name={[name, 'operator']} noStyle>
+                          <Select placeholder="请选择" showSearch allowClear style={{ width: '30%' }}>
+                            {getOperatorList(
+                              property && property[key]?.name
+                                ? currentSchema.properties.find(d => d.name === property[key]?.name)?.type
+                                : undefined,
+                            ).map(op => {
+                              return (
+                                <Option value={op.key} key={op.key}>
+                                  {
+                                    op.text
+                                    ?
+                                    <Tooltip title={op.text}>{op.value}</Tooltip>
+                                    :
+                                    op.value
+                                  }
+                                </Option>
+                              );
+                            })}
+                          </Select>
+                        </Form.Item>
+                        <Form.Item {...restField} name={[name, 'value']} noStyle>
+                          <Input style={{ width: '30%' }} />
+                        </Form.Item>
+                      </Input.Group>
+
                       <DeleteOutlined  onClick={() => remove(name)} />
-                    </span>
+                    </div>
                   ))}
                   <Form.Item style={{ width: '91%' }}>
                     <Button
@@ -347,7 +358,8 @@ export const NodeForm: React.FC<NodeFormProps> = ({
                       disabled={!currentSchema.properties}
                       onClick={() => add()}
                       block
-                      icon={<PlusOutlined />}
+                      icon={<PlusOutlined color="#6A6B71" />}
+                      style={{ color: '#6A6B71' }}
                     >
                       添加属性过滤条件
                     </Button>
@@ -357,20 +369,30 @@ export const NodeForm: React.FC<NodeFormProps> = ({
             }}
           </Form.List>
           <div className="color">
-            <Form.Item name="advancedColor" label="属性颜色">
-              <Radio.Group onChange={handleChangeAdvancedColor}>
-                {NodeDefaultColor.map(color => (
-                   <Radio
-                    className="custom-ant-radio-wrapper"
-                    key={color}
-                    value={color}
-                    style={{ background: color }}
-                  />
-                ))}
-              </Radio.Group>
-            </Form.Item>
-            <Form.Item name="advancedCustomColor" label=" ">
-              <ColorInput onChange={handleAdvancedColorChange} />
+            <Form.Item name="badgeValue" label="属性标签">
+              <Checkbox.Group>
+                <Checkbox 
+                  value='shuxingbiaoqian' 
+                  className="custom-ant-checkbox-wrapper"
+                  style={{
+                      border: 'none',
+                      lineHeight: '25px',
+                      width: 24,
+                      height: 25,
+                    }}
+                  >
+                  <CustomIcon
+                      type='icon-shuxingbiaoqian'
+                      style={{
+                        fontSize: 23,
+                        cursor: 'pointer',
+                        position: 'absolute',
+                        bottom: 4,
+                        left: 0,
+                      }}
+                    />
+                </Checkbox>
+              </Checkbox.Group>
             </Form.Item>
           </div>
         </Panel>

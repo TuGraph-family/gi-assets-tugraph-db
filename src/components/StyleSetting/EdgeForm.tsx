@@ -199,8 +199,8 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
         <IntegerStep  marks={marks} min={1} max={10} />
       </Form.Item>
 
-      <Form.Item label='显示文本' name="isShowText">
-        <Switch checked={form.getFieldValue('isShowText')} />
+      <Form.Item label='显示文本' name="isShowText" style={{ height: 30, marginBottom: 16 }}>
+        <Switch size='small' style={{ position: 'absolute', left: 70, top: -26 }} checked={form.getFieldValue('isShowText')} />
       </Form.Item>
 
       {
@@ -234,44 +234,46 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
             {(fields, { add, remove }) => (
               <>
                 {fields.map(({ key, name, ...restField }) => (
-                  <span style={{ display: 'inline-block', marginBottom: 8 }} key={key}>
-                    <Form.Item {...restField} name={[name, 'name']} noStyle>
-                      <Select
-                        placeholder="请选择"
-                        showSearch
-                        allowClear
-                        style={{ width: '33%', marginRight: 8 }}
-                        disabled={!currentSchema.properties}
-                      >
-                        {propertyOptions}
-                      </Select>
-                    </Form.Item>
-                    <Form.Item {...restField} name={[name, 'operator']} noStyle>
-                      <Select placeholder="请选择" showSearch allowClear style={{ width: '33%', marginRight: 8 }}>
-                        {getOperatorList(
-                          property && property[key]?.name
-                            ? currentSchema.properties.find(d => d.name === property[key]?.name)?.type
-                            : undefined,
-                        ).map(op => {
-                          return (
-                            <Option value={op.key} key={op.key}>
-                               {
-                                  op.text
-                                  ?
-                                  <Tooltip title={op.text}>{op.value}</Tooltip>
-                                  :
-                                  op.value
-                                }
-                            </Option>
-                          );
-                        })}
-                      </Select>
-                    </Form.Item>
-                    <Form.Item {...restField} name={[name, 'value']} noStyle>
-                      <Input style={{ width: '19%', marginRight: 8 }} />
-                    </Form.Item>
+                  <div className='property-list'>
+                    <Input.Group compact>
+                      <Form.Item {...restField} name={[name, 'name']} noStyle>
+                        <Select
+                          placeholder="请选择"
+                          showSearch
+                          allowClear
+                          style={{ width: '40%' }}
+                          disabled={!currentSchema.properties}
+                        >
+                          {propertyOptions}
+                        </Select>
+                      </Form.Item>
+                      <Form.Item {...restField} name={[name, 'operator']} noStyle>
+                        <Select placeholder="请选择" showSearch allowClear style={{ width: '30%' }}>
+                          {getOperatorList(
+                            property && property[key]?.name
+                              ? currentSchema.properties.find(d => d.name === property[key]?.name)?.type
+                              : undefined,
+                          ).map(op => {
+                            return (
+                              <Option value={op.key} key={op.key}>
+                                {
+                                    op.text
+                                    ?
+                                    <Tooltip title={op.text}>{op.value}</Tooltip>
+                                    :
+                                    op.value
+                                  }
+                              </Option>
+                            );
+                          })}
+                        </Select>
+                      </Form.Item>
+                      <Form.Item {...restField} name={[name, 'value']} noStyle>
+                        <Input style={{ width: '30%' }} />
+                      </Form.Item>
+                    </Input.Group>
                     <DeleteOutlined onClick={() => remove(name)}  />
-                  </span>
+                  </div>
                 ))}
                 <Form.Item style={{ width: '91%' }}>
                   <Button
@@ -279,7 +281,8 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
                     disabled={!currentSchema.properties}
                     onClick={() => add()}
                     block
-                    icon={<PlusOutlined />}
+                    icon={<PlusOutlined color="#6A6B71" />}
+                    style={{ color: '#6A6B71' }}
                   >
                     添加属性过滤条件
                   </Button>
