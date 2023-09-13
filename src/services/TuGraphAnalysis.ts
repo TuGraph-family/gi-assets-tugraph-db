@@ -39,3 +39,14 @@ export const neighborsQueryService = {
     });
   },
 }
+
+export const subgraphListService = {
+  name: '子图列表查询服务',
+  service: async (params) => {
+    const { HTTP_SERVER_URL } = utils.getServerEngineContext();
+    return await request(`${HTTP_SERVER_URL}/api/subgraph`, {
+      method: 'GET',
+      params
+    });
+  },
+}
