@@ -12,3 +12,4 @@ export { default as AdvanceNeighborsQuery } from './NeighborsQuery';
 export { default as TuGraphShortcutKeys } from './TuGraphShortcutKeys'
 export { default as PointEdgeView } from './PointEdgeView';
 export { default as TuGraphPathQuery } from './PathQuery'
+export { default as DoubleClickExpandNode } from './DoubleClickExpandNode'
