@@ -173,6 +173,7 @@ export interface NodeStyle {
   property: Array<{ name: string; operator: string; value: string }>;
   customColor?: string;
   advancedCustomColor?: string;
+  badgeValue?: string[];
 }
 export interface StyleTemplate {
   [key: string]: Partial<NodeStyle | EdgeStyle>;
@@ -257,7 +258,8 @@ export const getTransformByTemplate = (styles: any = {}, schemaData) => {
         advancedCustomColor,
         labelVisible,
         typeAliasVisible,
-        property
+        property,
+        badgeValue
       } = nodeCfg;
       
       let advancedNodes: IUserNode[] = [];
@@ -298,7 +300,6 @@ export const getTransformByTemplate = (styles: any = {}, schemaData) => {
         if (labelVisible) {
           // @ts-ignore
           labelArr.forEach((label) => {
-            console.log('node' ,node)
             if (node.data) {
               labelValueArr.push(node.data[label] || node.id);  
             } else if (node.properties) {
@@ -346,7 +347,18 @@ export const getTransformByTemplate = (styles: any = {}, schemaData) => {
             shadowColor: nodeColor,
             shadowBlur: 20,
             lineWidth: 0
-          }
+          },
+          badges: [
+            {
+              position: 'RT',
+              type: "font" as "font",
+              fontFamily: "iconfont",
+              value: badgeValue ? icons[badgeValue[0]] : '',
+              size: [30, 30],
+              color: '#faad14',
+              offset: [3, -2]
+            }
+          ]
         }
       };
     });
@@ -451,6 +463,7 @@ export const getTransformByTemplate = (styles: any = {}, schemaData) => {
 
     return {
       ...data,
+      // @ts-ignore
       nodes: newNodes,
       edges: newEdges,
       combos: combos

@@ -99,7 +99,7 @@ const NodeConfigurationPanel = (props) => {
           schemaData={schemaData} />
       </div>
       <div className='btn-group'>
-        <Button style={{ marginRight: 16 }} onClick={onClose}>
+        <Button style={{ marginRight: 8 }} onClick={onClose}>
           取消
         </Button>
         <Button type='primary' onClick={handleSettingNodeConfig}>

@@ -199,8 +199,8 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
         <IntegerStep  marks={marks} min={1} max={10} />
       </Form.Item>
 
-      <Form.Item label='显示文本' name="isShowText">
-        <Switch checked={form.getFieldValue('isShowText')} />
+      <Form.Item label='显示文本' name="isShowText" style={{ height: 30, marginBottom: 16 }}>
+        <Switch size='small' style={{ position: 'absolute', left: 70, top: -26 }} checked={form.getFieldValue('isShowText')} />
       </Form.Item>
 
       {
