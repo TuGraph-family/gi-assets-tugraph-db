@@ -134,7 +134,7 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "320px", langua
   return (
     <div className='LanguageQueryPanel'>
       <div className={"contentContainer"}>
-        <div style={{ marginBottom: 24 }}>
+        <div style={{ marginBottom: 24, marginTop: 16 }}>
           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px", marginTop: 8 }}>
             <span>查询语言</span>
             <a
@@ -156,7 +156,7 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "320px", langua
             </Tooltip>
           </Radio.Group>
         </div>
-        <span style={{ display: 'inline-block', marginBottom: 8 }}>输入语句</span>
+        <span style={{ display: 'inline-block', marginBottom: 12 }}>输入语句</span>
         <div className={"blockContainer"}>
           <div
             style={{

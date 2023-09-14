@@ -132,7 +132,7 @@ const GraphDemo: React.FunctionComponent<IProps> = (props) => {
             }}
           >
             <div className="picBox">
-              <img src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*5xJiS6WGlScAAAAAAAAAAAAADgOBAQ/original" />
+              <img style={{ height: '80%' }} src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*5xJiS6WGlScAAAAAAAAAAAAADgOBAQ/original" />
             </div>
             <div className="textBox">
               <div className="demoText">WanderingEarth（流浪地球）</div>

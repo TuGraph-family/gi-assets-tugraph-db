@@ -189,7 +189,7 @@ const AttributesFilter: React.FC<props> = ({ schemaServiceId }) => {
       </div>
       <div className="attribute-button-group">
         <Button
-          style={{ marginRight: 16 }}
+          style={{ marginRight: 8 }}
           onClick={() => {
             form.resetFields();
           }}
