@@ -23,18 +23,16 @@ const PropertiesDetailPanel: React.FC<props> = props => {
   return (
     <div className="propertiesDetail">
       <div className="information">
-        <ul>
-          <li style={{ fontWeight: 500, fontSize: 14, color: 'rgba(26,27,37,0.88)' }}>属性信息</li>
-          {content?.map(item => {
-            const { key, value } = item;
-            return (
-              <li key={key}>
-                <span style={{ fontSize: 14, color: 'rgba(26,27,37,0.88)' }}>{key}：</span>
-                <span style={{ fontSize: 12, color: '#ccc' }}>{value}</span>
-              </li>
-            );
-          })}
-        </ul>
+        <p style={{ fontWeight: 500, fontSize: 14, color: 'rgba(26,27,37,0.88)' }}>属性信息</p>
+        {content?.map(item => {
+          const { key, value } = item;
+          return (
+            <p key={key}>
+              <span style={{ fontSize: 14, color: 'rgba(26,27,37,0.88)' }}>{key}：</span>
+              <span style={{ fontSize: 12, color: '#ccc' }}>{value}</span>
+            </p>
+          );
+        })}
       </div>
     </div>
   );
