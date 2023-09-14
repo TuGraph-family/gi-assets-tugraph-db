@@ -3,13 +3,11 @@ import './index.less';
 
 export interface props {
   data?: any;
-  propertyInfos: { propertyName: string; ratio: number }[];
 }
 
-const PropertiesPanel: React.FC<props> = props => {
-  const { data, propertyInfos = [] } = props;
-  const currentDate = new Date();
-  const year = currentDate.getFullYear();
+const PropertiesDetailPanel: React.FC<props> = props => {
+  const { data } = props;
+
   let content;
   if (data) {
     content = Object.keys(data).map(key => {
@@ -42,4 +40,4 @@ const PropertiesPanel: React.FC<props> = props => {
   );
 };
 
-export default PropertiesPanel;
+export default PropertiesDetailPanel;
