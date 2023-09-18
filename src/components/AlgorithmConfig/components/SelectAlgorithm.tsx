@@ -1,6 +1,6 @@
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Select, Space, Tooltip } from 'antd';
-import { selectAlgorithm } from '../../content';
+import { selectAlgorithm } from '../content';
 import React from 'react';
 
 const SelectAlgorithm = (props) => {

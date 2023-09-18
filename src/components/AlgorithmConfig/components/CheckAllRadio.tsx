@@ -5,7 +5,7 @@ import {
   CheckboxChangeEvent,
   CheckboxValueType,
   Label,
-} from '../../interface';
+} from '../interface';
 
 const CheckboxGroup = Checkbox.Group;
 

@@ -1,12 +1,19 @@
 import { Button, Form, Input, Radio, Select, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
-import DescriptionInput from '../DescriptionInput';
-import CheckAllRadio from '../CheckAllRadio';
-import SelectAlgorithm from '../SelectAlgorithm';
-import AlgorithmParamsMap from '../AlgorithmParamsMap';
-import { data } from '../../data';
+import DescriptionInput from './ActiveForm';
+import CheckAllRadio from './CheckAllRadio';
+import SelectAlgorithm from '..';
+import AlgorithmParamsMap from './ActiveForm';
+import { data } from '../data';
 
-const ActiveForm = ({ type, preSet, ...other }: { type: string; preSet?: any }) => {
+const ActiveForm = ({
+  type,
+  preSet,
+  ...other
+}: {
+  type: string;
+  preSet?: any;
+}) => {
   const [form] = Form.useForm();
   const [hotUpdate, setHotUpdate] = useState({
     selectOutputDataOriginType: '0',
@@ -28,10 +35,20 @@ const ActiveForm = ({ type, preSet, ...other }: { type: string; preSet?: any }) 
       form={form}
       {...other}
     >
-      <Form.Item label="算法配置名称" name="algorithmName" rules={[{ required: true, message: '请输入' }]}>
-        <DescriptionInput description={'由中文、英文数字、下划线组成，50字符以内。'} />
+      <Form.Item
+        label="算法配置名称"
+        name="algorithmName"
+        rules={[{ required: true, message: '请输入' }]}
+      >
+        <DescriptionInput
+          description={'由中文、英文数字、下划线组成，50字符以内。'}
+        />
       </Form.Item>
-      <Form.Item label="选择节点类型" name="nodeType" rules={[{ required: true, message: '请选择' }]}>
+      <Form.Item
+        label="选择节点类型"
+        name="nodeType"
+        rules={[{ required: true, message: '请选择' }]}
+      >
         <CheckAllRadio
           value={['Test']}
           defaultValue={[
@@ -41,7 +58,11 @@ const ActiveForm = ({ type, preSet, ...other }: { type: string; preSet?: any }) 
           ]}
         />
       </Form.Item>
-      <Form.Item label="选择边类型" name="edgeType" rules={[{ required: true, message: '请选择' }]}>
+      <Form.Item
+        label="选择边类型"
+        name="edgeType"
+        rules={[{ required: true, message: '请选择' }]}
+      >
         <CheckAllRadio
           defaultValue={[
             { label: '测试', value: 'Test' },
@@ -50,7 +71,11 @@ const ActiveForm = ({ type, preSet, ...other }: { type: string; preSet?: any }) 
           ]}
         />
       </Form.Item>
-      <Form.Item label="算法配置类型" name="algorithmConfigType" rules={[{ required: true, message: '请选择' }]}>
+      <Form.Item
+        label="算法配置类型"
+        name="algorithmConfigType"
+        rules={[{ required: true, message: '请选择' }]}
+      >
         <Radio.Group
           options={[
             { label: '内置算法', value: '0' },
@@ -58,10 +83,18 @@ const ActiveForm = ({ type, preSet, ...other }: { type: string; preSet?: any }) 
           ]}
         />
       </Form.Item>
-      <Form.Item label="选择算法" name="selectAlgorithm" rules={[{ required: true, message: '请选择' }]}>
+      <Form.Item
+        label="选择算法"
+        name="selectAlgorithm"
+        rules={[{ required: true, message: '请选择' }]}
+      >
         <SelectAlgorithm />
       </Form.Item>
-      <Form.Item label="算法参数映射" name="algorithmParamsMap" rules={[{ required: true, message: '请选择' }]}>
+      <Form.Item
+        label="算法参数映射"
+        name="algorithmParamsMap"
+        rules={[{ required: true, message: '请选择' }]}
+      >
         <AlgorithmParamsMap />
       </Form.Item>
       <Form.Item
@@ -70,8 +103,8 @@ const ActiveForm = ({ type, preSet, ...other }: { type: string; preSet?: any }) 
         rules={[{ required: true, message: '请选择' }]}
       >
         <Radio.Group
-          onChange={e => {
-            setHotUpdate(pre => ({
+          onChange={(e) => {
+            setHotUpdate((pre) => ({
               ...pre,
               selectOutputDataOriginType: e?.target?.value,
             }));

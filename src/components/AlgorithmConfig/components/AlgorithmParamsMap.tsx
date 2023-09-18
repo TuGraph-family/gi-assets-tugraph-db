@@ -1,7 +1,7 @@
 import React from 'react';
-import AlItem from '../AlItem';
+import AlItem from './AlItem';
 
-const AlgorithmParamsMap = props => {
+const AlgorithmParamsMap = (props) => {
   return (
     <>
       <AlItem
@@ -19,7 +19,10 @@ const AlgorithmParamsMap = props => {
         alValue={props?.map?.target_id}
         description="同类型ID不能重复"
         onAlChange={(alValue: any) => {
-          props?.onChange({ ...props?.value, target_id: alValue?.target?.value });
+          props?.onChange({
+            ...props?.value,
+            target_id: alValue?.target?.value,
+          });
         }}
       />
       <AlItem
@@ -28,7 +31,10 @@ const AlgorithmParamsMap = props => {
         alValue={props?.value?.iterations}
         description=""
         onAlChange={(alValue: any) => {
-          props?.onChange({ ...props?.value, iterations: alValue?.target?.value });
+          props?.onChange({
+            ...props?.value,
+            iterations: alValue?.target?.value,
+          });
         }}
       />
     </>
