@@ -5,7 +5,7 @@
   height: 100%;
   .tugraph-property-panel-div {
     background: #f3f5f9;
-    overflow: auto;
+    overflow: hidden;
     &.open {
       &.left {
         display: block;
@@ -34,9 +34,6 @@
       align-items: center;
       justify-content: space-between;
       padding: 16px 24px;
-      // color: rgba(0, 0, 0, 0.65);
-      // background: var(--background-color);
-      border-bottom: 1px solid var(--border-color-base);
       border-radius: 2px 2px 0 0;
     }
     .close {
@@ -69,6 +66,7 @@
       line-height: 22px;
     }
     .body {
+      height: calc(100vh - 195px);
       flex-grow: 1;
       padding: 12px;
       overflow: auto;

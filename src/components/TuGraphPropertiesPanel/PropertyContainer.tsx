@@ -1,7 +1,5 @@
 // @ts-nocheck
-import { CloseOutlined } from '@ant-design/icons';
 import { utils, Icon } from '@antv/gi-sdk';
-import { Button, Divider } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { Resizable } from 're-resizable';
 import Handler from './Handle';
@@ -31,7 +29,7 @@ const getDefaultPropertyWidth = () => {
   return Number(defaultWidth);
 };
 
-const DivContainer: React.FunctionComponent<ContainerTypeProps> = props => {
+const PropertiesContainer: React.FunctionComponent<ContainerTypeProps> = props => {
   const { containerPlacement, children, visible, offset, onClose, title, animate } = props;
 
   const [isExpanded, setIsExpanded] = useState(true);
@@ -76,7 +74,7 @@ const DivContainer: React.FunctionComponent<ContainerTypeProps> = props => {
       };
   const nodeRef = React.useRef(null);
 
-  const DivContainer = (
+  const PropertyContainer = (
     <div
       ref={nodeRef}
       style={{
@@ -86,12 +84,11 @@ const DivContainer: React.FunctionComponent<ContainerTypeProps> = props => {
         ...displayStyle,
         width: '100%',
       }}
-      className={`divContainer tugraph-property-panel-div ${classes}`}
+      className={`tugraph-property-panel-div ${classes}`}
     >
       <div className="header">
         <div className="title"> {title}</div>
       </div>
-      <Divider style={{ margin: 0 }} />
       <div className="body">{children}</div>
     </div>
   );
@@ -124,7 +121,7 @@ const DivContainer: React.FunctionComponent<ContainerTypeProps> = props => {
         onResizeStart={onResizeStart}
         onResizeStop={onResizeStop}
       >
-        {DivContainer}
+        {PropertyContainer}
         <Handler
           type="right"
           handleClick={toggleClick}
@@ -143,4 +140,4 @@ const DivContainer: React.FunctionComponent<ContainerTypeProps> = props => {
   );
 };
 
-export default DivContainer;
+export default PropertiesContainer;
