@@ -1,0 +1,78 @@
+.property-panel-container {
+  position: absolute;
+  top: 0px;
+  right: 4px;
+  height: 100%;
+  .tugraph-property-panel-div {
+    background: #f3f5f9;
+    overflow: hidden;
+    &.open {
+      &.left {
+        display: block;
+        transition: all 0.3s;
+      }
+      &.right {
+        display: block;
+        transition: all 0.3s;
+      }
+    }
+    &.close {
+      &.left {
+        // display: hidden;
+        width: 0px !important;
+        transition: all 0.3s;
+      }
+      &.right {
+        // display: hidden;
+        width: 0px !important;
+        transition: all 0.3s;
+      }
+    }
+    .header {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      border-radius: 2px 2px 0 0;
+    }
+    .close {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 10;
+      display: block;
+      padding: 10px;
+      // color: rgba(0, 0, 0, 0.45);
+      font-weight: 700;
+      font-size: 16px;
+      font-style: normal;
+      line-height: 1;
+      text-align: center;
+      text-transform: none;
+      text-decoration: none;
+      background: transparent;
+      border: 0;
+      outline: 0;
+      cursor: pointer;
+      transition: color 0.3s;
+      text-rendering: auto;
+    }
+    .title {
+      margin: 0;
+      // color: rgba(0, 0, 0, 0.85);
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 22px;
+    }
+    .body {
+      height: calc(100vh - 195px);
+      flex-grow: 1;
+      padding: 12px;
+      overflow: auto;
+      font-size: 14px;
+      line-height: 1.5715;
+      word-wrap: break-word;
+    }
+  }
+}
