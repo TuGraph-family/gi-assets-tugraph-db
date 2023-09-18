@@ -9,7 +9,7 @@ export interface IProps {
   GIAC: IGIAC;
 }
 
-const GraphDemo: React.FunctionComponent<IProps> = (props) => {
+const GraphDemo: React.FunctionComponent<IProps> = props => {
   const { GIAC } = props;
 
   const isShow = GIAC.visible || !localStorage.getItem('TuGraph_NO_SHOW');
@@ -34,26 +34,26 @@ const GraphDemo: React.FunctionComponent<IProps> = (props) => {
     });
 
     // 先跳转到具体子图再执行查询
-    const { origin, pathname } = location
-    const newURL = `${origin}${pathname}?graphName=${state.graphName}&demoGraphName=${state.graphName}`
+    const { origin, pathname } = location;
+    const newURL = `${origin}${pathname}?graphName=${state.graphName}&demoGraphName=${state.graphName}`;
     // GI 中测试使用
     // const newURL = `http://dev.alipay.net:8000/#/workspace/d72a7985-292f-4dc5-a9c9-c38f3e3639e5?nav=components&graphName=${state.graphName}&demoGraphName=${state.graphName}`
-    location.href = newURL
+    location.href = newURL;
   };
 
-  const handleShow = (e) => {
+  const handleShow = e => {
     if (e.target.checked) {
       localStorage.setItem('TuGraph_NO_SHOW', 'true');
     } else {
-      localStorage.removeItem('TuGraph_NO_SHOW')
+      localStorage.removeItem('TuGraph_NO_SHOW');
     }
   };
 
   const showModal = () => {
     setState({
       ...state,
-      visible: true
-    })
+      visible: true,
+    });
   };
 
   return (
@@ -119,7 +119,10 @@ const GraphDemo: React.FunctionComponent<IProps> = (props) => {
             }}
           >
             <div className="picBox">
-              <img style={{ height: '80%', width: 148 }} src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*gYdUTLkJvZAAAAAAAAAAAAAADgOBAQ/original" />
+              <img
+                style={{ height: '80%', width: 148 }}
+                src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*gYdUTLkJvZAAAAAAAAAAAAAADgOBAQ/original"
+              />
             </div>
             <div className="textBox">
               <div className="demoText">ThreeKingdoms（三国）</div>
@@ -132,7 +135,10 @@ const GraphDemo: React.FunctionComponent<IProps> = (props) => {
             }}
           >
             <div className="picBox">
-              <img style={{ height: '80%' }} src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*5xJiS6WGlScAAAAAAAAAAAAADgOBAQ/original" />
+              <img
+                style={{ height: '80%', width: '72%' }}
+                src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*5xJiS6WGlScAAAAAAAAAAAAADgOBAQ/original"
+              />
             </div>
             <div className="textBox">
               <div className="demoText">WanderingEarth（流浪地球）</div>
