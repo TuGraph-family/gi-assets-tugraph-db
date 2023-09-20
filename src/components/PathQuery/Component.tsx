@@ -287,7 +287,13 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
             {/* <Form.Item name="maxdeep" label="最大深度" wrapperCol={{ span: 24 }} labelCol={{ span: 24 }}>
               <InputNumber min={1} max={50} placeholder="请输入最大深度（上限50）" style={{ width: '100%' }} />
             </Form.Item> */}
-            <Form.Item style={{ marginBottom: 8 }} name="direction" label="是否有向" wrapperCol={{ span: 24 }} labelCol={{ span: 24 }}>
+            <Form.Item
+              style={{ marginBottom: 8 }}
+              name="direction"
+              label="是否有向"
+              wrapperCol={{ span: 24 }}
+              labelCol={{ span: 24 }}
+            >
               <Switch />
             </Form.Item>
           </Form>
@@ -296,7 +302,7 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
         {state.nodePath.length > 0 && (
           <div className="tugraph-path-analysis-result-container">
             <div className="tugraph-path-analysis-title">
-              <div>查询结果</div>
+              <div>分析结果</div>
               <SegementFilter state={state} updateState={updateState} />
             </div>
             <Collapse
@@ -316,13 +322,6 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
                     // }
                   >
                     <StepComponent path={path} />
-                    {/* <Timeline>
-                      {path.map(nodeId => {
-                        const nodeConfig = sourceDataMap.nodes[nodeId];
-                        const data = nodeConfig?.data || {};
-                        return <Timeline.Item>{data[pathNodeLabel] || nodeId}</Timeline.Item>;
-                      })}
-                    </Timeline> */}
                   </Panel>
                 );
               })}

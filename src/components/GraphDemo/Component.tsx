@@ -136,7 +136,7 @@ const GraphDemo: React.FunctionComponent<IProps> = props => {
           >
             <div className="picBox">
               <img
-                style={{ height: '80%', width: '72%' }}
+                style={{ height: '85%', width: '72%' }}
                 src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*5xJiS6WGlScAAAAAAAAAAAAADgOBAQ/original"
               />
             </div>

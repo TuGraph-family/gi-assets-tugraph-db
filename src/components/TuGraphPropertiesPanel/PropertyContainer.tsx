@@ -78,7 +78,7 @@ const PropertiesContainer: React.FunctionComponent<ContainerTypeProps> = props =
     <div
       ref={nodeRef}
       style={{
-        boxShadow: '6px 0 16px -8px rgb(0 0 0 / 8%), 9px 0 28px 0 rgb(0 0 0 / 5%), 12px 0 48px 16px rgb(0 0 0 / 3%)',
+        // boxShadow: '6px 0 16px -8px rgb(0 0 0 / 8%), 9px 0 28px 0 rgb(0 0 0 / 5%), 12px 0 48px 16px rgb(0 0 0 / 3%)',
         cursor: 'default',
         ...styles,
         ...displayStyle,
