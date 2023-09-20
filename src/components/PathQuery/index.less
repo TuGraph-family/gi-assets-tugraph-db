@@ -21,6 +21,11 @@
       border: 1px solid #ffffff;
       border-radius: 8px;
       height: calc(100vh - 510px);
+      .tugraph-collapse{
+        &:focus{
+          border:  1px solid rgba(22,80,255,0.6);
+        }
+      }
       .tugraph-collapse-container {
         margin: 1px !important;
         padding: 4px 4px !important;
@@ -29,11 +34,19 @@
         overflow: auto;
         .tugraph-collapse-container-panel {
           background: #ffffff;
+          border:1px solid rgba(22,80,255, 0.2);
           margin: 8px 0;
-          box-shadow: -1px -1px 4px 0 hsla(0, 0%, 87.5%, 0.5), -2px 2px 4px 0 hsla(0, 0%, 95.7%, 0.5),
-            2px 3px 8px 2px hsla(0, 0%, 59.2%, 0.05);
           border-radius: 8px;
+    
+          &:hover{
+            box-shadow: -1px -1px 4px 0 hsla(0, 0%, 87.5%, 0.5), -2px 2px 4px 0 hsla(0, 0%, 95.7%, 0.5),
+            2px 3px 8px 2px hsla(0, 0%, 59.2%, 0.05);
+          }
+          &:active{
+            border:  1px solid rgba(22,80,255,0.6);
+          }
         }
+     
       }
     }
 
@@ -46,6 +59,7 @@
       display: flex;
       justify-content: space-between;
       color: #363740;
+      align-items: center;
       .ant-segmented {
         background: #eaeff9;
         padding: 4px;
@@ -99,9 +113,7 @@
     }
   }
 
-  :global {
-    .ant-steps-item-tail::after {
-      margin-right: 10px;
-    }
+  &:focus{
+    border:  1px solid rgba(22,80,255,0.6);
   }
 }

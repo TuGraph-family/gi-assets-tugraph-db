@@ -22,7 +22,7 @@ export const options = [
 const SegementFilter: React.FunctionComponent<SegementFilterProps> = props => {
   return (
     <div>
-      <Segmented options={options} value={options[0].value} />
+      <Segmented options={options} value={options[0].value} style={{ width: 116 }} />
     </div>
   );
 };
