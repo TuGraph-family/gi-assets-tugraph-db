@@ -13,7 +13,7 @@ const PanelExtra: React.FC<IPanelHeaderProps> = props => {
   };
   return (
     <div onClick={preventBuddle}>
-      <Switch checked={checked} onChange={checked => onSwitchChange(pathId)} />
+      <Switch size='small' checkedChildren="高亮" unCheckedChildren="关闭" checked={checked} onChange={checked => onSwitchChange(pathId)} />
     </div>
   );
 };

@@ -8,7 +8,7 @@ interface props {
 }
 export const StepComponent: React.FC<props> = ({ path }) => {
   return (
-    <div className="container" tabIndex={0}>
+    <div className="step-component-container" tabIndex={0}>
       <Space>
         {path?.map((item, index) => {
           if (index === 0) {

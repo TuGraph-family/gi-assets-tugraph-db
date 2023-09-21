@@ -1,7 +1,7 @@
 import { Graph } from '@antv/g6';
 import type { FormInstance } from 'antd';
 import { Button, Form, Select, Row, Col, Tag, Badge } from 'antd';
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import CustomIcon from '../StyleSetting/CustomIcon';
 import { hexToRGBA } from '../utils';
 import './index.less';
@@ -17,6 +17,7 @@ interface NodeSelectionWrapProps extends NodeSelectionProps {
   items: {
     name: string;
     label: string;
+    autoFocus?: boolean;
   }[];
 }
 
@@ -27,10 +28,11 @@ interface NodeSelectionFormItemProps extends NodeSelectionProps {
   label: string;
   selecting: string;
   setSelecting: React.Dispatch<React.SetStateAction<string>>;
+  autoFocus?: any;
 }
 
 const NodeSelectionFormItem: React.FC<NodeSelectionFormItemProps> = memo(props => {
-  const { nodeLabel, key, name, label, data, setSelecting, color } = props;
+  const { nodeLabel, key, name, label, data, setSelecting, color, autoFocus = false} = props;
 
   const getDefaultRow = () => {
     return <Row>
@@ -62,6 +64,8 @@ const NodeSelectionFormItem: React.FC<NodeSelectionFormItemProps> = memo(props =
             setSelecting('');
           }}
           optionLabelProp='label'
+          autoFocus={autoFocus}
+          defaultOpen={autoFocus}
         >
           <Select.OptGroup key='simple-path-query' label={getDefaultRow()}>
             {data.map(node => (
@@ -94,7 +98,6 @@ const NodeSelectionWrap: React.FC<NodeSelectionWrapProps> = memo(props => {
   const colors = ['#1650FF', '#FFC53D'];
   const handleSwap = async () => {
     const values = await form.getFieldsValue();
-    console.log('values', values);
     const { source, target } = values;
     form.setFieldsValue({ source: target, target: source });
   };
@@ -113,6 +116,7 @@ const NodeSelectionWrap: React.FC<NodeSelectionWrapProps> = memo(props => {
           nodeLabel={nodeLabel}
           selecting={selecting}
           setSelecting={setSelecting}
+          autoFocus={item.autoFocus}
         />
       ))}
       <div
