@@ -279,6 +279,7 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
 
   const handlePanelClick = (index) => {
     const checked = state.highlightPath.has(index);
+    console.log('点击路径', index, state.highlightPath)
     updateState(draft => {
       draft.hasChecked = {
         ...state.hasChecked,
@@ -302,15 +303,6 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
               nodeLabel={pathNodeLabel}
             />
 
-            {hasDirection && (
-              <Form.Item wrapperCol={{ span: 24 }} labelCol={{ span: 24 }} name="direction" label="是否有向">
-                <Switch checkedChildren="有向" unCheckedChildren="无向" defaultChecked />
-              </Form.Item>
-            )}
-
-            {/* <Form.Item name="maxdeep" label="最大深度" wrapperCol={{ span: 24 }} labelCol={{ span: 24 }}>
-              <InputNumber min={1} max={50} placeholder="请输入最大深度（上限50）" style={{ width: '100%' }} />
-            </Form.Item> */}
             <Form.Item
               style={{ height: 30, marginBottom: 8 }}
               name="direction"
@@ -326,7 +318,6 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
           <div className="tugraph-path-analysis-result-container">
             <div className="tugraph-path-analysis-title">
               <div>分析结果</div>
-              {/* <SegementFilter state={state} updateState={updateState} /> */}
             </div>
             <Collapse
               defaultActiveKey={0}
