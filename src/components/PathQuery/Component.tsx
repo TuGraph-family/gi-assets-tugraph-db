@@ -2,12 +2,12 @@ import { CaretRightOutlined } from '@ant-design/icons';
 import { findShortestPath } from '@antv/algorithm';
 import NodeSelectionWrap from './NodeSelectionMode';
 import { useContext } from '@antv/gi-sdk';
-import { Button, Col, Collapse, Empty, Form, InputNumber, Row, Space, Switch, Timeline, message } from 'antd';
+import { Button, Collapse, Empty, Form, Space, Switch, message } from 'antd';
 // import { enableMapSet } from 'immer';
 import React, { memo, useEffect, useRef } from 'react';
 import { useImmer } from 'use-immer';
-import PanelExtra from './PanelExtra';
-import SegementFilter from './SegmentFilter';
+// import PanelExtra from './PanelExtra';
+// import SegementFilter from './SegmentFilter';
 import { IHighlightElement, IState } from './typing';
 import { getPathByWeight } from './utils';
 import './index.less';
@@ -44,6 +44,7 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
       type: 'All-Path',
     },
     selecting: '',
+    hasChecked: {}
   });
 
   // 缓存被高亮的节点和边
@@ -88,7 +89,7 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
 
           return;
         }
-        const highlightPath = new Set<number>(allNodePath.map((_, index) => index));
+        const highlightPath = new Set<number>(allNodePath.slice(0, 1).map((_, index) => index));
 
         updateState(draft => {
           draft.allNodePath = allNodePath;
@@ -97,6 +98,9 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
           draft.edgePath = allEdgePath;
           draft.isAnalysis = true;
           draft.highlightPath = highlightPath;
+          draft.hasChecked = {
+            [0]: true
+          }
           draft.filterRule = {
             type: 'All-Path',
           };
@@ -156,6 +160,11 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
         edges.forEach(edgeId => {
           graph.findById(edgeId) && graph.setItemState(edgeId, 'active', false);
           highlightElementRef.current?.edges.delete(edgeId);
+          graph.updateItem(edgeId, {
+            style: {
+              animate: null,
+            },
+          });
         });
       }
     }
@@ -231,7 +240,7 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
     updateState(draft => {
       draft.nodePath = nodePath;
       draft.edgePath = edgePath;
-      draft.highlightPath = new Set(nodePath.map((_, index) => index));
+      draft.highlightPath = new Set(nodePath.slice(0, 1).map((_, index) => index));
     });
   }, [state.allNodePath, state.allEdgePath, state.filterRule]);
 
@@ -257,12 +266,27 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
   }, [controlledValues]);
 
   const items = [
-    { name: 'source', label: '起始节点' },
+    { 
+      name: 'source', 
+      label: '起始节点',
+      autoFocus: true
+    },
     {
       name: 'target',
       label: '目标节点',
     },
   ];
+
+  const handlePanelClick = (index) => {
+    const checked = state.highlightPath.has(index);
+    updateState(draft => {
+      draft.hasChecked = {
+        ...state.hasChecked,
+        [index]: !checked
+      }
+    })
+    onSwitchChange(index)
+  }
 
   return (
     <div className="tugraph-path-analysis">
@@ -288,13 +312,12 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
               <InputNumber min={1} max={50} placeholder="请输入最大深度（上限50）" style={{ width: '100%' }} />
             </Form.Item> */}
             <Form.Item
-              style={{ marginBottom: 8 }}
+              style={{ height: 30, marginBottom: 8 }}
               name="direction"
               label="是否有向"
-              wrapperCol={{ span: 24 }}
-              labelCol={{ span: 24 }}
+              colon={false}
             >
-              <Switch />
+              <Switch size='small' style={{ position: 'absolute', left: 8, top: 8 }} />
             </Form.Item>
           </Form>
         </div>
@@ -303,20 +326,24 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
           <div className="tugraph-path-analysis-result-container">
             <div className="tugraph-path-analysis-title">
               <div>分析结果</div>
-              <SegementFilter state={state} updateState={updateState} />
+              {/* <SegementFilter state={state} updateState={updateState} /> */}
             </div>
             <Collapse
               defaultActiveKey={0}
               ghost={true}
+              collapsible="icon"
               className="tugraph-collapse-container"
               expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
             >
               {state.nodePath.map((path, index) => {
                 return (
                   <Panel
+                    // @ts-ignore
+                    onClick={() => handlePanelClick(index)}
                     key={index}
                     header={`路径 ${index + 1}`}
                     className="tugraph-collapse-container-panel"
+                    style={{ border: state.hasChecked[index] ? '1px solid rgba(22, 80, 255, 1)' : '1px solid rgba(22, 80, 255, 0.2)' }}
                     // extra={
                     //   <PanelExtra pathId={index} highlightPath={state.highlightPath} onSwitchChange={onSwitchChange} />
                     // }
