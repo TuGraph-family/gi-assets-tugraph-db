@@ -13,6 +13,7 @@ export interface IState {
   isAnalysis: boolean;
   filterRule: IFilterRule;
   selecting: string;
+  hasChecked: any;
 }
 
 export interface IHighlightElement{

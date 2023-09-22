@@ -6,12 +6,19 @@ interface IntegerStepProps {
   onChange?: (value: number) => void;
   defaultValue?: number;
   value?: number;
-  marks: any;
+  marks?: any;
   min?: number;
   max?: number;
 }
 
-const IntegerStep: React.FC<IntegerStepProps> = ({ value, defaultValue = 0, onChange, marks, min = 5, max = 100 }) => {
+const defaultMarks = {
+  5: '最小',
+  30: '小',
+  60: '中等',
+  100: '大',
+};
+
+const IntegerStep: React.FC<IntegerStepProps> = ({ value, defaultValue = 0, onChange, marks = defaultMarks, min = 5, max = 100 }) => {
   const [state, setState] = useImmer<{ inputValue?: number }>({ 
     inputValue: defaultValue,
   });

@@ -17,7 +17,7 @@ const LayoutSwitchTool: React.FC<LayoutSwitchProps> = props => {
   }>({
     dataList: [
       {
-        id: 'graphin-force',
+        id: 'force2',
         src: 'https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*KgwCS5Fjk4MAAAAAAAAAAAAADgOBAQ/original',
         name: '力导向布局',
       },
@@ -64,6 +64,10 @@ const LayoutSwitchTool: React.FC<LayoutSwitchProps> = props => {
           ...config.layout.props,
         };
       }
+      
+      // 将当前面板 key 存储到localStorage中
+      localStorage.setItem('ActiveAssetID', 'LayoutContent')
+
       updateContext(draft => {
         draft.layout = layoutProps;
         draft.config.layout = {
