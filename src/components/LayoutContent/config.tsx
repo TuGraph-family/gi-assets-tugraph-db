@@ -76,7 +76,7 @@ const graphLayoutConfig: Record<string, LayoutConfig> = {
       {
         component: TwoInput,
         label: "center",
-        labelZh: "布局中心",
+        labelZh: "中心点",
         key: "layoutConfig.center",
         inputLabel: ["x", "y"],
         defaultValue: [500, 300],

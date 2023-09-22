@@ -1,7 +1,7 @@
 import React from 'react';
 import type { GILayoutConfig, IGIAC } from '@antv/gi-sdk';
 import { useImmer } from 'use-immer';
-import { useContext,utils } from '@antv/gi-sdk';
+import { useContext } from '@antv/gi-sdk';
 import { Popover } from 'antd';
 import GIAComponent from '@antv/gi-sdk/lib/components/GIAC';
 import './index.less';
@@ -65,9 +65,8 @@ const LayoutSwitchTool: React.FC<LayoutSwitchProps> = props => {
         };
       }
       
-      const { searchParams, path } = utils.getSearchParams(window.location);
-      searchParams.set('ActiveAssetID', 'LayoutContent');
-      window.location.hash = `${path}?${searchParams.toString()}`;
+      // 将当前面板 key 存储到localStorage中
+      localStorage.setItem('ActiveAssetID', 'LayoutContent')
 
       updateContext(draft => {
         draft.layout = layoutProps;
