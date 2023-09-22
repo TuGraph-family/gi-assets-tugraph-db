@@ -1,7 +1,7 @@
 import React from 'react';
 import type { GILayoutConfig, IGIAC } from '@antv/gi-sdk';
 import { useImmer } from 'use-immer';
-import { useContext } from '@antv/gi-sdk';
+import { useContext,utils } from '@antv/gi-sdk';
 import { Popover } from 'antd';
 import GIAComponent from '@antv/gi-sdk/lib/components/GIAC';
 import './index.less';
@@ -17,7 +17,7 @@ const LayoutSwitchTool: React.FC<LayoutSwitchProps> = props => {
   }>({
     dataList: [
       {
-        id: 'graphin-force',
+        id: 'force2',
         src: 'https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*KgwCS5Fjk4MAAAAAAAAAAAAADgOBAQ/original',
         name: '力导向布局',
       },
@@ -64,6 +64,11 @@ const LayoutSwitchTool: React.FC<LayoutSwitchProps> = props => {
           ...config.layout.props,
         };
       }
+      
+      const { searchParams, path } = utils.getSearchParams(window.location);
+      searchParams.set('ActiveAssetID', 'LayoutContent');
+      window.location.hash = `${path}?${searchParams.toString()}`;
+
       updateContext(draft => {
         draft.layout = layoutProps;
         draft.config.layout = {

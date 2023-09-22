@@ -8,7 +8,7 @@ const info = {
   category: 'data-query',
   desc: '通过切换布局类型配置，渲染图数据',
   cover: 'http://xxxx.jpg',
-  type: 'GIAC',
+  type: 'GIAC_CONTENT',
 };
 
 export default {
