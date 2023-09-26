@@ -3,7 +3,7 @@ import { findShortestPath } from '@antv/algorithm';
 import NodeSelectionWrap from './NodeSelectionMode';
 import { useContext } from '@antv/gi-sdk';
 import { Button, Collapse, Empty, Form, Space, Switch, message } from 'antd';
-// import { enableMapSet } from 'immer';
+import { enableMapSet } from 'immer';
 import React, { memo, useEffect, useRef } from 'react';
 import { useImmer } from 'use-immer';
 // import PanelExtra from './PanelExtra';
@@ -13,6 +13,7 @@ import { getPathByWeight } from './utils';
 import './index.less';
 
 import { StepComponent } from './StepComponent';
+import { useState } from 'react';
 
 const { Panel } = Collapse;
 
@@ -27,7 +28,7 @@ export interface IPathAnalysisProps {
   onOpen: () => void;
 }
 
-// enableMapSet();
+enableMapSet();
 
 const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
   const { pathNodeLabel, controlledValues, onOpen = () => {}, hasDirection } = props;
@@ -44,7 +45,7 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
       type: 'All-Path',
     },
     selecting: '',
-    hasChecked: {}
+    hasChecked: new Map<number, boolean>()
   });
 
   // 缓存被高亮的节点和边
@@ -90,6 +91,8 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
           return;
         }
         const highlightPath = new Set<number>(allNodePath.slice(0, 1).map((_, index) => index));
+        const defaultChecked = new Map<number, boolean>();
+        defaultChecked.set(0, true)
 
         updateState(draft => {
           draft.allNodePath = allNodePath;
@@ -98,9 +101,7 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
           draft.edgePath = allEdgePath;
           draft.isAnalysis = true;
           draft.highlightPath = highlightPath;
-          draft.hasChecked = {
-            [0]: true
-          }
+          draft.hasChecked = defaultChecked;
           draft.filterRule = {
             type: 'All-Path',
           };
@@ -113,12 +114,15 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
   };
 
   const onSwitchChange = (pathId: number) => {
+    const pathSet = new Set<number>(state.highlightPath)
+    if (state.highlightPath.has(pathId)) {
+      pathSet.delete(pathId);
+    } else {
+      pathSet.add(pathId);
+    }
+
     updateState(draft => {
-      if (draft.highlightPath.has(pathId)) {
-        draft.highlightPath.delete(pathId);
-      } else {
-        draft.highlightPath.add(pathId);
-      }
+      draft.highlightPath = pathSet
     });
   };
 
@@ -279,12 +283,11 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
 
   const handlePanelClick = (index) => {
     const checked = state.highlightPath.has(index);
-    console.log('点击路径', index, state.highlightPath)
+    const maps = new Map<number, boolean>(state.hasChecked)
+    maps.set(index, !checked)
+
     updateState(draft => {
-      draft.hasChecked = {
-        ...state.hasChecked,
-        [index]: !checked
-      }
+      draft.hasChecked = maps
     })
     onSwitchChange(index)
   }
@@ -334,7 +337,7 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
                     key={index}
                     header={`路径 ${index + 1}`}
                     className="tugraph-collapse-container-panel"
-                    style={{ border: state.hasChecked[index] ? '1px solid rgba(22, 80, 255, 1)' : '1px solid rgba(22, 80, 255, 0.2)' }}
+                    style={{ border: state.hasChecked.get(index) ? '1px solid rgba(22, 80, 255, 1)' : '1px solid rgba(22, 80, 255, 0.2)' }}
                     // extra={
                     //   <PanelExtra pathId={index} highlightPath={state.highlightPath} onSwitchChange={onSwitchChange} />
                     // }
