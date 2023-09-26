@@ -13,7 +13,7 @@ export interface IState {
   isAnalysis: boolean;
   filterRule: IFilterRule;
   selecting: string;
-  hasChecked: any;
+  hasChecked: Map<number, boolean>;
 }
 
 export interface IHighlightElement{
