@@ -14,4 +14,5 @@ export { default as PointEdgeView } from './PointEdgeView';
 export { default as TuGraphPathQuery } from './PathQuery';
 export { default as TuGraphPropertiesPanel } from './TuGraphPropertiesPanel';
 export { default as DoubleClickExpandNode } from './DoubleClickExpandNode';
-export {default as LayoutContent} from './LayoutContent'
+export { default as LayoutContent } from './LayoutContent';
+export { default as TuGraphDownload } from './Download';
