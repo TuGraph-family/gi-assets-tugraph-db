@@ -29,7 +29,7 @@ const PropertiesDetailPanel: React.FC<props> = props => {
           return (
             <p key={key}>
               <span style={{ fontSize: 14, color: 'rgba(26,27,37,0.88)' }}>{key}：</span>
-              <span style={{ fontSize: 12, color: '#ccc' }}>{value}</span>
+              <span style={{ fontSize: 12, color: 'rgb(152, 152, 157)' }}>{value}</span>
             </p>
           );
         })}
