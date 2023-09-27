@@ -1,6 +1,6 @@
 import React from 'react';
 import { AlItemProps } from '../interface';
-import DescriptionInput from './ActiveForm';
+import DescriptionInput from './DescriptionInput';
 
 const AlItem = ({
   mT,

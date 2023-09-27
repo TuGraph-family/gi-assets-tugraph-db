@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import DescriptionInput from './DescriptionInput';
 import CheckAllRadio from './CheckAllRadio';
 import SelectAlgorithm from './SelectAlgorithm';
-import AlgorithmParamsMap from './ActiveForm';
+import AlgorithmParamsMap from './AlgorithmParamsMap';
 import { data } from '../data';
 
 const ActiveForm = ({
