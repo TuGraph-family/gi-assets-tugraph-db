@@ -3,7 +3,7 @@ import { useContext } from '@antv/gi-sdk';
 import { useImmer } from 'use-immer';
 import { Pie } from '@antv/g2plot';
 import './index.less';
-import { deepClone, getSetArray } from '../../utils';
+import { deepClone, getSetArray } from '../utils';
 
 const reg = /\+[^\+]+\+/g;
 const reg1 = /\<[^\<]+\>/g;
