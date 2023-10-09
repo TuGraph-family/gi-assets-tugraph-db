@@ -1,9 +1,9 @@
 import { Button, Form, Input, Radio, Select, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
-import DescriptionInput from './ActiveForm';
+import DescriptionInput from './DescriptionInput';
 import CheckAllRadio from './CheckAllRadio';
-import SelectAlgorithm from '..';
-import AlgorithmParamsMap from './ActiveForm';
+import SelectAlgorithm from './SelectAlgorithm';
+import AlgorithmParamsMap from './AlgorithmParamsMap';
 import { data } from '../data';
 
 const ActiveForm = ({

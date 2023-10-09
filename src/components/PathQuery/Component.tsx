@@ -82,11 +82,24 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
         if (!allNodePath?.length) {
           let info = '无符合条件的路径';
           if (direction) {
-            info = '{info}，可尝试将“是否有向”设置为“无向”，或改变起点与终点';
+            info = `${info}，可尝试将“是否有向”设置为“无向”，或改变起点与终点`;
           } else {
-            info = '{info}，可尝试改变起点与终点';
+            info = `${info}，可尝试改变起点与终点`;
           }
           message.info(info);
+
+          updateState(draft => {
+            draft.allNodePath = [];
+            draft.allEdgePath = [];
+            draft.nodePath = [];
+            draft.edgePath = [];
+            draft.highlightPath = new Set();
+            draft.isAnalysis = false;
+            draft.filterRule = {
+              type: 'All-Path',
+            };
+            draft.selecting = '';
+          });
 
           return;
         }

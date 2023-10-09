@@ -16,12 +16,14 @@ export interface CheckAllRadioProps extends Partial<CheckboxProps> {
   checkAllVisible?: boolean;
   value?: string[];
   defaultValue: any[];
-  onChange?: (value: CheckboxValueType[] | CheckboxChangeEvent | Label[]) => void;
+  onChange?: (
+    value: CheckboxValueType[] | CheckboxChangeEvent | Label[]
+  ) => void;
 }
-export interface DescriptionInput extends InputProps {
+export interface DescriptionInputProps extends InputProps {
   description: string;
 }
-export interface DescriptionSelect extends SelectProps {
+export interface DescriptionSelectProps extends SelectProps {
   description: string;
 }
 export interface RootConfig {
@@ -41,7 +43,7 @@ export interface DataType {
   creator: string;
   createTime: string;
 }
-export interface AlItemProps extends DescriptionInput {
+export interface AlItemProps extends DescriptionInputProps {
   mT: string;
   sT: string;
   alValue: string | number | undefined;
@@ -58,4 +60,11 @@ export interface LinksFn {
   goEdit?: (id: string, other?: any) => void;
 }
 
-export { CheckboxChangeEvent, CheckboxValueType, IGIAC, CheckboxProps, InputProps, SelectProps };
+export {
+  CheckboxChangeEvent,
+  CheckboxValueType,
+  IGIAC,
+  CheckboxProps,
+  InputProps,
+  SelectProps,
+};

@@ -32,7 +32,7 @@ const List = ({ goAdd, goList, goDetails, goResult }: LinksFn) => {
     list: DataType[];
     loading: boolean;
   }>({
-    list: mockList,
+    list: mockList as any,
     loading: false,
   });
   const isFullList = config?.list?.length > 0;
@@ -46,7 +46,6 @@ const List = ({ goAdd, goList, goDetails, goResult }: LinksFn) => {
           style={{
             fontSize: '16px',
           }}
-          rev={undefined}
         />
       ),
       filterDropdown: <SearchItem name="name" />,
@@ -87,7 +86,6 @@ const List = ({ goAdd, goList, goDetails, goResult }: LinksFn) => {
           style={{
             fontSize: '16px',
           }}
-          rev={undefined}
         />
       ),
       filterDropdown: <SearchItem name="creator" />,
@@ -314,9 +312,9 @@ const Result = ({ goList, name, id }: LinksFn) => {
           defaultActiveKey={['0']}
           expandIcon={(props) => {
             return props?.isActive ? (
-              <CaretUpOutlined rev="" style={{ fontSize: '14px' }} />
+              <CaretUpOutlined style={{ fontSize: '14px' }} />
             ) : (
-              <CaretDownOutlined rev="" style={{ fontSize: '14px' }} />
+              <CaretDownOutlined style={{ fontSize: '14px' }} />
             );
           }}
         >

@@ -3,17 +3,20 @@ import { useContext } from '@antv/gi-sdk';
 import { useImmer } from 'use-immer';
 import { Pie } from '@antv/g2plot';
 import './index.less';
+import { deepClone, getSetArray } from '../utils';
 
 const reg = /\+[^\+]+\+/g;
 const reg1 = /\<[^\<]+\>/g;
 
 const PointEdgeView = () => {
-  const {
-    data,
-    graph,
-  } = useContext();
+  const { data, graph } = useContext();
+  const copyData = deepClone(data);
+  if (data) {
+    copyData.nodes = getSetArray(data.nodes);
+    copyData.edges = getSetArray(data.edges);
+  }
 
-  const { nodes, edges } = data
+  const { nodes, edges } = copyData;
   const typeMap: any = {};
   const [state, setState] = useImmer<{
     visible: boolean;
@@ -26,7 +29,7 @@ const PointEdgeView = () => {
   });
 
   if (nodes.length === 0) {
-    return null
+    return null;
   }
 
   const nodeTypesSet = (): any[] => {
@@ -105,7 +108,7 @@ const PointEdgeView = () => {
           num[i?.label || 'other'] = 1;
         }
       });
-    
+
     return Object.keys(num).map((k: string) => ({ label: k, num: num[k], ...num[k], id: k }));
   };
 
@@ -130,6 +133,7 @@ const PointEdgeView = () => {
   const EdgesList = () => {
     useEffect(() => {
       edgesTypesSet();
+      console.log(edges, nodes);
     }, [edges, nodes]);
 
     return (
