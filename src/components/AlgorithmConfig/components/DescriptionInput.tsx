@@ -1,11 +1,11 @@
 import { Input } from 'antd';
-import { DescriptionInput } from '../interface';
+import { DescriptionInputProps } from '../interface';
 import React from 'react';
 
 const DescriptionInput = ({
   description,
   ...other
-}: Partial<DescriptionInput>) => {
+}: Partial<DescriptionInputProps>) => {
   return (
     <div className="description">
       <div className="input">

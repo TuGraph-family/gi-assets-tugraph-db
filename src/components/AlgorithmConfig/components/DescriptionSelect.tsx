@@ -1,11 +1,11 @@
 import { Select } from 'antd';
 import React from 'react';
-import { DescriptionSelect } from '../interface';
+import { DescriptionSelectProps } from '../interface';
 
 const DescriptionSelect = ({
   description,
   ...other
-}: Partial<DescriptionSelect>) => {
+}: Partial<DescriptionSelectProps>) => {
   return (
     <div className="description">
       <div className="input">
