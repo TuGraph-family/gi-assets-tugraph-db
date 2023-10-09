@@ -281,11 +281,28 @@ export const getTransformByTemplate = (styles: any = {}, schemaData) => {
         );
       }
 
+      const nodeIconMapping = JSON.parse(localStorage.getItem('NODE_ICON_MAPPING') || '{}')
+
       const advancedIds = advancedNodes.map((item) => item.id);
       const hasCurrentId = advancedIds.indexOf(node.id) !== -1;
       
-      const size = hasCurrentId ? basicSize : nodeCfg.size || node.style?.keyshape?.size
-      const nodeColor = hasCurrentId ? advancedCustomColor || advancedColor : customColor || basicColor || nodeCfg.color || node.style?.keyshape?.fill
+      const size = basicSize || node.style?.keyshape?.size
+      const nodeColor = customColor || basicColor || nodeCfg.color || node.style?.keyshape?.fill
+
+      const basicBadges = nodeIconMapping[node.id] || []
+      const defaultAdvancedBadges = [{
+        position: 'RT',
+        type: "font" as "font",
+        fontFamily: "iconfont",
+        value: badgeValue ? icons[badgeValue[0]] : '',
+        size: [30, 30],
+        color: '#faad14',
+        offset: [3, -2]
+      }]
+
+      const advancedBadges = [...defaultAdvancedBadges, ...basicBadges]
+
+      const badges = hasCurrentId ? advancedBadges: basicBadges
 
       // 兼容单选数据
       let labelValueArr: string[] = [];
@@ -348,17 +365,7 @@ export const getTransformByTemplate = (styles: any = {}, schemaData) => {
             shadowBlur: 20,
             lineWidth: 0
           },
-          badges: [
-            {
-              position: 'RT',
-              type: "font" as "font",
-              fontFamily: "iconfont",
-              value: badgeValue ? icons[badgeValue[0]] : '',
-              size: [30, 30],
-              color: '#faad14',
-              offset: [3, -2]
-            }
-          ]
+          badges
         }
       };
     });
