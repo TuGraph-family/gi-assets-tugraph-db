@@ -11,8 +11,6 @@ import { typeImg } from "../StatisticsFilter/constants";
 const { Option } = Select;
 const { CheckableTag } = Tag;
 
-const tagsData = ['person', 'movie', 'user'];
-
 export interface QuickQueryProps {
   languageServiceId: string;
   schemaServiceId: string;
@@ -368,7 +366,7 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
         <div className="otherContainer">
           <span style={{ marginRight: 8 }}>示例:</span>
           <Space size={[0, 8]} wrap>
-            {tagsData.map((tag) => (
+            {schemaTypeData.map(d => d.labelName).slice(0, 3).map((tag) => (
               <CheckableTag
                 key={tag}
                 checked={state.selectTag === tag}

@@ -8,7 +8,7 @@ const SearchItem = ({ name }: { name: string }) => {
       <Input />
       <div className="tool">
         <Button
-          icon={<SearchOutlined color="#fff" rev="" />}
+          icon={<SearchOutlined color="#fff" />}
           type="primary"
           style={{ width: '80px' }}
         >
