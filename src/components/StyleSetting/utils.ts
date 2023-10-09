@@ -284,8 +284,8 @@ export const getTransformByTemplate = (styles: any = {}, schemaData) => {
       const advancedIds = advancedNodes.map((item) => item.id);
       const hasCurrentId = advancedIds.indexOf(node.id) !== -1;
       
-      const size = hasCurrentId ? basicSize : node.style?.keyshape?.size || nodeCfg.size
-      const nodeColor = hasCurrentId ? advancedCustomColor || advancedColor : customColor || basicColor || node.style?.keyshape?.fill || nodeCfg.color
+      const size = hasCurrentId ? basicSize : nodeCfg.size || node.style?.keyshape?.size
+      const nodeColor = hasCurrentId ? advancedCustomColor || advancedColor : customColor || basicColor || nodeCfg.color || node.style?.keyshape?.fill
 
       // 兼容单选数据
       let labelValueArr: string[] = [];
@@ -336,7 +336,7 @@ export const getTransformByTemplate = (styles: any = {}, schemaData) => {
             fontFamily: "iconfont",
             value: icons[icon.iconText],
             fill: nodeColor,
-            size: size * 0.7
+            size: size ? size * 0.7 : 21
           },
           keyshape: {
             size: size || 1,
@@ -409,7 +409,7 @@ export const getTransformByTemplate = (styles: any = {}, schemaData) => {
       const isAdvanced = advancedIds.indexOf(edge.id) !== -1;
       // const color = isAdvanced ? advancedColor || basicColor || "#87e8de" : basicColor || "#87e8de";
       
-      const color = isAdvanced ? advancedCustomColor || advancedColor : customColor || basicColor || edge.style?.keyshape?.fill || edgeCfg.color
+      const color = isAdvanced ? advancedCustomColor || advancedColor : customColor || basicColor || edgeCfg.color || edge.style?.keyshape?.fill
       
       let labelValueArr: string[] = [];
 

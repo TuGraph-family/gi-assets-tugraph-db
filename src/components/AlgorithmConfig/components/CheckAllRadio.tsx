@@ -31,6 +31,7 @@ const CheckAllRadio = ({
                 onChange(
                   e.target.checked
                     ? defaultValue?.map(
+                      // @ts-ignore
                         (item: Label | CheckboxValueType) => item?.value
                       )
                     : []

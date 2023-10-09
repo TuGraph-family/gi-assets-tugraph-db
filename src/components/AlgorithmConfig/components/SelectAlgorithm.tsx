@@ -17,7 +17,7 @@ const SelectAlgorithm = (props) => {
               <Tooltip title={item?.tooltip}>
                 <span className="lTxt">
                   算法说明 &nbsp;
-                  <QuestionCircleOutlined rev={undefined} className="tIc" />
+                  <QuestionCircleOutlined className="tIc" />
                 </span>
               </Tooltip>
             </div>
