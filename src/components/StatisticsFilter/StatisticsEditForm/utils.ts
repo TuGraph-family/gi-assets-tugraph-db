@@ -113,10 +113,19 @@ export const filterGraphData = (
  * @param elementType 元素类型
  * @returns 图表数据
  */
-export const getChartData = (graphData: GIGraphData, prop: string, elementType: 'node' | 'edge') => {
+export const getChartData = (
+  graphData: GIGraphData,
+  prop: string,
+  elementType: 'node' | 'edge',
+  currentValue?: string,
+) => {
   const elements = elementType === 'node' ? graphData.nodes : graphData.edges;
+  let filterData = elements;
+  if (currentValue) {
+    filterData = elements.filter(item => item.label === currentValue);
+  }
   const chartData = new Map<string, number>();
-  elements?.forEach(e => {
+  filterData?.forEach(e => {
     e.data &&
       e.data[prop] != undefined &&
       chartData.set(e.data[prop], chartData.has(e.data[prop]) ? chartData.get(e.data[prop])! + 1 : 1);
