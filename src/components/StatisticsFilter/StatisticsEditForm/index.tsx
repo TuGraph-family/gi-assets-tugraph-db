@@ -5,7 +5,7 @@ import {
   PieChartOutlined,
   SelectOutlined,
   FireTwoTone,
-  CaretRightOutlined
+  CaretRightOutlined,
 } from '@ant-design/icons';
 import { useContext, utils } from '@antv/gi-sdk';
 import { Button, Dropdown, Menu, Select, Row, Col, Collapse, Form, Space } from 'antd';
@@ -25,7 +25,7 @@ export const iconMap = {
   boolean: <FieldStringOutlined style={{ color: 'rgb(39, 110, 241)', marginRight: '4px' }} />,
   string: <FieldStringOutlined style={{ color: 'rgb(39, 110, 241)', marginRight: '4px' }} />,
   number: <span style={{ color: 'rgb(255, 192, 67)', marginRight: '4px' }}>123.</span>,
-  'int32': <span style={{ color: 'rgb(255, 192, 67)', marginRight: '4px' }}>123.</span>,
+  int32: <span style={{ color: 'rgb(255, 192, 67)', marginRight: '4px' }}>123.</span>,
   date: <FieldTimeOutlined style={{ color: 'rgb(255, 192, 67)', marginRight: '4px' }} />,
 };
 
@@ -43,20 +43,13 @@ interface FilterSelectionProps {
   form?: any;
   schemaList: {
     nodes: any[];
-    edges: any[]
+    edges: any[];
   };
 }
 
 const FilterSelection: React.FC<FilterSelectionProps> = props => {
   const { propertyGraphData, useIntl, data } = useContext();
-
-  const {
-    filterCriteria,
-    updateFilterCriteria,
-    removeFilterCriteria,
-    form,
-    schemaList,
-  } = props;
+  const { filterCriteria, updateFilterCriteria, removeFilterCriteria, form, schemaList } = props;
   const label = Form.useWatch(`label-${filterCriteria.id}`, form);
 
   // 对于离散类型的数据支持切换图表类型
@@ -64,29 +57,33 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
   const [state, setState] = useState<{
     currentSchema: any;
     currentProperty: any;
+    currentValue: string;
   }>({
     currentSchema: {},
     currentProperty: {},
+    currentValue: '',
   });
 
   const handleLabelChange = (value: string) => {
     let schemaArr: any[] = [];
     // 过滤出 schemaType 的值，设置当前的 Schema
     if (value) {
-      schemaArr = [...schemaList.nodes, ...schemaList.edges].filter(node => node.labelName === value);
+      schemaArr = [...schemaList.nodes, ...schemaList.edges].filter(
+        node => node.labelName === value || node.label === value,
+      );
       if (schemaArr.length > 0) {
-        setState({ ...state, currentSchema: schemaArr[0] });
+        setState({ ...state, currentSchema: schemaArr[0], currentValue: value });
       }
     }
   };
 
   const onSelectChange = value => {
     const id = filterCriteria.id as string;
-    const elementType = state.currentSchema.labelType
-    
+    const elementType = state.currentSchema.labelType;
+
     const elementProps = state.currentSchema.properties;
     let analyzerType;
-    
+
     if (!elementProps) {
       analyzerType = 'NONE';
       updateFilterCriteria(id, {
@@ -98,11 +95,11 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
         analyzerType,
       });
       setEnableChangeChartType(false);
-      return
+      return;
     }
 
-    const current = elementProps.find(d => d.name === value)
-    const propertyType = current.type.toLowerCase()
+    const current = elementProps.find(d => d.name === value);
+    const propertyType = current.type.toLowerCase();
     if (propertyType === 'number' || propertyType === 'int32') {
       analyzerType = 'HISTOGRAM';
       updateFilterCriteria(id, {
@@ -126,7 +123,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
       });
       setEnableChangeChartType(false);
     } else if (propertyType === 'string') {
-      const chartData = getChartData(data as any, value, elementType);
+      const chartData = getChartData(data as any, value, elementType, state.currentValue);
       let selectOptions = [...chartData.keys()].map(key => ({
         value: key,
         label: key,
@@ -204,8 +201,10 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
 
   useEffect(() => {
     const { prop, elementType, analyzerType } = filterCriteria;
+
     if (prop && elementType && analyzerType && ['PIE', 'SELECT', 'WORDCLOUD'].indexOf(analyzerType) !== -1) {
-      const chartData = getChartData(data as any, prop, elementType);
+      const chartData = getChartData(data as any, prop, elementType, state.currentValue);
+
       updateFilterCriteria(filterCriteria.id!, {
         ...filterCriteria,
         chartData,
@@ -219,7 +218,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
         histogramData,
       });
     }
-  }, [data, filterCriteria.prop, filterCriteria.elementType, filterCriteria.analyzerType]);
+  }, [data, filterCriteria.prop, filterCriteria.elementType, filterCriteria.analyzerType, state.currentValue]);
 
   const menu = (
     // @ts-ignore
@@ -243,9 +242,9 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
   );
 
   const getPropertyOptions = () => {
-    const elementProps = state.currentSchema.properties || []
+    const elementProps = state.currentSchema.properties || [];
     return elementProps.map(e => {
-      const { name, type  } = e
+      const { name, type } = e;
       // @ts-ignore
       const icon = iconMap[type.toLowerCase()];
 
@@ -276,7 +275,11 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
             <span>
               {label ? (
                 <span>
-                  <img src={state.currentSchema.labelType === 'node' ? typeImg.person : typeImg.amount} alt="" className="img" />
+                  <img
+                    src={state.currentSchema.labelType === 'node' ? typeImg.person : typeImg.amount}
+                    alt=""
+                    className="img"
+                  />
                   {label}
                 </span>
               ) : (
@@ -315,8 +318,8 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
               </OptGroup>
             </Select>
           </Form.Item>
-          <Space style={{ marginBottom: 8, width: '100%' }} align="baseline" className='space-statistic-panel'>
-            <Form.Item name='name' label='选择属性' rules={[{ required: true, message: '请选择属性' }]}>
+          <Space style={{ marginBottom: 8, width: '100%' }} align="baseline" className="space-statistic-panel">
+            <Form.Item name="name" label="选择属性" rules={[{ required: true, message: '请选择属性' }]}>
               <Select
                 style={{ width: '100%' }}
                 onChange={onSelectChange}
@@ -326,13 +329,9 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
                 filterOption={(input, option) => {
                   return (option?.value as string)?.toLowerCase().includes(input.toLowerCase());
                 }}
-                value={
-                  filterCriteria.prop
-                    ? `${filterCriteria.prop}`
-                    : undefined
-                }
+                value={filterCriteria.prop ? `${filterCriteria.prop}` : undefined}
               >
-                  {getPropertyOptions()}
+                {getPropertyOptions()}
               </Select>
               {enableChangeChartType && (
                 <Dropdown overlay={menu}>
@@ -342,7 +341,11 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
             </Form.Item>
           </Space>
 
-          <div className="tugraph-filter-panel-value" id={`${filterCriteria.id}-chart-container`} style={{ marginTop: -20 }}>
+          <div
+            className="tugraph-filter-panel-value"
+            id={`${filterCriteria.id}-chart-container`}
+            style={{ marginTop: -20 }}
+          >
             {filterCriteria.analyzerType == 'SELECT' && (
               <Select
                 style={{ width: '100%' }}
