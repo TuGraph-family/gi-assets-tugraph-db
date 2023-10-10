@@ -18,3 +18,4 @@ export { default as DoubleClickExpandNode } from './DoubleClickExpandNode';
 export { default as LayoutContent } from './LayoutContent';
 export { default as TuGraphDownload } from './Download';
 export { default as AddIconLabel } from './AddIconLabel'
+export { default as TuGraphLockNode } from './LockNode'

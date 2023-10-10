@@ -122,6 +122,7 @@ export const getChartData = (
   const elements = elementType === 'node' ? graphData.nodes : graphData.edges;
   let filterData = elements;
   if (currentValue) {
+    // @ts-ignore
     filterData = elements.filter(item => item.label === currentValue);
   }
   const chartData = new Map<string, number>();
