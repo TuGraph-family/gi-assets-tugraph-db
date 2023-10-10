@@ -34,7 +34,7 @@ const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = (props) => {
   const { labelModalLoading, labelModalVisible } = state;
 
   const currentItem = contextmenu.item
-  if (!currentItem) {
+  if (!currentItem || currentItem.destroyed) {
     return null
   }
 
@@ -53,12 +53,20 @@ const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = (props) => {
 
       refreshNodeAttrPanel();
 
+      // 获取所有选中节点的id
+      const selectedNodes = graph.findAllByState("node", "selected") as any[];
+      if (selectedNodes.length === 0) {
+        selectedNodes.push(currentItem)
+      }
+
+      const selectedNodeIds = selectedNodes.map(d => d.getID())
+
       // 更新数据确保再次展示菜单
       updateContext((draft) => {
         const newData = deepClone(graphData)
 
         newData.nodes.forEach(d => {
-          if (d.id === currentItem.getID()) {
+          if (selectedNodeIds.includes(d.id)) {
             if (!d.style.badges) {
               d.style.badges = []
             }
