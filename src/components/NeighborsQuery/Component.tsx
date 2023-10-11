@@ -62,10 +62,6 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
 
   const { data, updateContext, updateHistory, graph, schemaData, services } = useContext();
 
-  const customStyleConfig = localStorage.getItem('CUSTOM_STYLE_CONFIG')
-    ? JSON.parse(localStorage.getItem('CUSTOM_STYLE_CONFIG') as string)
-    : {};
-
   const service = utils.getService(services, serviceId);
   const languageService = utils.getService(services, languageServiceId);
 
@@ -137,6 +133,8 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
       currentRef.current.expandIds = expandIds;
       currentRef.current.expandStartId = expandStartId;
 
+      const customStyleConfig = JSON.parse(localStorage.getItem('CUSTOM_STYLE_CONFIG') as string || '{}')
+
       const transform = getTransformByTemplate(customStyleConfig, schemaData);
 
       updateContext(draft => {
@@ -204,6 +202,7 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
       currentRef.current.expandIds = expandIds;
       currentRef.current.expandStartId = expandStartId;
 
+      const customStyleConfig = JSON.parse(localStorage.getItem('CUSTOM_STYLE_CONFIG') as string || '{}')
       const transform = getTransformByTemplate(customStyleConfig, schemaData);
 
       updateContext(draft => {

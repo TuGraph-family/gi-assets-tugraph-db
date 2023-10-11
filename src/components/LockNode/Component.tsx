@@ -39,6 +39,7 @@ const TuGraphLockNode: React.FunctionComponent<TuGraphLockNodeProps> = (props) =
         value: icons['loukongsuodingicon'],
         fontFamily: "iconfont",
         size: [20, 20],
+        offset: [-4, 4],
         color: "#7e92b5",
       });
       graph.updateItem(target, {

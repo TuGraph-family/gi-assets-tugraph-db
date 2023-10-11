@@ -15,7 +15,6 @@ export interface ILanguageQueryProps {
 
 const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "320px", languageServiceId }) => {
   const { updateContext, services, graph, schemaData } = useContext();
-  const customStyleConfig = localStorage.getItem('CUSTOM_STYLE_CONFIG') ? JSON.parse(localStorage.getItem('CUSTOM_STYLE_CONFIG') as string) : {}
 
   const languageService = utils.getService(services, languageServiceId);
 
@@ -77,6 +76,7 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "320px", langua
       d.data = d.properties
     })
 
+    const customStyleConfig = JSON.parse(localStorage.getItem('CUSTOM_STYLE_CONFIG') as string || '{}')
     const transform = getTransformByTemplate(customStyleConfig, schemaData);
 
     // 查询后除了改变画布节点/边数据，还需要保存“初始数据”，供类似 Filter 组件作为初始化数据使用
