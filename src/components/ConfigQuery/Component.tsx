@@ -23,8 +23,6 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
     services,
     graph,
   } = useContext();
-  
-  const customStyleConfig = localStorage.getItem('CUSTOM_STYLE_CONFIG') ? JSON.parse(localStorage.getItem('CUSTOM_STYLE_CONFIG') as string) : {}
 
   const quickQueryService = utils.getService(services, languageServiceId);
 
@@ -121,7 +119,7 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
     }
   }, [schemaList]);
 
-
+  const customStyleConfig = JSON.parse(localStorage.getItem('CUSTOM_STYLE_CONFIG') as string || '{}')
   const transform = getTransformByTemplate(customStyleConfig, state.schemaList);
 
   const handleExecQuery = async () => {

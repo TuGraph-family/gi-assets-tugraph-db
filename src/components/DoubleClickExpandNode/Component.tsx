@@ -16,10 +16,6 @@ const DoubleClickExpandNode = () => {
   const { updateContext, services, schemaData, graph } = useContext();
   const service: any = utils.getService(services, 'TuGraph-DB/neighborsQueryService');
 
-  const customStyleConfig = localStorage.getItem('CUSTOM_STYLE_CONFIG')
-    ? JSON.parse(localStorage.getItem('CUSTOM_STYLE_CONFIG') as string)
-    : {};
-
   const expandNodes = async (ids, expandStartId, sep, propNodes: any = undefined) => {
     let nodes = propNodes;
 
@@ -57,8 +53,9 @@ const DoubleClickExpandNode = () => {
       currentRef.current.expandIds = expandIds;
       currentRef.current.expandStartId = expandStartId;
 
+      const customStyleConfig = JSON.parse(localStorage.getItem('CUSTOM_STYLE_CONFIG') as string || '{}')
+      
       const transform = getTransformByTemplate(customStyleConfig, schemaData);
-
       updateContext(draft => {
         const res = transform(newData);
         // @ts-ignore

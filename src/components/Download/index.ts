@@ -1,3 +1,4 @@
+import { Info } from '@antv/gi-sdk';
 import Component from './Component';
 import registerMeta from './registerMeta';
 
@@ -8,7 +9,7 @@ const info = {
   category: 'data-query',
   desc: '下载',
   cover: 'http://xxxx.jpg',
-  type: 'GIAC_CONTENT',
+  type: Info.type.COMPONENT_ACTION,
 };
 
 export default {

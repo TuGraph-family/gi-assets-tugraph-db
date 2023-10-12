@@ -1,10 +1,14 @@
 import { Select } from 'antd';
 import { common, useContext } from '@antv/gi-sdk';
-import React from 'react';
+import React, { useEffect } from 'react';
 import './index.less';
+import { useState } from 'react';
 
 const Download: React.FC<{}> = ({}) => {
-  const { graph } = useContext();
+  const { graph, data } = useContext();
+  const [state, setState] = useState({
+    disbaled: true
+  })
 
   const onExport = () => {
     const { nodes, edges } = graph.save() as {
@@ -32,14 +36,27 @@ const Download: React.FC<{}> = ({}) => {
     onExport();
   };
 
+  useEffect(() => {
+    if (data.nodes.length > 0) {
+      setState({
+        disbaled: false
+      })
+    } else {
+      setState({
+        disbaled: true
+      })
+    }
+  }, [data.nodes.length])
+
   return (
-    <div className="container">
+    <div className="tugraph-download-container">
       <Select
         placeholder="下载"
-        style={{ width: 98 }}
+        style={{ width: 75 }}
         onChange={handleChange}
         dropdownMatchSelectWidth={false}
         className="selection"
+        disabled={state.disbaled}
         suffixIcon={
           <img
             src="https://mdn.alipayobjects.com/huamei_qcdryc/afts/img/A*8vDOSrGq4ykAAAAAAAAAAAAADgOBAQ/original"
