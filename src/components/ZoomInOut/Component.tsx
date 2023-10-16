@@ -25,26 +25,30 @@ const ZoomInOut = () => {
   const realNodeRef: RefObject<any> = useRef(null);
 
   const fn = throttle(
-    e => {
+    (e) => {
       const upScale = e.clientX < nodeRef.current.offsetX;
       if (nodeRef.current.holdOn) {
         if (upScale) {
           nodeRef.current.scale = nodeRef.current.scale + 0.1;
           realNodeRef.current.style.transform = `scale(${nodeRef.current.scale})`;
-          realNodeRef.current.style.bottom = (nodeRef.current.scale - 1) * 60 + nodeRef.current.pull + 'px';
-          realNodeRef.current.style.right = (nodeRef.current.scale - 1) * 64 + nodeRef.current.pull + 'px';
+          realNodeRef.current.style.bottom =
+            (nodeRef.current.scale - 1) * 60 + nodeRef.current.pull + 'px';
+          realNodeRef.current.style.right =
+            (nodeRef.current.scale - 1) * 64 + nodeRef.current.pull + 'px';
         } else {
           nodeRef.current.scale = nodeRef.current.scale - 0.1;
           realNodeRef.current.style.transform = `scale(${nodeRef.current.scale})`;
-          realNodeRef.current.style.bottom = (nodeRef.current.scale - 1) * 60 + nodeRef.current.pull + 'px';
-          realNodeRef.current.style.right = (nodeRef.current.scale - 1) * 64 + nodeRef.current.pull + 'px';
+          realNodeRef.current.style.bottom =
+            (nodeRef.current.scale - 1) * 60 + nodeRef.current.pull + 'px';
+          realNodeRef.current.style.right =
+            (nodeRef.current.scale - 1) * 64 + nodeRef.current.pull + 'px';
         }
       }
     },
     60,
     {
       trailing: true,
-    },
+    }
   );
   const [state, setState] = useImmer<{
     visible: boolean;
@@ -58,7 +62,6 @@ const ZoomInOut = () => {
       className: 'minimapWrap',
     });
     graph.addPlugin(minimap);
-    console.log(graph, nodeRef.current);
   }, [state.visible]);
   return (
     <div
@@ -78,16 +81,16 @@ const ZoomInOut = () => {
         nodeRef.current.holdOn = false;
         realNodeRef.current.style.borderColor = '#e9e9e9';
       }}
-      onDragStart={e => {
+      onDragStart={(e) => {
         nodeRef.current.offsetX = e.clientX;
         nodeRef.current.drag = true;
       }}
-      onDrag={e => {
-        if (nodeRef.current.drag) {
+      onDrag={(e) => {
+        if (nodeRef.current.drag && nodeRef.current.holdOn) {
           fn(e);
         }
       }}
-      onDragEnd={e => {
+      onDragEnd={(e) => {
         nodeRef.current.drag = false;
         realNodeRef.current.style.borderColor = '#e9e9e9';
       }}
