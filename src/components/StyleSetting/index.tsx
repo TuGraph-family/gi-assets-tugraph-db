@@ -9,7 +9,8 @@ const info = {
   category: "system-interaction",
   desc: "样式设置",
   cover: "http://xxxx.jpg",
-  type: "GIAC_CONTENT"
+  type: "GIAC_CONTENT",
+  className: 'gi-richcontainer-stylesetting-button'
 };
 
 export default {
