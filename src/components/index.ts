@@ -17,5 +17,6 @@ export { default as TuGraphPropertiesPanel } from './TuGraphPropertiesPanel';
 export { default as DoubleClickExpandNode } from './DoubleClickExpandNode';
 export { default as LayoutContent } from './LayoutContent';
 export { default as TuGraphDownload } from './Download';
-export { default as AddIconLabel } from './AddIconLabel'
-export { default as TuGraphLockNode } from './LockNode'
+export { default as AddIconLabel } from './AddIconLabel';
+export { default as TuGraphLockNode } from './LockNode';
+export { default as ZoomInOut } from './ZoomInOut';
