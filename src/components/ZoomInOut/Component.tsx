@@ -55,6 +55,10 @@ const ZoomInOut = () => {
   }>({
     visible: false,
   });
+  const resetEvent = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+  };
   useEffect(() => {
     const minimap = new Minimap({
       size: [nodeRef.current.width / 2, nodeRef.current.mapHeight / 2],
@@ -68,13 +72,13 @@ const ZoomInOut = () => {
       className="zoomInOut"
       ref={realNodeRef}
       draggable
-      onMouseDown={() => {
+      onMouseDown={(e) => {
         nodeRef.current.timer = setTimeout(() => {
           nodeRef.current.holdOn = true;
           realNodeRef.current.style.borderColor = '#3056e3';
         }, 1000);
       }}
-      onMouseUp={() => {
+      onMouseUp={(e) => {
         if (nodeRef.current.timer) {
           clearTimeout(nodeRef.current.timer);
         }
@@ -97,7 +101,12 @@ const ZoomInOut = () => {
     >
       {!state.visible ? (
         <div className="map">
-          <div id="minimap"></div>
+          <div
+            id="minimap"
+            onMouseDown={(e) => {
+              resetEvent(e);
+            }}
+          ></div>
         </div>
       ) : null}
       {state.visible ? (
