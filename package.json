@@ -1,6 +1,6 @@
 {
   "name": "@tugraph/gi-assets-tugraph-db",
-  "version": "0.6.28",
+  "version": "0.6.30",
   "description": "G6VP Assets for TuGraph-DB",
   "keywords": [
     "G6VP",
@@ -27,12 +27,15 @@
     "start": "father build --watch"
   },
   "dependencies": {
+    "@antv/g2": "^5.1.5",
     "@antv/g2plot": "^2.4.31",
     "@antv/g6": "4.x",
-    "@antv/gi-sdk": "workspace:*",
+    "@antv/gi-sdk": "^2.4.14",
     "@antv/graphin": "2.x",
     "ace-gremlin-editor": "^1.0.2",
+    "ahooks": "^3.7.8",
     "antd": "4.x",
+    "dayjs": "^1.11.10",
     "deepmerge": "^4.3.1",
     "immer": "^9.0.0",
     "lodash": "^4.17.21",
