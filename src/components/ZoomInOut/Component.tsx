@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, RefObject } from 'react';
 import { useContext } from '@antv/gi-sdk';
-import { Minimap, Graph } from '@antv/g6';
+import { Minimap } from '@antv/g6';
 import { useImmer } from 'use-immer';
 import { throttle } from '@antv/util';
 
@@ -9,7 +9,12 @@ import './index.less';
 const animateCfg = { duration: 200, easing: 'easeCubic' };
 
 const ZoomInOut = () => {
-  const { graph } = useContext();
+  const { graph, data } = useContext();
+
+  if (!data || data.nodes.length === 0) {
+    return null
+  }
+  
   const nodeRef: any = useRef({
     timer: null,
     width: 140,
@@ -67,6 +72,7 @@ const ZoomInOut = () => {
     });
     graph.addPlugin(minimap);
   }, [state.visible]);
+
   return (
     <div
       className="zoomInOut"

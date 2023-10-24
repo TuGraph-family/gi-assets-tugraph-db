@@ -1,6 +1,6 @@
 {
   "name": "@tugraph/gi-assets-tugraph-db",
-  "version": "0.6.30",
+  "version": "0.6.33",
   "description": "G6VP Assets for TuGraph-DB",
   "keywords": [
     "G6VP",
@@ -30,7 +30,7 @@
     "@antv/g2": "^5.1.5",
     "@antv/g2plot": "^2.4.31",
     "@antv/g6": "4.x",
-    "@antv/gi-sdk": "^2.4.14",
+    "@antv/gi-sdk": "^2.4.15",
     "@antv/graphin": "2.x",
     "ace-gremlin-editor": "^1.0.2",
     "ahooks": "^3.7.8",
