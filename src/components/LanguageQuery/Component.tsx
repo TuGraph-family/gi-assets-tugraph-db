@@ -29,7 +29,7 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "320px", langua
     languageType: 'Cypher',
     editorValue: "match p=(n)-[r]-(m) return p limit 6",
     btnLoading: false,
-    hasClear: false
+    hasClear: true
   });
   const { languageType, editorValue, btnLoading } = state;
 
@@ -172,7 +172,7 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = "320px", langua
           </div>
         </div>
 
-        <Checkbox onChange={handleChange}>清空画布数据</Checkbox>
+        <Checkbox checked={state.hasClear} value={state.hasClear} onChange={handleChange}>清空画布数据</Checkbox>
 
       </div>
       <div className={"buttonContainer"}>

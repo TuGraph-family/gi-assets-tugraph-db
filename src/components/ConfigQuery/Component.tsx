@@ -124,7 +124,7 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
 
   const handleExecQuery = async () => {
     const values = await form.validateFields();
-    const { label, property, value, logic, limit = 10, hasClearData } = values;
+    const { label, property, value, logic, limit = 200, hasClearData = true } = values;
     setState((draft) => {
       draft.btnLoading = true;
     });
@@ -277,6 +277,10 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
     form.resetFields()
   }
 
+  const initialValues = {
+    limit: 200,
+    hasClearData: true
+  }
   return (
     <div className='quickQueryContainer'>
       <Form
@@ -285,6 +289,7 @@ const ConfigQuery: React.FC<QuickQueryProps> = ({ languageServiceId, schemaServi
         layout='vertical'
         onValuesChange={handleValueChange}
         style={{ height: "100%", overflow: "auto" }}
+        initialValues={initialValues}
       >
 
         <div className="formContainer">

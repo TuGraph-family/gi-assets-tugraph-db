@@ -21,3 +21,4 @@ export { default as AddIconLabel } from './AddIconLabel';
 export { default as TuGraphLockNode } from './LockNode';
 export { default as ZoomInOut } from './ZoomInOut';
 export { default as TuGraphTimebar } from './Timebar'
+export { default as EnabledUserGuidance } from './EnabledUserGuidance'
