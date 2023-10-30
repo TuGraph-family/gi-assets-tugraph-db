@@ -1,32 +1,65 @@
-import React from "react";
-import { InputNumber, Slider } from "antd";
+import { Col, Popover, Row, Slider } from 'antd';
+import React, { useEffect } from 'react';
+import { useImmer } from 'use-immer';
+import './index.less';
 
-const InputSlider = ({ value, onChange, min, max }) => {
-  const valueMin = !isNaN(min) ? min : 2;
-  const valueMax = !isNaN(max) ? max : 100;
+interface IntegerStepProps {
+  onChange?: (value: number) => void;
+  defaultValue?: number;
+  value?: number;
+  marks?: any;
+  min?: number;
+  max?: number;
+}
+
+const defaultMarks = {
+  5: '最小',
+  30: '小',
+  60: '中等',
+  100: '大',
+};
+
+const IntegerStep: React.FC<IntegerStepProps> = ({
+  value,
+  defaultValue = 0,
+  onChange,
+  marks = defaultMarks,
+  min = 5,
+  max = 100,
+}) => {
+  const [state, setState] = useImmer<{ inputValue?: number }>({
+    inputValue: defaultValue,
+  });
+  const { inputValue } = state;
+
+  const onValueChange = value => {
+    setState(draft => {
+      draft.inputValue = value;
+    });
+    if (onChange) {
+      onChange(value);
+    }
+  };
+  useEffect(() => {
+    setState(draft => {
+      draft.inputValue = value;
+    });
+  }, [value]);
+
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row"
-      }}
-    >
-      <Slider
-        min={valueMin}
-        max={valueMax}
-        onChange={onChange}
-        value={typeof value === "number" ? value : valueMin}
-        style={{ flex: 1 }}
-      ></Slider>
-      <InputNumber
-        min={valueMin}
-        max={valueMax}
-        style={{ width: "60px" }}
-        value={value}
-        onChange={onChange}
-      />
-    </div>
+    <Row className="inputSlider">
+      <Col span={24}>
+        <Slider
+          min={min}
+          max={max}
+          marks={marks}
+          step={null}
+          onChange={onValueChange}
+          value={typeof inputValue === 'number' ? inputValue : 0}
+        />
+      </Col>
+    </Row>
   );
 };
 
-export default InputSlider;
+export default IntegerStep;
