@@ -5,6 +5,7 @@ import { useContext, utils } from "@antv/gi-sdk";
 import EdgeConfigurationPanel from "./EdgeConfiguration";
 import NodeConfigurationPanel from "./NodeConfiguration";
 import { getQueryString } from '../utils'
+import { isEmpty } from 'lodash';
 import './index.less'
 
 export interface IStyleSetting {
@@ -17,6 +18,7 @@ const StyleSetting: React.FunctionComponent<IStyleSetting> = (props) => {
   
   const {
     services,
+    schemaData,
   } = useContext();
 
   const schemaService = utils.getService(services, schemaServiceId);
@@ -34,6 +36,7 @@ const StyleSetting: React.FunctionComponent<IStyleSetting> = (props) => {
       edges: []
     },
   })
+
 
   const graphName = getQueryString('graphName')
 
@@ -57,8 +60,17 @@ const StyleSetting: React.FunctionComponent<IStyleSetting> = (props) => {
   }
   
   useEffect(() => {
-    queryGraphSchema()
-  }, [graphName])
+    if (!isEmpty(schemaData?.nodes) || !isEmpty(schemaData?.edges)) { 
+      setState((draft) => {
+      draft.schemaList = schemaData;
+    });
+      return;
+    }
+    if (graphName) { 
+      queryGraphSchema();
+    }
+  
+  }, [graphName, schemaData]);
 
   const handleChange = (value) => {
     setState(draft => {

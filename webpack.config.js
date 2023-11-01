@@ -92,7 +92,7 @@ module.exports = (env, argv) => {
               },
             },
           ],
-          sideEffects: true,
+          sideEffects: false,
         },
         {
           test: /\.(woff|woff2|eot|ttf|otf)$/,

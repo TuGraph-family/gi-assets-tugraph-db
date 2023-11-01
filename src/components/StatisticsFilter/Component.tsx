@@ -6,6 +6,7 @@ import { HistogramOpt } from './StatisticsEditForm/type';
 import { nanoid } from 'nanoid';
 import { useContext, utils } from '@antv/gi-sdk';
 import { filterGraphData, highlightSubGraph } from './StatisticsEditForm/utils';
+import { isEmpty } from 'lodash';
 import { getQueryString } from '../utils';
 import './index.less';
 
@@ -20,7 +21,7 @@ const StatisticsFilter: React.FC<StatisticsFilterProps> = ({ histogramOptions, s
   const [filterdata, setFilterData] = useState({
     [id]: { defaultKey: undefined, histogramOptions: undefined, id, isFilterReady: false },
   });
-  const { updateContext, services, graph, data } = useContext();
+  const { updateContext, services, graph, data , schemaData} = useContext();
   const schemaService = utils.getService(services, schemaServiceId);
   const [schemaList, setSchemaList] = useState<{
     nodes: any[];
@@ -42,8 +43,15 @@ const StatisticsFilter: React.FC<StatisticsFilterProps> = ({ histogramOptions, s
   };
 
   useEffect(() => {
-    queryGraphSchema();
-  }, [graphName]);
+    if (!isEmpty(schemaData?.nodes) || !isEmpty(schemaData?.edges)) { 
+      setSchemaList(schemaData);
+      return;
+    }
+    if (graphName) { 
+      queryGraphSchema();
+    }
+  
+  }, [graphName, schemaData]);
 
   const addPanel = (defaultKey?: string, filterProps = {}) => {
     const filterCriteria = {

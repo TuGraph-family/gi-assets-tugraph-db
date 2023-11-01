@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { CloseOutlined } from '@ant-design/icons';
 import { cloneDeep } from 'lodash';
 import { AttributesEditForm } from './AttributesEditForm/index';
+import { isEmpty } from 'lodash';
 import { useContext, utils } from '@antv/gi-sdk';
 import { filterByTopRule } from '../StyleSetting/utils';
 import { getQueryString } from '../utils'
@@ -14,7 +15,7 @@ export interface props {
 
 const AttributesFilter: React.FC<props> = ({ schemaServiceId }) => {
   const [form] = Form.useForm();
-  const { services, graph } = useContext();
+  const { services, graph, schemaData } = useContext();
   const [filterdata, setFilterData] = useState([{ id: Date.now() }]);
   const schemaService = utils.getService(services, schemaServiceId);
   const [schemaList, setSchemaList] = useState<{
@@ -24,6 +25,7 @@ const AttributesFilter: React.FC<props> = ({ schemaServiceId }) => {
     nodes: [],
     edges: []
   });
+
 
   const graphName = getQueryString('graphName')
   const queryGraphSchema = async () => {
@@ -37,8 +39,15 @@ const AttributesFilter: React.FC<props> = ({ schemaServiceId }) => {
   };
 
   useEffect(() => {
-    queryGraphSchema();
-  }, [graphName]);
+    if (!isEmpty(schemaData?.nodes) || !isEmpty(schemaData?.edges)) { 
+      setSchemaList(schemaData);
+      return;
+    }
+    if (graphName) { 
+      queryGraphSchema();
+    }
+  
+  }, [graphName, schemaData]);
 
   const addPanel = () => {
     const addData = cloneDeep(filterdata);
