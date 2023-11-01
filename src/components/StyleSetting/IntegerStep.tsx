@@ -1,6 +1,7 @@
-import { Col, Popover, Row, Slider } from "antd";
-import React, { useEffect } from "react";
-import { useImmer } from "use-immer";
+import { Col, Popover, Row, Slider } from 'antd';
+import React, { useEffect } from 'react';
+import { useImmer } from 'use-immer';
+import './index.less';
 
 interface IntegerStepProps {
   onChange?: (value: number) => void;
@@ -18,14 +19,21 @@ const defaultMarks = {
   100: '大',
 };
 
-const IntegerStep: React.FC<IntegerStepProps> = ({ value, defaultValue = 0, onChange, marks = defaultMarks, min = 5, max = 100 }) => {
-  const [state, setState] = useImmer<{ inputValue?: number }>({ 
+const IntegerStep: React.FC<IntegerStepProps> = ({
+  value,
+  defaultValue = 0,
+  onChange,
+  marks = defaultMarks,
+  min = 5,
+  max = 100,
+}) => {
+  const [state, setState] = useImmer<{ inputValue?: number }>({
     inputValue: defaultValue,
   });
   const { inputValue } = state;
 
-  const onValueChange = (value) => {
-    setState((draft) => {
+  const onValueChange = value => {
+    setState(draft => {
       draft.inputValue = value;
     });
     if (onChange) {
@@ -33,13 +41,13 @@ const IntegerStep: React.FC<IntegerStepProps> = ({ value, defaultValue = 0, onCh
     }
   };
   useEffect(() => {
-    setState((draft) => {
+    setState(draft => {
       draft.inputValue = value;
     });
   }, [value]);
 
   return (
-    <Row style={{ padding: '0 8px' }}>
+    <Row className="integerStep">
       <Col span={24}>
         <Slider
           min={min}
@@ -47,7 +55,7 @@ const IntegerStep: React.FC<IntegerStepProps> = ({ value, defaultValue = 0, onCh
           marks={marks}
           step={null}
           onChange={onValueChange}
-          value={typeof inputValue === "number" ? inputValue : 0}
+          value={typeof inputValue === 'number' ? inputValue : 0}
         />
       </Col>
       {/* <Col span={4}>

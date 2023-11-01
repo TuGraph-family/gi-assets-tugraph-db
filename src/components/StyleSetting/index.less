@@ -35,7 +35,7 @@
       height: 25px;
       margin-right: 8px;
       margin-bottom: 8px;
-      background: #FAFBFE;
+      background: #f3f5f9;
       border-radius: 2px;
       .ant-radio {
         visibility: hidden;
@@ -44,6 +44,7 @@
     .custom-ant-radio-wrapper.ant-radio-wrapper-checked {
       outline: 8px auto #fff;
       box-shadow: 2px 2px 8px 2px rgba(89,113,185,0.24);
+      
     }
     .ant-radio-button-wrapper:not(:first-child)::before {
       width: 0px;
@@ -91,6 +92,22 @@
     }
     .color {
       display: flex;
+    }
+    .integerStep{
+      padding: 0 8px;
+
+      .ant-slider-track {
+        background-color: #1650ff;
+      }
+      .ant-slider-handle {
+        border: solid 2px #1650ff;
+      }
+      .ant-slider-dot-active {
+        border-color: #1650ff;
+      }
+      .ant-switch-checked {
+        background-color: #1650ff;
+      }
     }
   
     .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
