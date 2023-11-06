@@ -12,27 +12,13 @@ interface Props {
   gremlinId?: string;
 }
 
-export const GraphEditor: React.FC<Props, any> = forwardRef<any, any>(
-  (props, editorRef) => {
-    const {
-      height = '100%',
-      width,
-      initialValue = '',
-      graphId = 'default-editor',
-      language,
-    } = props;
-    return (
-      <div style={{ width, height, borderRadius: 8 }}>
-        <CypherEdit
-          ref={editorRef}
-          value={initialValue}
-          height={height}
-          showGutter={false}
-          language={language}
-        />
-      </div>
-    );
-  }
-);
+export const GraphEditor: React.FC<any> = forwardRef<any, any>((props, editorRef) => {
+  const { height = '100%', width, initialValue = '', graphId = 'default-editor', language } = props;
+  return (
+    <div style={{ width, height, borderRadius: 8 }}>
+      <CypherEdit ref={editorRef} value={initialValue} height={height} showGutter={false} language={language} />
+    </div>
+  );
+});
 
 export default GraphEditor;
