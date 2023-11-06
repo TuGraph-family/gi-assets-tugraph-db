@@ -314,12 +314,12 @@ export const getOperatorList = (value: string = '') => {
     return [
       {
         key: "CT",
-        value: "∈",
+        value: "⊃",
         text: '包含'
       },
       {
         key: "NC",
-        value: "∉",
+        value: "⊅",
         text: '不包含'
       },
       {
