@@ -27,10 +27,6 @@ const request = extend({
 // 中间件
 request.interceptors.response.use(async (response) => {
   const data = await response.clone().json();
-  if (data.errorCode == 401) {
-    message.warning('登录过期，请重新登录');
-    window.location.href = '/admin/ks0v7y637ix';
-  }
   if (data.errorCode == 400 || data.errorCode == 500) {
     message.error('请求失败' + data.errorMessage);
   }
