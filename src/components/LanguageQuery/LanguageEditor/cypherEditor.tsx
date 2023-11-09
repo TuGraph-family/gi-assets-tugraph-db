@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useState, forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import { MonacoEnvironment, EditorProvider } from '@difizen/cofine-editor-core';
 
 const Editor = forwardRef<any, any>((props, editorRef) => {
@@ -17,6 +17,10 @@ const Editor = forwardRef<any, any>((props, editorRef) => {
   };
 
   React.useEffect(() => {
+    MonacoEnvironment.loadModule(async (container: { load: (arg0: Syringe.Module) => void }) => {
+      const dsl = await import('@difizen/cofine-language-cypher');
+      container.load(dsl.default);
+    });
     MonacoEnvironment.init().then(async () => {
       if (editorRef && editorRef.current) {
         const editorProvider =
@@ -55,7 +59,6 @@ const Editor = forwardRef<any, any>((props, editorRef) => {
         }
         // registerOptions({});
       }
-      window.define = undefined;
     });
 
     return () => {
@@ -64,32 +67,6 @@ const Editor = forwardRef<any, any>((props, editorRef) => {
       }
     };
   }, [editorRef]);
-
-  const doFormat = (): Promise<boolean> => {
-    if (!codeEditor) {
-      Promise.resolve(false);
-    }
-    const selection = codeEditor.getSelection();
-    const hasSelection = selection && !selection.isEmpty();
-    const action = codeEditor.getAction(
-      hasSelection
-        ? 'editor.action.formatSelection'
-        : 'editor.action.formatDocument'
-    );
-    if (action) {
-      return new Promise((resolve, reject) => {
-        action.run().then(
-          () => {
-            resolve(true);
-          },
-          (err: Error) => {
-            reject(err);
-          }
-        );
-      });
-    }
-    return Promise.reject(new Error('format not support'));
-  };
 
   return (
     <div
