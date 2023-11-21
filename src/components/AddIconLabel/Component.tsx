@@ -3,7 +3,7 @@ import { Form, Input, Menu, message, Modal, Radio, Dropdown } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useImmer } from 'use-immer';
 import type { MenuProps } from 'antd';
-import { deepClone } from '../../utils';
+import { deepClone } from '../utils';
 import './index.less';
 
 const Item: any = Menu.Item;
