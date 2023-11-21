@@ -76,6 +76,7 @@ const LayoutSwitchTool: React.FC<LayoutSwitchProps> = props => {
         };
         draft.layoutCache = false;
       });
+      // @ts-ignore
       clearTimeout(timer);
       timer = setTimeout(() => {
         graph.fitCenter(true);
