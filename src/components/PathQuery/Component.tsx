@@ -30,8 +30,13 @@ export interface IPathAnalysisProps {
 
 enableMapSet();
 
-const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
-  const { pathNodeLabel, controlledValues, onOpen = () => {}, hasDirection } = props;
+const TuGraphPathQuery: React.FC<IPathAnalysisProps> = (props) => {
+  const {
+    pathNodeLabel,
+    controlledValues,
+    onOpen = () => {},
+    hasDirection,
+  } = props;
   const { data: graphData, graph, sourceDataMap } = useContext();
 
   const [state, updateState] = useImmer<IState>({
@@ -45,7 +50,7 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
       type: 'All-Path',
     },
     selecting: '',
-    hasChecked: new Map<number, boolean>()
+    hasChecked: new Map<number, boolean>(),
   });
 
   // 缓存被高亮的节点和边
@@ -58,7 +63,7 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
 
   const handleResetForm = () => {
     form.resetFields();
-    updateState(draft => {
+    updateState((draft) => {
       draft.allNodePath = [];
       draft.allEdgePath = [];
       draft.nodePath = [];
@@ -74,11 +79,16 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
   };
 
   const handleSearch = () => {
-    form.validateFields().then(values => {
+    form.validateFields().then((values) => {
       cancelHighlight();
       const { source, target, direction = false } = values;
       try {
-        const { allPath: allNodePath, allEdgePath }: any = findShortestPath(graphData, source, target, direction);
+        const { allPath: allNodePath, allEdgePath }: any = findShortestPath(
+          graphData,
+          source,
+          target,
+          direction
+        );
         if (!allNodePath?.length) {
           let info = '无符合条件的路径';
           if (direction) {
@@ -88,7 +98,7 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
           }
           message.info(info);
 
-          updateState(draft => {
+          updateState((draft) => {
             draft.allNodePath = [];
             draft.allEdgePath = [];
             draft.nodePath = [];
@@ -103,11 +113,13 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
 
           return;
         }
-        const highlightPath = new Set<number>(allNodePath.slice(0, 1).map((_, index) => index));
+        const highlightPath = new Set<number>(
+          allNodePath.slice(0, 1).map((_, index) => index)
+        );
         const defaultChecked = new Map<number, boolean>();
-        defaultChecked.set(0, true)
+        defaultChecked.set(0, true);
 
-        updateState(draft => {
+        updateState((draft) => {
           draft.allNodePath = allNodePath;
           draft.allEdgePath = allEdgePath;
           draft.nodePath = allNodePath;
@@ -127,24 +139,24 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
   };
 
   const onSwitchChange = (pathId: number) => {
-    const pathSet = new Set<number>(state.highlightPath)
+    const pathSet = new Set<number>(state.highlightPath);
     if (state.highlightPath.has(pathId)) {
       pathSet.delete(pathId);
     } else {
       pathSet.add(pathId);
     }
 
-    updateState(draft => {
-      draft.highlightPath = pathSet
+    updateState((draft) => {
+      draft.highlightPath = pathSet;
     });
   };
 
   // 取消所有节点和边的高亮状态
   const cancelHighlight = () => {
-    [...highlightElementRef.current?.nodes].forEach(nodeId => {
+    [...highlightElementRef.current?.nodes].forEach((nodeId) => {
       graph.findById(nodeId) && graph.setItemState(nodeId, 'active', false);
     });
-    [...highlightElementRef.current.edges].forEach(edgeId => {
+    [...highlightElementRef.current.edges].forEach((edgeId) => {
       // graph.findById(edgeId) && graph.setItemState(edgeId, 'active', false);
       if (graph.findById(edgeId)) {
         graph.setItemState(edgeId, 'active', false);
@@ -165,53 +177,62 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
 
   useEffect(() => {
     for (let i = 0; i < state.nodePath.length; i++) {
-      const nodes = state.nodePath[i];
-      const edges = state.edgePath[i];
-
-      if (!state.highlightPath.has(i)) {
-        nodes.forEach(nodeId => {
-          graph.findById(nodeId) && graph.setItemState(nodeId, 'active', false);
-          highlightElementRef.current?.nodes.delete(nodeId);
-        });
-
-        edges.forEach(edgeId => {
-          graph.findById(edgeId) && graph.setItemState(edgeId, 'active', false);
-          highlightElementRef.current?.edges.delete(edgeId);
-          graph.updateItem(edgeId, {
-            style: {
-              animate: null,
-            },
-          });
-        });
+      if (state.edgePath && state.nodePath) {
+        const nodes = [...state.nodePath[i]];
+        const edges = [...state.edgePath[i]];
+        if (nodes.length && edges.length) {
+          if (!state?.highlightPath?.has(i)) {
+            nodes.forEach((nodeId) => {
+              graph.findById(nodeId) &&
+                graph.setItemState(nodeId, 'active', false);
+              highlightElementRef.current?.nodes?.delete(nodeId);
+            });
+            edges.forEach((edgeId) => {
+              graph.findById(edgeId) &&
+                graph.setItemState(edgeId, 'active', false);
+              highlightElementRef.current?.edges.delete(edgeId);
+              graph.updateItem(edgeId, {
+                style: {
+                  animate: null,
+                },
+              });
+            });
+          }
+        }
       }
     }
 
     for (let i = 0; i < state.nodePath.length; i++) {
-      const nodes = state.nodePath[i];
-      const edges = state.edgePath[i];
-      if (state.highlightPath.has(i)) {
-        nodes.forEach(nodeId => {
-          graph.findById(nodeId) && graph.setItemState(nodeId, 'active', true);
-          highlightElementRef.current?.nodes.add(nodeId);
-        });
-        edges.forEach(edgeId => {
-          // graph.findById(edgeId) && graph.setItemState(edgeId, 'active', true);
-          if (graph.findById(edgeId)) {
-            graph.setItemState(edgeId, 'active', true);
-            graph.updateItem(edgeId, {
-              style: {
-                animate: {
-                  visible: true,
-                  type: 'circle-running',
-                  color: 'red',
-                  repeat: true,
-                  duration: 1000,
-                },
-              },
+      if (state.edgePath && state.nodePath) {
+        const nodes = [...state.nodePath[i]];
+        const edges = [...state.edgePath[i]];
+        if (nodes.length && edges.length) {
+          if (state?.highlightPath?.has(i)) {
+            nodes.forEach((nodeId) => {
+              graph.findById(nodeId) &&
+                graph.setItemState(nodeId, 'active', true);
+              highlightElementRef.current?.nodes.add(nodeId);
+            });
+            edges.forEach((edgeId) => {
+              // graph.findById(edgeId) && graph.setItemState(edgeId, 'active', true);
+              if (graph.findById(edgeId)) {
+                graph.setItemState(edgeId, 'active', true);
+                graph.updateItem(edgeId, {
+                  style: {
+                    animate: {
+                      visible: true,
+                      type: 'circle-running',
+                      color: 'red',
+                      repeat: true,
+                      duration: 1000,
+                    },
+                  },
+                });
+              }
+              highlightElementRef.current?.edges.add(edgeId);
             });
           }
-          highlightElementRef.current?.edges.add(edgeId);
-        });
+        }
       }
     }
   }, [state.highlightPath]);
@@ -228,18 +249,29 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
       let minLen = Infinity;
       state.allEdgePath.forEach((path, pathId) => {
         const len = state.filterRule.weightPropertyName
-          ? getPathByWeight(path, state.filterRule.weightPropertyName, sourceDataMap)
+          ? getPathByWeight(
+              path,
+              state.filterRule.weightPropertyName,
+              sourceDataMap
+            )
           : path.length;
         minLen = Math.min(minLen, len);
         pathLenMap[pathId] = len;
       });
 
-      nodePath = state.allNodePath.filter((_, pathId) => pathLenMap[pathId] === minLen);
-      edgePath = state.allEdgePath.filter((_, pathId) => pathLenMap[pathId] === minLen);
-    } else if (state.filterRule.type === 'Edge-Type-Filter' && state.filterRule.edgeType) {
+      nodePath = state.allNodePath.filter(
+        (_, pathId) => pathLenMap[pathId] === minLen
+      );
+      edgePath = state.allEdgePath.filter(
+        (_, pathId) => pathLenMap[pathId] === minLen
+      );
+    } else if (
+      state.filterRule.type === 'Edge-Type-Filter' &&
+      state.filterRule.edgeType
+    ) {
       const validPathId = new Set();
       state.allEdgePath.forEach((path, pathId) => {
-        const isMatch = path.every(edgeId => {
+        const isMatch = path.every((edgeId) => {
           const edgeConfig = sourceDataMap.edges[edgeId];
           return edgeConfig?.edgeType === state.filterRule.edgeType;
         });
@@ -247,17 +279,23 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
           validPathId.add(pathId);
         }
       });
-      nodePath = state.allNodePath.filter((_, pathId) => validPathId.has(pathId));
-      edgePath = state.allEdgePath.filter((_, pathId) => validPathId.has(pathId));
+      nodePath = state.allNodePath.filter((_, pathId) =>
+        validPathId.has(pathId)
+      );
+      edgePath = state.allEdgePath.filter((_, pathId) =>
+        validPathId.has(pathId)
+      );
     } else {
       nodePath = state.allNodePath;
       edgePath = state.allEdgePath;
     }
 
-    updateState(draft => {
+    updateState((draft) => {
       draft.nodePath = nodePath;
       draft.edgePath = edgePath;
-      draft.highlightPath = new Set(nodePath.slice(0, 1).map((_, index) => index));
+      draft.highlightPath = new Set(
+        nodePath.slice(0, 1).map((_, index) => index)
+      );
     });
   }, [state.allNodePath, state.allEdgePath, state.filterRule]);
 
@@ -283,10 +321,10 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
   }, [controlledValues]);
 
   const items = [
-    { 
-      name: 'source', 
+    {
+      name: 'source',
       label: '起始节点',
-      autoFocus: true
+      autoFocus: true,
     },
     {
       name: 'target',
@@ -296,14 +334,14 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
 
   const handlePanelClick = (index) => {
     const checked = state.highlightPath.has(index);
-    const maps = new Map<number, boolean>(state.hasChecked)
-    maps.set(index, !checked)
+    const maps = new Map<number, boolean>(state.hasChecked);
+    maps.set(index, !checked);
 
-    updateState(draft => {
-      draft.hasChecked = maps
-    })
-    onSwitchChange(index)
-  }
+    updateState((draft) => {
+      draft.hasChecked = maps;
+    });
+    onSwitchChange(index);
+  };
 
   return (
     <div className="tugraph-path-analysis">
@@ -325,7 +363,10 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
               label="是否有向"
               colon={false}
             >
-              <Switch size='small' style={{ position: 'absolute', left: 8, top: 8 }} />
+              <Switch
+                size="small"
+                style={{ position: 'absolute', left: 8, top: 8 }}
+              />
             </Form.Item>
           </Form>
         </div>
@@ -340,7 +381,9 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
               ghost={true}
               collapsible="icon"
               className="tugraph-collapse-container"
-              expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+              expandIcon={({ isActive }) => (
+                <CaretRightOutlined rotate={isActive ? 90 : 0} />
+              )}
             >
               {state.nodePath.map((path, index) => {
                 return (
@@ -350,7 +393,11 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = props => {
                     key={index}
                     header={`路径 ${index + 1}`}
                     className="tugraph-collapse-container-panel"
-                    style={{ border: state.hasChecked.get(index) ? '1px solid rgba(22, 80, 255, 1)' : '1px solid rgba(22, 80, 255, 0.2)' }}
+                    style={{
+                      border: state.hasChecked.get(index)
+                        ? '1px solid rgba(22, 80, 255, 1)'
+                        : '1px solid rgba(22, 80, 255, 0.2)',
+                    }}
                     // extra={
                     //   <PanelExtra pathId={index} highlightPath={state.highlightPath} onSwitchChange={onSwitchChange} />
                     // }
