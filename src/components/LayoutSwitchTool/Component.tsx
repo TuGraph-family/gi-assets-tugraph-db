@@ -1,16 +1,15 @@
-import React from 'react';
 import type { GILayoutConfig, IGIAC } from '@antv/gi-sdk';
-import { useImmer } from 'use-immer';
 import { useContext } from '@antv/gi-sdk';
-import { Popover } from 'antd';
 import GIAComponent from '@antv/gi-sdk/lib/components/GIAC';
+import { Popover } from 'antd';
+import React from 'react';
+import { useImmer } from 'use-immer';
 import './index.less';
 
 export interface LayoutSwitchProps {
   GIAC: IGIAC;
 }
-let timer: NodeJS.Timer;
-const LayoutSwitchTool: React.FC<LayoutSwitchProps> = props => {
+const LayoutSwitchTool: React.FC<LayoutSwitchProps> = (props) => {
   const { GIAC } = props;
   const [state, setState] = useImmer<{
     dataList: any[];
@@ -64,11 +63,11 @@ const LayoutSwitchTool: React.FC<LayoutSwitchProps> = props => {
           ...config.layout.props,
         };
       }
-      
-      // 将当前面板 key 存储到localStorage中
-      localStorage.setItem('ActiveAssetID', 'LayoutContent')
 
-      updateContext(draft => {
+      // 将当前面板 key 存储到localStorage中
+      localStorage.setItem('ActiveAssetID', 'LayoutContent');
+
+      updateContext((draft) => {
         draft.layout = layoutProps;
         draft.config.layout = {
           id: layoutConfig.id,
@@ -76,9 +75,8 @@ const LayoutSwitchTool: React.FC<LayoutSwitchProps> = props => {
         };
         draft.layoutCache = false;
       });
-      // @ts-ignore
-      clearTimeout(timer);
-      timer = setTimeout(() => {
+
+      setTimeout(() => {
         graph.fitCenter(true);
       }, 60);
     };
@@ -105,14 +103,21 @@ const LayoutSwitchTool: React.FC<LayoutSwitchProps> = props => {
       title={null}
       content={
         <div className="popoverContent">
-          {state.dataList.map(item => {
-            return <PopoverItem key={item?.id} src={item?.src} name={item?.name} id={item?.id} />;
+          {state.dataList.map((item) => {
+            return (
+              <PopoverItem
+                key={item?.id}
+                src={item?.src}
+                name={item?.name}
+                id={item?.id}
+              />
+            );
           })}
         </div>
       }
       placement="bottom"
     >
-      <GIAComponent GIAC={GIAC} className='layout-switch-btn'/>
+      <GIAComponent GIAC={GIAC} className="layout-switch-btn" />
     </Popover>
   );
 };

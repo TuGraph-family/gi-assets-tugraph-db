@@ -1,19 +1,22 @@
-import { useContext, utils } from '@antv/gi-sdk';
-import { Button, Radio, Tooltip, Checkbox, message } from 'antd';
+import { getQueryString } from '@/utils';
 import { FileTextOutlined } from '@ant-design/icons';
+import { useContext, utils } from '@antv/gi-sdk';
+import { Button, Checkbox, message, Radio, Tooltip } from 'antd';
 import React, { useRef } from 'react';
 import { useImmer } from 'use-immer';
 import { getTransformByTemplate } from '../StyleSetting/utils';
-import GraphEditor from './LanguageEditor/index';
-import { getQueryString } from '../utils';
 import './index.less';
+import GraphEditor from './LanguageEditor/index';
 
 export interface ILanguageQueryProps {
   height?: string;
   languageServiceId: string;
 }
 
-const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = '320px', languageServiceId }) => {
+const LanguageQuery: React.FC<ILanguageQueryProps> = ({
+  height = '320px',
+  languageServiceId,
+}) => {
   const { updateContext, services, graph, schemaData } = useContext();
   const editorRef = useRef<any>(null);
   const languageService = utils.getService(services, languageServiceId);
@@ -34,18 +37,18 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = '320px', langua
   const { languageType, editorValue, btnLoading } = state;
 
   const handleChangeEditorValue = (value: string) => {
-    setState(draft => {
+    setState((draft) => {
       draft.editorValue = value;
     });
   };
 
   const handleClickQuery = async () => {
     const value = editorRef.current?.codeEditor?.getValue();
-    updateContext(draft => {
+    updateContext((draft) => {
       draft.isLoading = true;
     });
 
-    setState(draft => {
+    setState((draft) => {
       draft.btnLoading = true;
     });
     if (!languageService) {
@@ -56,7 +59,7 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = '320px', langua
       graphName,
     });
 
-    setState(draft => {
+    setState((draft) => {
       draft.btnLoading = false;
     });
 
@@ -69,21 +72,23 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = '320px', langua
     const { formatData } = result.data;
 
     // 处理 formData，添加 data 字段
-    formatData.nodes.forEach(d => {
+    formatData.nodes.forEach((d) => {
       d.data = d.properties;
     });
 
-    formatData.edges.forEach(d => {
+    formatData.edges.forEach((d) => {
       d.data = d.properties;
     });
 
-    const customStyleConfig = JSON.parse((localStorage.getItem('CUSTOM_STYLE_CONFIG') as string) || '{}');
+    const customStyleConfig = JSON.parse(
+      (localStorage.getItem('CUSTOM_STYLE_CONFIG') as string) || '{}',
+    );
     const transform = getTransformByTemplate(customStyleConfig, schemaData);
 
     // 查询后除了改变画布节点/边数据，还需要保存“初始数据”，供类似 Filter 组件作为初始化数据使用
     if (state.hasClear) {
       // 清空数据
-      updateContext(draft => {
+      updateContext((draft) => {
         if (transform) {
           draft.transform = transform;
         }
@@ -101,7 +106,7 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = '320px', langua
         nodes: [...originData.nodes, ...formatData.nodes],
         edges: [...originData.edges, ...formatData.edges],
       };
-      updateContext(draft => {
+      updateContext((draft) => {
         const res = transform(newData);
         // @ts-ignore
         draft.data = res;
@@ -110,25 +115,25 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = '320px', langua
       });
     }
 
-    updateContext(draft => {
+    updateContext((draft) => {
       draft.isLoading = false;
     });
   };
 
-  const handleChange = e => {
-    setState(draft => {
+  const handleChange = (e) => {
+    setState((draft) => {
       draft.hasClear = e.target.checked;
     });
   };
 
-  const handleChangeLangageType = value => {
-    setState(draft => {
+  const handleChangeLangageType = (value) => {
+    setState((draft) => {
       draft.languageType = value;
     });
   };
 
   const handleResetCypher = () => {
-    setState(draft => {
+    setState((draft) => {
       draft.editorValue = '';
     });
   };
@@ -166,7 +171,9 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = '320px', langua
             </Tooltip>
           </Radio.Group>
         </div>
-        <span style={{ display: 'inline-block', marginBottom: 12 }}>输入语句</span>
+        <span style={{ display: 'inline-block', marginBottom: 12 }}>
+          输入语句
+        </span>
         <div className={'blockContainer'}>
           <div
             style={{
@@ -177,13 +184,17 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({ height = '320px', langua
             <GraphEditor
               initialValue={editorValue}
               height={height}
-              onChange={value => handleChangeEditorValue(value)}
+              onChange={(value) => handleChangeEditorValue(value)}
               ref={editorRef}
             />
           </div>
         </div>
 
-        <Checkbox checked={state.hasClear} value={state.hasClear} onChange={handleChange}>
+        <Checkbox
+          checked={state.hasClear}
+          value={state.hasClear}
+          onChange={handleChange}
+        >
           清空画布数据
         </Checkbox>
       </div>

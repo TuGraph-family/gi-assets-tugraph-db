@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import { useContext } from '@antv/gi-sdk';
-import { useImmer } from 'use-immer';
+import { deepClone, getSetArray } from '@/utils';
 import { Pie } from '@antv/g2plot';
+import { useContext } from '@antv/gi-sdk';
+import React, { useEffect } from 'react';
+import { useImmer } from 'use-immer';
 import './index.less';
-import { deepClone, getSetArray } from '../utils';
 
-const reg = /\+[^\+]+\+/g;
-const reg1 = /\<[^\<]+\>/g;
+const reg = /\+[^+]+\+/g;
+const reg1 = /<[^<]+>/g;
 
 const PointEdgeView = () => {
   const { data, graph } = useContext();
@@ -46,7 +46,8 @@ const PointEdgeView = () => {
     nodes.forEach((item: any) => {
       if (keys.includes(item?.label)) {
         if (typeMap[item?.label]) {
-          Array.isArray(typeMap[item?.label]) && typeMap[item?.label].push(item?.id);
+          Array.isArray(typeMap[item?.label]) &&
+            typeMap[item?.label].push(item?.id);
         } else {
           typeMap[item?.label] = [item?.id];
         }
@@ -78,7 +79,7 @@ const PointEdgeView = () => {
     return edgesTypeMap;
   };
 
-  const onClickType = type => {
+  const onClickType = (type) => {
     nodes.forEach((node: any) => {
       const hasMatch = typeMap[type].includes(node?.id);
       if (hasMatch) {
@@ -109,18 +110,27 @@ const PointEdgeView = () => {
         }
       });
 
-    return Object.keys(num).map((k: string) => ({ label: k, num: num[k], ...num[k], id: k }));
+    return Object.keys(num).map((k: string) => ({
+      label: k,
+      num: num[k],
+      ...num[k],
+      id: k,
+    }));
   };
 
   const PointList = () => {
     return (
       <>
         {nodeTypesSet().map((item: any) => {
-          const num = nodes.filter((i: any) => i?.label === item?.label).length || 0;
+          const num =
+            nodes.filter((i: any) => i?.label === item?.label).length || 0;
           return (
             <div className="listItem">
               <div className="left">
-                <div className="icon" style={{ backgroundColor: item?.style?.keyshape?.fill }}></div>
+                <div
+                  className="icon"
+                  style={{ backgroundColor: item?.style?.keyshape?.fill }}
+                ></div>
                 <div className="text">{item?.label}</div>
               </div>
               <div className="right">{num}</div>
@@ -138,7 +148,7 @@ const PointEdgeView = () => {
 
     return (
       <>
-        {Object.keys(edgesTypesSet()).map(key => {
+        {Object.keys(edgesTypesSet()).map((key) => {
           let title: string = '';
           let match: RegExpMatchArray | null = key.match(reg);
           if (match && Array.isArray(match)) {
@@ -234,10 +244,13 @@ const PointEdgeView = () => {
 
   return (
     <div className="pointEdgeView">
-      {nodeTypesSet().map(item => {
+      {nodeTypesSet().map((item) => {
         return (
           <div className="nodesItem" onClick={() => onClickType(item?.label)}>
-            <div className="icon" style={{ backgroundColor: item?.style?.keyshape?.fill }}></div>
+            <div
+              className="icon"
+              style={{ backgroundColor: item?.style?.keyshape?.fill }}
+            ></div>
             <div className="text">{item?.label}</div>
           </div>
         );
@@ -250,9 +263,11 @@ const PointEdgeView = () => {
           <div className="type">
             <div className="nodeType">
               <div
-                className={state.nodeType === 'nodes' ? 'typeActive' : 'typeNormal'}
+                className={
+                  state.nodeType === 'nodes' ? 'typeActive' : 'typeNormal'
+                }
                 onClick={() => {
-                  setState(pre => {
+                  setState((pre) => {
                     pre.nodeType = 'nodes';
                   });
                 }}
@@ -261,9 +276,11 @@ const PointEdgeView = () => {
                 <span className="num">{nodes.length || 0}</span>
               </div>
               <div
-                className={state.nodeType === 'edges' ? 'typeActive' : 'typeNormal'}
+                className={
+                  state.nodeType === 'edges' ? 'typeActive' : 'typeNormal'
+                }
                 onClick={() => {
-                  setState(pre => {
+                  setState((pre) => {
                     pre.nodeType = 'edges';
                   });
                 }}
@@ -274,9 +291,13 @@ const PointEdgeView = () => {
             </div>
             <div className="viewType">
               <div
-                className={state.viewType === 'list' ? 'viewTypeActive' : 'viewTypeNormal'}
+                className={
+                  state.viewType === 'list'
+                    ? 'viewTypeActive'
+                    : 'viewTypeNormal'
+                }
                 onClick={() => {
-                  setState(pre => {
+                  setState((pre) => {
                     pre.viewType = 'list';
                   });
                 }}
@@ -291,9 +312,13 @@ const PointEdgeView = () => {
                 />
               </div>
               <div
-                className={state.viewType === 'chart' ? 'viewTypeActive' : 'viewTypeNormal'}
+                className={
+                  state.viewType === 'chart'
+                    ? 'viewTypeActive'
+                    : 'viewTypeNormal'
+                }
                 onClick={() => {
-                  setState(pre => {
+                  setState((pre) => {
                     pre.viewType = 'chart';
                   });
                 }}

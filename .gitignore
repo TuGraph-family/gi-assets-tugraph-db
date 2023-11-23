@@ -1,6 +1,10 @@
 node_modules
 .umi
+/src/.umi
+/src/.umi-production
 es
 dist
 lib
 .turbo
+.bitmap
+workspace.jsonc

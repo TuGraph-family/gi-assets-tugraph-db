@@ -1,8 +1,8 @@
 import { EngineBanner, utils } from '@antv/gi-sdk';
 import { Button, Col, Form, Input, Row } from 'antd';
 import * as React from 'react';
+import { getQueryString } from '../utils';
 import { GI_SERVICE_SCHEMA } from './Initializer';
-import { getQueryString } from '../components/utils'
 const { setServerEngineContext, getServerEngineContext } = utils;
 
 export interface ServerProps {
@@ -14,7 +14,7 @@ const DEFAULT_INFO = {
   HTTP_SERVER_URL: 'http://127.0.0.1:7001',
 };
 
-const Server: React.FunctionComponent<ServerProps> = props => {
+const Server: React.FunctionComponent<ServerProps> = (props) => {
   const { updateGISite } = props;
 
   const [form] = Form.useForm();
@@ -28,7 +28,7 @@ const Server: React.FunctionComponent<ServerProps> = props => {
     // 一定要先设置，否则schema查询是没有的
     setServerEngineContext(values);
 
-    const graphName = getQueryString('graphName')
+    const graphName = getQueryString('graphName');
 
     const schema = await GI_SERVICE_SCHEMA.service(graphName);
     const engineContext = {
@@ -58,7 +58,11 @@ const Server: React.FunctionComponent<ServerProps> = props => {
       <Form name="form" form={form}>
         <Row gutter={[20, 20]}>
           <Col span={24}>
-            <Form.Item label="数据集名称" name="name" rules={[{ required: true, message: '填写数据集名称!' }]}>
+            <Form.Item
+              label="数据集名称"
+              name="name"
+              rules={[{ required: true, message: '填写数据集名称!' }]}
+            >
               <Input placeholder="请填写数据集名称" />
             </Form.Item>
             <Form.Item
@@ -69,7 +73,11 @@ const Server: React.FunctionComponent<ServerProps> = props => {
               <Input placeholder="请填写 R+ 引擎地址" />
             </Form.Item>
             <Form.Item>
-              <Button style={{ width: '100%' }} onClick={handleStart} type="primary">
+              <Button
+                style={{ width: '100%' }}
+                onClick={handleStart}
+                type="primary"
+              >
                 创建数据集
               </Button>
             </Form.Item>

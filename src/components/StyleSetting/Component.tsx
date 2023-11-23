@@ -1,12 +1,12 @@
-import { Segmented } from "antd";
-import React, { useEffect } from "react";
-import { useImmer } from 'use-immer'
-import { useContext, utils } from "@antv/gi-sdk";
-import EdgeConfigurationPanel from "./EdgeConfiguration";
-import NodeConfigurationPanel from "./NodeConfiguration";
-import { getQueryString } from '../utils'
+import { getQueryString } from '@/utils';
+import { useContext, utils } from '@antv/gi-sdk';
+import { Segmented } from 'antd';
 import { isEmpty } from 'lodash';
-import './index.less'
+import React, { useEffect } from 'react';
+import { useImmer } from 'use-immer';
+import EdgeConfigurationPanel from './EdgeConfiguration';
+import './index.less';
+import NodeConfigurationPanel from './NodeConfiguration';
 
 export interface IStyleSetting {
   visible: boolean;
@@ -14,12 +14,9 @@ export interface IStyleSetting {
 }
 
 const StyleSetting: React.FunctionComponent<IStyleSetting> = (props) => {
-  const { schemaServiceId } = props
-  
-  const {
-    services,
-    schemaData,
-  } = useContext();
+  const { schemaServiceId } = props;
+
+  const { services, schemaData } = useContext();
 
   const schemaService = utils.getService(services, schemaServiceId);
 
@@ -33,64 +30,64 @@ const StyleSetting: React.FunctionComponent<IStyleSetting> = (props) => {
     styleType: 'node',
     schemaList: {
       nodes: [],
-      edges: []
+      edges: [],
     },
-  })
+  });
 
-
-  const graphName = getQueryString('graphName')
+  const graphName = getQueryString('graphName');
 
   const queryGraphSchema = async () => {
     if (!schemaService || !graphName) {
-      return
+      return;
     }
-    const result = await schemaService(graphName)
-    const { data } = result
+    const result = await schemaService(graphName);
+    const { data } = result;
     if (!data) {
       // 如果请求失败，则直接 return
-      return
+      return;
     }
-    
+
     setState((draft) => {
       draft.schemaList = {
         nodes: data.nodes,
-        edges: data.edges
+        edges: data.edges,
       };
     });
-  }
-  
+  };
+
   useEffect(() => {
-    if (!isEmpty(schemaData?.nodes) || !isEmpty(schemaData?.edges)) { 
+    if (!isEmpty(schemaData?.nodes) || !isEmpty(schemaData?.edges)) {
       setState((draft) => {
-      draft.schemaList = schemaData;
-    });
+        draft.schemaList = schemaData;
+      });
       return;
     }
-    if (graphName) { 
+    if (graphName) {
       queryGraphSchema();
     }
-  
   }, [graphName, schemaData]);
 
   const handleChange = (value) => {
-    setState(draft => {
-      draft.styleType = value
-    })
-  }
+    setState((draft) => {
+      draft.styleType = value;
+    });
+  };
 
   return (
     <div className="style-setting-container">
-      <Segmented 
-        value={state.styleType} 
-        options={[{ label: '点样式', value: 'node'}, { label: '边样式', value: 'edge' }]}
-        onChange={handleChange} />
-      {
-        state.styleType === 'node'
-        ?
+      <Segmented
+        value={state.styleType}
+        options={[
+          { label: '点样式', value: 'node' },
+          { label: '边样式', value: 'edge' },
+        ]}
+        onChange={handleChange}
+      />
+      {state.styleType === 'node' ? (
         <NodeConfigurationPanel {...props} schemaData={state.schemaList} />
-        :
-        <EdgeConfigurationPanel {...props}  schemaData={state.schemaList}/>
-      }
+      ) : (
+        <EdgeConfigurationPanel {...props} schemaData={state.schemaList} />
+      )}
     </div>
   );
 };
