@@ -1,9 +1,9 @@
-import { useContext, icons } from '@antv/gi-sdk';
-import { Form, Input, Menu, message, Modal, Radio, Dropdown } from 'antd';
+import { deepClone } from '@/utils';
+import { icons, useContext } from '@antv/gi-sdk';
+import type { MenuProps } from 'antd';
+import { Dropdown, Input, Menu, message, Modal, Radio } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useImmer } from 'use-immer';
-import type { MenuProps } from 'antd';
-import { deepClone } from '../utils';
 import './index.less';
 
 const Item: any = Menu.Item;
@@ -14,11 +14,18 @@ export const NODE_ICON_MAPPING = 'NODE_ICON_MAPPING';
 export interface AddIconLabelProps {
   contextmenu: any;
 }
-const resetEvent = e => {
+const resetEvent = (e) => {
   e.stopPropagation();
   e.preventDefault();
 };
-export const Colors = ['#7E92B5', '#9661BC', '#7262FD', '#F6BD16', '#F6903D', '#F08BB4'];
+export const Colors = [
+  '#7E92B5',
+  '#9661BC',
+  '#7262FD',
+  '#F6BD16',
+  '#F6903D',
+  '#F08BB4',
+];
 const defaultLabel = { fill: Colors[0], value: '' };
 const getLocalMap = (key = NODE_ICON_MAPPING, origin = {}) => {
   return JSON.parse(`${localStorage.getItem(key)}`) || origin;
@@ -28,7 +35,7 @@ const setLocalMap = (nodeIconMapping, key = NODE_ICON_MAPPING) => {
   localStorage.setItem(key, JSON.stringify(nodeIconMapping));
 };
 
-const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = props => {
+const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = (props) => {
   const { contextmenu } = props;
   const { updateContext, graph, data: graphData } = useContext();
 
@@ -45,7 +52,7 @@ const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = props => {
         const localMap = getLocalMap(NODE_ICON_MAPPING, {});
         const currentNodeLabelList: any[] = localMap[id];
         if (currentNodeLabelList?.length) {
-          currentNodeLabelList?.forEach(it => {
+          currentNodeLabelList?.forEach((it) => {
             result.push({ ...it, parentId: id, actionType: 'get' });
           });
         }
@@ -60,7 +67,13 @@ const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = props => {
   }
   const LabelNodeHistoryEdit = (props: any) => {
     const {
-      editNodeState: { fill = Colors[0], value = '', type = 'font', id, parentId },
+      editNodeState: {
+        fill = Colors[0],
+        value = '',
+        type = 'font',
+        id,
+        parentId,
+      },
       onCancel,
       onConfirm,
       originType,
@@ -102,7 +115,7 @@ const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = props => {
                     maxLength={20}
                     className="labelNodeHistoryInput"
                     value={editState.value}
-                    onChange={e => {
+                    onChange={(e) => {
                       setEditState({ ...editState, value: e.target.value });
                     }}
                   />
@@ -114,25 +127,33 @@ const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = props => {
               <Radio.Group
                 value={editState?.fill}
                 defaultValue={Colors[0]}
-                onChange={e => {
+                onChange={(e) => {
                   setEditState({ ...editState, fill: e.target.value });
                 }}
               >
-                {Colors.map(color => (
-                  <Radio key={color} value={color} style={{ background: color }} />
+                {Colors.map((color) => (
+                  <Radio
+                    key={color}
+                    value={color}
+                    style={{ background: color }}
+                  />
                 ))}
               </Radio.Group>
               {!isText ? publicNode : null}
             </div>
             {getLocalMap(NODE_ICON_HISTORY, []).length && isText ? (
               <div className="labelNodeHistoryList">
-                {[...getLocalMap(NODE_ICON_HISTORY, [])].map(item => {
+                {[...getLocalMap(NODE_ICON_HISTORY, [])].map((item) => {
                   return (
                     <div
                       className="labelNodeHistoryListItem"
                       style={{ backgroundColor: item?.color }}
                       onClick={() => {
-                        setEditState(pre => ({ ...pre, value: item?.content, fill: item?.color }));
+                        setEditState((pre) => ({
+                          ...pre,
+                          value: item?.content,
+                          fill: item?.color,
+                        }));
                       }}
                     >
                       {item?.content}
@@ -146,9 +167,20 @@ const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = props => {
       </>
     );
   };
-  const LabelNode = ({ value, fill, onDeleteLabel, id, onSelectLabel, selectLabel, type }) => {
+  const LabelNode = ({
+    value,
+    fill,
+    onDeleteLabel,
+    id,
+    onSelectLabel,
+    selectLabel,
+    type,
+  }) => {
     return (
-      <div className={id === selectLabel?.id ? 'labelNodeSelected' : 'labelNode'} onClick={onSelectLabel}>
+      <div
+        className={id === selectLabel?.id ? 'labelNodeSelected' : 'labelNode'}
+        onClick={onSelectLabel}
+      >
         <div
           className="labelNodeContent"
           style={{
@@ -175,7 +207,15 @@ const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = props => {
       </div>
     );
   };
-  const AddLabelNode = ({ name, labelList, setType, setDisplay, setSelectLabel, selectLabel, deleteLabel }) => {
+  const AddLabelNode = ({
+    name,
+    labelList,
+    setType,
+    setDisplay,
+    setSelectLabel,
+    selectLabel,
+    deleteLabel,
+  }) => {
     const items: MenuProps['items'] = [
       {
         key: 'text',
@@ -186,7 +226,12 @@ const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = props => {
             onClick={() => {
               setType('text');
               setDisplay(true);
-              setSelectLabel({ ...defaultLabel, actionType: 'add', type: 'text', parentId: '' });
+              setSelectLabel({
+                ...defaultLabel,
+                actionType: 'add',
+                type: 'text',
+                parentId: '',
+              });
             }}
           >
             文本标签
@@ -201,7 +246,12 @@ const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = props => {
             rel="noopener noreferrer"
             onClick={() => {
               setType('font');
-              setSelectLabel({ ...defaultLabel, actionType: 'add', type: 'font', parentId: '' });
+              setSelectLabel({
+                ...defaultLabel,
+                actionType: 'add',
+                type: 'font',
+                parentId: '',
+              });
               setDisplay(true);
             }}
           >
@@ -214,7 +264,7 @@ const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = props => {
     return (
       <div className="addLabelNode">
         <div className="addLabelNodeNameList">
-          {[...name].map(item => (
+          {[...name].map((item) => (
             <div className="addLabelNodeName" key={item?.getID()}>
               {item?.getID()}
             </div>
@@ -222,7 +272,7 @@ const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = props => {
         </div>
         <div className="addLabelNodeList">
           {labelList.length
-            ? labelList.map(item => (
+            ? labelList.map((item) => (
                 <LabelNode
                   value={item?.value}
                   fill={item?.fill}
@@ -241,7 +291,7 @@ const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = props => {
                     });
                     setDisplay(true);
                   }}
-                  onDeleteLabel={e => {
+                  onDeleteLabel={(e) => {
                     resetEvent(e);
                     deleteLabel(item?.id);
                   }}
@@ -294,7 +344,7 @@ const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = props => {
   const { labelModalLoading, labelModalVisible } = state;
   // 计算渲染节点的偏移量
   const getOffset = (item, index, labelList: any[]): number[] => {
-    const hasFont = labelList.some(i => i?.type === 'font');
+    const hasFont = labelList.some((i) => i?.type === 'font');
     const isFont = item?.type === 'font';
     const y = isFont ? 0 : hasFont ? 10 : 0;
     let x = 0;
@@ -363,8 +413,8 @@ const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = props => {
   const updateCurrentNode = (node, labelList) => {
     const newData = deepClone(graphData);
     const badges = getBadges(labelList, node);
-    updateContext(draft => {
-      newData.nodes.forEach(d => {
+    updateContext((draft) => {
+      newData.nodes.forEach((d) => {
         if (node?.getID() === d?.id) {
           if (!d.style.badges) {
             d.style.badges = [];
@@ -387,19 +437,23 @@ const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = props => {
       },
     });
   };
-  const getClassifyNodeLabel = id => {
-    return [...state.labelList].filter(item => `${item?.id}`.includes(id) || item?.parentId === id);
+  const getClassifyNodeLabel = (id) => {
+    return [...state.labelList].filter(
+      (item) => `${item?.id}`.includes(id) || item?.parentId === id,
+    );
   };
-  const getAddNodeLabel = id => {
+  const getAddNodeLabel = (id) => {
     return [...state.labelList]
-      .filter(item => `${item?.id}`.includes('_add_') && item?.actionType === 'add')
+      .filter(
+        (item) => `${item?.id}`.includes('_add_') && item?.actionType === 'add',
+      )
       .map((item, index) => ({ ...item, id: id + `${index}`, parentId: id }));
   };
   const confirmSave = async () => {
     const selectedNode = getSelectNodes();
     const copySelectedNode = [...selectedNode];
     const localMap = getLocalMap(NODE_ICON_MAPPING, {});
-    selectedNode.forEach(item => {
+    selectedNode.forEach((item) => {
       const id = item?.getID();
       const addNodeLabelList = getAddNodeLabel(id);
       const nodeLabel = [...getClassifyNodeLabel(id), ...addNodeLabelList];
@@ -407,13 +461,13 @@ const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = props => {
       updateCurrentNode(item, nodeLabel);
     });
     setLocalMap(localMap, NODE_ICON_MAPPING);
-    setState(draft => {
+    setState((draft) => {
       draft.labelModalVisible = false;
       draft.display = false;
       draft.selectLabel = defaultLabel;
     });
     setTimeout(() => {
-      copySelectedNode.forEach(e => {
+      copySelectedNode.forEach((e) => {
         const id = e?.getID();
         graph.setItemState(id, 'selected', true);
         contextmenu.onClose();
@@ -426,13 +480,13 @@ const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = props => {
     const selectedNode = getSelectNodes();
     const copySelectedNode = [...selectedNode];
     const localMap = getLocalMap(NODE_ICON_MAPPING, {});
-    allNode.forEach(node => {
+    allNode.forEach((node) => {
       if (localMap[node?.getID()]) {
         updateCurrentNode(node, localMap[node?.getID()]);
       }
     });
     setTimeout(() => {
-      copySelectedNode.forEach(e => {
+      copySelectedNode.forEach((e) => {
         const id = e?.getID();
         graph.setItemState(id, 'selected', true);
       });
@@ -440,7 +494,7 @@ const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = props => {
   };
 
   useEffect(() => {
-    setState(pre => ({ ...pre, labelList: getLabelList() }));
+    setState((pre) => ({ ...pre, labelList: getLabelList() }));
   }, [state.labelModalVisible]);
 
   useEffect(() => {
@@ -456,7 +510,7 @@ const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = props => {
           if (selectedList.length === 0) {
             return message.error('选择节点为空');
           }
-          setState(draft => {
+          setState((draft) => {
             draft.labelModalVisible = true;
           });
         }}
@@ -470,7 +524,7 @@ const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = props => {
         okText="确认"
         cancelText="取消"
         onCancel={() => {
-          setState(draft => {
+          setState((draft) => {
             draft.labelModalVisible = false;
             draft.display = false;
             draft.selectLabel = defaultLabel;
@@ -485,18 +539,21 @@ const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = props => {
           <AddLabelNode
             name={getSelectNodes()}
             labelList={state.labelList}
-            deleteLabel={id => {
-              setState(pre => ({ ...pre, labelList: pre?.labelList?.filter(item => item?.id !== id) }));
+            deleteLabel={(id) => {
+              setState((pre) => ({
+                ...pre,
+                labelList: pre?.labelList?.filter((item) => item?.id !== id),
+              }));
             }}
             selectLabel={state?.selectLabel}
-            setSelectLabel={selectLabel => {
-              setState(pre => ({ ...pre, selectLabel }));
+            setSelectLabel={(selectLabel) => {
+              setState((pre) => ({ ...pre, selectLabel }));
             }}
-            setDisplay={display => {
-              setState(pre => ({ ...pre, display }));
+            setDisplay={(display) => {
+              setState((pre) => ({ ...pre, display }));
             }}
-            setType={type => {
-              setState(pre => ({ ...pre, type }));
+            setType={(type) => {
+              setState((pre) => ({ ...pre, type }));
             }}
           />
           <LabelNodeHistoryEdit
@@ -504,18 +561,22 @@ const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = props => {
             display={state.display}
             originType={state.type}
             onCancel={() => {
-              setState(pre => ({ ...pre, display: false, selectLabel: defaultLabel }));
+              setState((pre) => ({
+                ...pre,
+                display: false,
+                selectLabel: defaultLabel,
+              }));
             }}
-            onConfirm={editState => {
+            onConfirm={(editState) => {
               const selectedNode = getSelectNodes();
               const historyLabelSet = getLocalMap(NODE_ICON_HISTORY, []);
-              setState(pre => {
+              setState((pre) => {
                 return {
                   ...pre,
                   labelList:
                     editState?.actionType === 'edit'
                       ? [
-                          ...pre?.labelList.map(item => {
+                          ...pre?.labelList.map((item) => {
                             if (editState.id === item?.id) {
                               return { ...item, ...editState };
                             }
@@ -533,14 +594,22 @@ const AddIconLabel: React.FunctionComponent<AddIconLabelProps> = props => {
                             id:
                               selectedNode.length > 1
                                 ? '_add_' + Date.now()
-                                : `${editState?.parentId || currentItem?.getID()}_${pre?.labelList?.length || 0}`,
+                                : `${
+                                    editState?.parentId || currentItem?.getID()
+                                  }_${pre?.labelList?.length || 0}`,
                           },
                         ],
                 };
               });
-              if (editState?.type === 'text' && !historyLabelSet.some(i => i?.content === editState?.value)) {
+              if (
+                editState?.type === 'text' &&
+                !historyLabelSet.some((i) => i?.content === editState?.value)
+              ) {
                 setLocalMap(
-                  [...historyLabelSet, { color: editState?.fill, content: editState?.value }].slice(-10),
+                  [
+                    ...historyLabelSet,
+                    { color: editState?.fill, content: editState?.value },
+                  ].slice(-10),
                   NODE_ICON_HISTORY,
                 );
               }

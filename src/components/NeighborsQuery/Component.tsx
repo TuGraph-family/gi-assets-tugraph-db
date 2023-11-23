@@ -1,10 +1,10 @@
+import { getQueryString } from '@/utils';
 import { useContext, utils } from '@antv/gi-sdk';
-import { useImmer } from 'use-immer';
 import { Menu, message } from 'antd';
 import React, { useEffect, useRef } from 'react';
+import { useImmer } from 'use-immer';
 import { getTransformByTemplate } from '../StyleSetting/utils';
 import AdvanceNeighborsQueryConfig from './AdvanceNeighborsConfig';
-import { getQueryString } from '../utils';
 
 const { SubMenu } = Menu;
 type ControlledValues = {
@@ -23,7 +23,7 @@ const getContextMenuParams = (graph: any, contextmenu) => {
   const selectedItems = graph.findAllByState('node', 'selected');
 
   const selectedNodes = new Map();
-  selectedItems.forEach(item => {
+  selectedItems.forEach((item) => {
     const model = item.getModel();
     selectedNodes.set(model.id, model);
   });
@@ -45,7 +45,9 @@ const getContextMenuParams = (graph: any, contextmenu) => {
 /**
  * https://doc.linkurio.us/user-manual/latest/visualization-inspect/
  */
-const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = props => {
+const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = (
+  props,
+) => {
   const { contextmenu, serviceId, languageServiceId, controlledValues } = props;
   const currentRef = useRef({
     expandIds: [],
@@ -60,7 +62,8 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
     ids: [],
   });
 
-  const { data, updateContext, updateHistory, graph, schemaData, services } = useContext();
+  const { data, updateContext, updateHistory, graph, schemaData, services } =
+    useContext();
 
   const service = utils.getService(services, serviceId);
   const languageService = utils.getService(services, languageServiceId);
@@ -72,11 +75,14 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
     return null;
   }
 
-  const handleClick = async sep => {
-    const { ids, nodes, expandStartId } = getContextMenuParams(graph, contextmenu);
+  const handleClick = async (sep) => {
+    const { ids, nodes, expandStartId } = getContextMenuParams(
+      graph,
+      contextmenu,
+    );
     if (sep === 'custom-query') {
       // 展示高级配置
-      setState(draft => {
+      setState((draft) => {
         draft.visible = true;
         draft.ids = ids;
       });
@@ -84,7 +90,7 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
       return;
     }
 
-    updateContext(draft => {
+    updateContext((draft) => {
       draft.isLoading = true;
     });
 
@@ -92,7 +98,12 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
     await expandNodes(ids, expandStartId, sep, nodes);
   };
 
-  const expandNodes = async (ids, expandStartId, sep, propNodes: any = undefined) => {
+  const expandNodes = async (
+    ids,
+    expandStartId,
+    sep,
+    propNodes: any = undefined,
+  ) => {
     let nodes = propNodes;
     const historyProps = {
       startIds: ids,
@@ -100,8 +111,13 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
       sep,
     };
     if (!propNodes) {
-      nodes = ids.map(id => graph.findById(id)?.getModel()).filter(Boolean);
-      if (!nodes?.length) handleUpateHistory(historyProps, false, '当前画布中未找到指定的扩散起始节点');
+      nodes = ids.map((id) => graph.findById(id)?.getModel()).filter(Boolean);
+      if (!nodes?.length)
+        handleUpateHistory(
+          historyProps,
+          false,
+          '当前画布中未找到指定的扩散起始节点',
+        );
     }
     try {
       const result = await service({
@@ -120,24 +136,26 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
       const { formatData } = result.data;
 
       // 处理 formData，添加 data 字段
-      formatData.nodes.forEach(d => {
+      formatData.nodes.forEach((d) => {
         d.data = d.properties;
       });
 
-      formatData.edges.forEach(d => {
+      formatData.edges.forEach((d) => {
         d.data = d.properties;
       });
 
       const newData = utils.handleExpand(data, formatData);
-      const expandIds = result.nodes?.map(n => n.id) || [];
+      const expandIds = result.nodes?.map((n) => n.id) || [];
       currentRef.current.expandIds = expandIds;
       currentRef.current.expandStartId = expandStartId;
 
-      const customStyleConfig = JSON.parse(localStorage.getItem('CUSTOM_STYLE_CONFIG') as string || '{}')
+      const customStyleConfig = JSON.parse(
+        (localStorage.getItem('CUSTOM_STYLE_CONFIG') as string) || '{}',
+      );
 
       const transform = getTransformByTemplate(customStyleConfig, schemaData);
 
-      updateContext(draft => {
+      updateContext((draft) => {
         const res = transform(newData);
         // @ts-ignore
         draft.data = res;
@@ -146,7 +164,9 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
         draft.isLoading = false;
         if (draft.layout.type === 'preset') {
           //兼容从save模式
-          const { props: layoutProps } = draft.config.layout || { props: { type: 'graphin-force' } };
+          const { props: layoutProps } = draft.config.layout || {
+            props: { type: 'graphin-force' },
+          };
           draft.layout = layoutProps;
         }
       });
@@ -157,7 +177,11 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
   };
 
   const advanceExpandNodes = async (cyper: string) => {
-    const { ids, nodes: propNodes, expandStartId } = getContextMenuParams(graph, contextmenu);
+    const {
+      ids,
+      nodes: propNodes,
+      expandStartId,
+    } = getContextMenuParams(graph, contextmenu);
 
     let nodes = propNodes;
     const historyProps = {
@@ -166,8 +190,13 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
       sep: 1,
     };
     if (!propNodes) {
-      nodes = ids.map(id => graph.findById(id)?.getModel()).filter(Boolean);
-      if (!nodes?.length) handleUpateHistory(historyProps, false, '当前画布中未找到指定的扩散起始节点');
+      nodes = ids.map((id) => graph.findById(id)?.getModel()).filter(Boolean);
+      if (!nodes?.length)
+        handleUpateHistory(
+          historyProps,
+          false,
+          '当前画布中未找到指定的扩散起始节点',
+        );
     }
 
     if (!languageService) {
@@ -189,23 +218,25 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
       const { formatData } = result.data;
 
       // 处理 formData，添加 data 字段
-      formatData.nodes.forEach(d => {
+      formatData.nodes.forEach((d) => {
         d.data = d.properties;
       });
 
-      formatData.edges.forEach(d => {
+      formatData.edges.forEach((d) => {
         d.data = d.properties;
       });
 
       const newData = utils.handleExpand(data, formatData);
-      const expandIds = result.nodes?.map(n => n.id) || [];
+      const expandIds = result.nodes?.map((n) => n.id) || [];
       currentRef.current.expandIds = expandIds;
       currentRef.current.expandStartId = expandStartId;
 
-      const customStyleConfig = JSON.parse(localStorage.getItem('CUSTOM_STYLE_CONFIG') as string || '{}')
+      const customStyleConfig = JSON.parse(
+        (localStorage.getItem('CUSTOM_STYLE_CONFIG') as string) || '{}',
+      );
       const transform = getTransformByTemplate(customStyleConfig, schemaData);
 
-      updateContext(draft => {
+      updateContext((draft) => {
         const res = transform(newData);
         // @ts-ignore
         draft.data = res;
@@ -215,7 +246,9 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
         draft;
         if (draft.layout.type === 'preset') {
           //兼容从save模式
-          const { props: layoutProps } = draft.config.layout || { props: { type: 'graphin-force' } };
+          const { props: layoutProps } = draft.config.layout || {
+            props: { type: 'graphin-force' },
+          };
           draft.layout = layoutProps;
         }
       });
@@ -233,7 +266,11 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
    * @param errorMsg 若失败，填写失败信息
    * @param value 查询语句
    */
-  const handleUpateHistory = (params: ControlledValues, success: boolean = true, errorMsg?: string) => {
+  const handleUpateHistory = (
+    params: ControlledValues,
+    success: boolean = true,
+    errorMsg?: string,
+  ) => {
     updateHistory({
       componentId: 'NeighborsQuery',
       type: 'analyse',
@@ -263,7 +300,7 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
       if (expandIds.length === 0) {
         return;
       }
-      expandIds.forEach(id => {
+      expandIds.forEach((id) => {
         const item = graph.findById(id);
         if (item && !item.destroyed) {
           graph.setItemState(id, 'query_normal', true);
@@ -300,7 +337,7 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
     },
   ];
 
-  const menuItem = menus.map(_item => {
+  const menuItem = menus.map((_item) => {
     const { label, key } = _item;
     return (
       // @ts-ignore
@@ -311,7 +348,7 @@ const AdvanceNeighborsQuery: React.FunctionComponent<QueryNeighborsProps> = prop
   });
 
   const handleCloseConfig = () => {
-    setState(draft => {
+    setState((draft) => {
       draft.visible = false;
     });
   };

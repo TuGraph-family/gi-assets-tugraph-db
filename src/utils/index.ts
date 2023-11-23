@@ -1,4 +1,3 @@
-
 //使用递归的方式实现数组、对象的深拷贝
 export const deepClone = (obj: any): any => {
   let objClone = Array.isArray(obj) ? [] : {};
@@ -30,10 +29,10 @@ export const getSetArray = (arr: any[], key = 'id') => {
 };
 
 /**
- * 
+ *
  * @param hex 十六进制颜色值
  * @param alpha 透明度
- * @returns 
+ * @returns
  */
 export const hexToRGBA = (hex, alpha) => {
   var r = parseInt(hex.slice(1, 3), 16);
@@ -41,11 +40,11 @@ export const hexToRGBA = (hex, alpha) => {
   var b = parseInt(hex.slice(5, 7), 16);
 
   if (alpha) {
-    return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
+    return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')';
   } else {
-    return "rgb(" + r + ", " + g + ", " + b + ")";
+    return 'rgb(' + r + ', ' + g + ', ' + b + ')';
   }
-}
+};
 
 export const getQueryString = (name: string) => {
   const reg = new RegExp('(^|&|\\?)' + name + '=([^(&|#)]*)', 'i');
@@ -53,5 +52,5 @@ export const getQueryString = (name: string) => {
   if (r !== null) {
     return decodeURIComponent(r[2]);
   }
-  return ''
-}
+  return '';
+};

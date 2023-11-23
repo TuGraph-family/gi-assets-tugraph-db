@@ -1,6 +1,6 @@
 import { utils } from '@antv/gi-sdk';
+import { getQueryString } from '../utils';
 import request from './request';
-import { getQueryString } from '../components/utils'
 
 // import { CypherQuery } from './CypherQuery';
 import { refreshToken } from './TuGraphService';
@@ -16,7 +16,7 @@ export const GI_SERVICE_INTIAL_GRAPH = {
     //     limit: 500,
     //   });
     // }
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       resolve({
         nodes: [],
         edges: [],
@@ -28,11 +28,15 @@ export const GI_SERVICE_INTIAL_GRAPH = {
 export const GI_SERVICE_SCHEMA = {
   name: '查询图模型',
   service: async (graphName: string = getQueryString('graphName')) => {
-    const { HTTP_SERVER_URL, CURRENT_SUBGRAPH } = utils.getServerEngineContext();
+    const { HTTP_SERVER_URL, CURRENT_SUBGRAPH } =
+      utils.getServerEngineContext();
     try {
-      const result = await request(HTTP_SERVER_URL + `/api/schema/${graphName}`, {
-        method: 'get',
-      });
+      const result = await request(
+        HTTP_SERVER_URL + `/api/schema/${graphName}`,
+        {
+          method: 'get',
+        },
+      );
 
       const { success, data, code } = result;
 

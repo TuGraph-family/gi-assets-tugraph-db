@@ -1,9 +1,9 @@
-import { useContext, utils } from '@antv/gi-sdk';
-import { Row, Col, Form, Input, Select, Badge, Tag, message } from 'antd';
-import React, { useEffect } from 'react';
+import { getQueryString, hexToRGBA } from '@/utils';
 import { SearchOutlined } from '@ant-design/icons';
+import { useContext, utils } from '@antv/gi-sdk';
+import { Badge, Col, Form, Input, message, Row, Select, Tag } from 'antd';
+import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
-import { getQueryString, hexToRGBA } from '../utils';
 import { getTransformByTemplate } from '../StyleSetting/utils';
 import './index.less';
 
@@ -17,7 +17,7 @@ const SimpleQuery = () => {
   const { updateContext, services, schemaData, graph, data } = useContext();
   const languageService: any = utils.getService(
     services,
-    'TuGraph-DB/languageQueryService'
+    'TuGraph-DB/languageQueryService',
   );
 
   const customStyleConfig = localStorage.getItem('CUSTOM_STYLE_CONFIG')

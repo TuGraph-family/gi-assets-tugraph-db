@@ -1,12 +1,11 @@
-import { Form, Button, Popconfirm } from 'antd';
-import React, { useState, useEffect } from 'react';
+import { getQueryString } from '@/utils';
 import { CloseOutlined } from '@ant-design/icons';
-import { cloneDeep } from 'lodash';
-import { AttributesEditForm } from './AttributesEditForm/index';
-import { isEmpty } from 'lodash';
 import { useContext, utils } from '@antv/gi-sdk';
+import { Button, Form, Popconfirm } from 'antd';
+import { cloneDeep, isEmpty } from 'lodash';
+import React, { useEffect, useState } from 'react';
 import { filterByTopRule } from '../StyleSetting/utils';
-import { getQueryString } from '../utils'
+import { AttributesEditForm } from './AttributesEditForm/index';
 import './index.less';
 
 export interface props {
@@ -19,15 +18,14 @@ const AttributesFilter: React.FC<props> = ({ schemaServiceId }) => {
   const [filterdata, setFilterData] = useState([{ id: Date.now() }]);
   const schemaService = utils.getService(services, schemaServiceId);
   const [schemaList, setSchemaList] = useState<{
-    nodes: any[],
-    edges: any[]
+    nodes: any[];
+    edges: any[];
   }>({
     nodes: [],
-    edges: []
+    edges: [],
   });
 
-
-  const graphName = getQueryString('graphName')
+  const graphName = getQueryString('graphName');
   const queryGraphSchema = async () => {
     if (!schemaService) {
       return;
@@ -39,14 +37,13 @@ const AttributesFilter: React.FC<props> = ({ schemaServiceId }) => {
   };
 
   useEffect(() => {
-    if (!isEmpty(schemaData?.nodes) || !isEmpty(schemaData?.edges)) { 
+    if (!isEmpty(schemaData?.nodes) || !isEmpty(schemaData?.edges)) {
       setSchemaList(schemaData);
       return;
     }
-    if (graphName) { 
+    if (graphName) {
       queryGraphSchema();
     }
-  
   }, [graphName, schemaData]);
 
   const addPanel = () => {
@@ -58,19 +55,19 @@ const AttributesFilter: React.FC<props> = ({ schemaServiceId }) => {
   };
 
   //删除事件
-  const handleDelete = id => (
+  const handleDelete = (id) => (
     <Popconfirm
       title="你确定要删除吗?"
       placement="topRight"
       okText="确认"
       cancelText="取消"
       onConfirm={() => {
-        const deleteData = filterdata.filter(item => item.id !== id);
+        const deleteData = filterdata.filter((item) => item.id !== id);
         setFilterData(deleteData);
       }}
     >
       <CloseOutlined
-        onClick={event => {
+        onClick={(event) => {
           event.stopPropagation();
         }}
       />
@@ -80,7 +77,7 @@ const AttributesFilter: React.FC<props> = ({ schemaServiceId }) => {
   const transformObject = (params) => {
     const o: any = [];
     for (const key in params) {
-      if (key.startsWith("label-")) {
+      if (key.startsWith('label-')) {
         const labelValue = params[key];
         const rulesKey = `rules-${key.slice(6)}`;
         const rulesValue = params[rulesKey];
@@ -88,58 +85,64 @@ const AttributesFilter: React.FC<props> = ({ schemaServiceId }) => {
       }
     }
     return o;
-  }
+  };
 
   const handleSubmit = async () => {
-    const values = await form.validateFields()
-    const rules = transformObject(values)
+    const values = await form.validateFields();
+    const rules = transformObject(values);
     // 筛选出符合条件的节点
-    const graphData = graph.save()
+    const graphData = graph.save();
 
-    const currentNodes: any = []
-    const currentEdges: any = []
-    rules.forEach(rule => {
+    const currentNodes: any = [];
+    const currentEdges: any = [];
+    rules.forEach((rule) => {
       const currentSchema = schemaList?.nodes?.find(
-        (nodeSchema) => nodeSchema.labelName === rule.key
+        (nodeSchema) => nodeSchema.labelName === rule.key,
       );
-      const filterSchemaData =  {
+      const filterSchemaData = {
         type: rule.key,
         label: rule.key,
         expressions: rule.rules,
-        properties: currentSchema?.properties
-      }
+        properties: currentSchema?.properties,
+      };
 
       // @ts-ignore
       const filterNodes = graphData.nodes?.filter((node) =>
-        filterByTopRule({
-          id: node.id,
-          label: node.label,
-          properties: node.data
-        }, filterSchemaData as any)
+        filterByTopRule(
+          {
+            id: node.id,
+            label: node.label,
+            properties: node.data,
+          },
+          filterSchemaData as any,
+        ),
       );
 
-      filterNodes.forEach(d => {
-        currentNodes.push(d)
-      })
+      filterNodes.forEach((d) => {
+        currentNodes.push(d);
+      });
 
       // @ts-ignore
       const filterEdges = graphData.edges?.filter((edge) =>
-        filterByTopRule({
-          id: edge.id,
-          label: edge.label,
-          properties: edge.data
-        }, filterSchemaData as any)
+        filterByTopRule(
+          {
+            id: edge.id,
+            label: edge.label,
+            properties: edge.data,
+          },
+          filterSchemaData as any,
+        ),
       );
 
-      filterEdges.forEach(d => {
-        currentEdges.push(d)
-      })
-    })
+      filterEdges.forEach((d) => {
+        currentEdges.push(d);
+      });
+    });
 
-    const nodeIds = currentNodes.map(d => d.id)
+    const nodeIds = currentNodes.map((d) => d.id);
 
     // @ts-ignore
-    graphData.nodes?.forEach(node => {
+    graphData.nodes?.forEach((node) => {
       const hasMatch = nodeIds.includes(node.id);
       if (hasMatch) {
         graph.setItemState(node.id, 'disabled', false);
@@ -150,9 +153,9 @@ const AttributesFilter: React.FC<props> = ({ schemaServiceId }) => {
       }
     });
 
-    const edgeIds = currentEdges.map(d => d.id)
-     // @ts-ignore
-     graphData.edges?.forEach(edge => {
+    const edgeIds = currentEdges.map((d) => d.id);
+    // @ts-ignore
+    graphData.edges?.forEach((edge) => {
       const hasMatch = edgeIds.includes(edge.id);
       if (hasMatch) {
         graph.setItemState(edge.id, 'disabled', false);
@@ -165,11 +168,18 @@ const AttributesFilter: React.FC<props> = ({ schemaServiceId }) => {
   };
 
   return (
-    <div className='attribute-filter-container'>
-      <div className='attribute-filter-container-form'>
+    <div className="attribute-filter-container">
+      <div className="attribute-filter-container-form">
         <Form form={form} layout="vertical">
           {filterdata.map((item, index) => {
-            return <AttributesEditForm id={item.id} handleDelete={handleDelete} form={form} schemaList={schemaList} />;
+            return (
+              <AttributesEditForm
+                id={item.id}
+                handleDelete={handleDelete}
+                form={form}
+                schemaList={schemaList}
+              />
+            );
           })}
           <Button
             block
@@ -181,7 +191,8 @@ const AttributesFilter: React.FC<props> = ({ schemaServiceId }) => {
               justifyContent: 'center',
               color: '#6A6B71',
               height: 94,
-              backgroundImage: 'linear-gradient(174deg, rgba(245,248,255,0.38) 11%, rgba(244,247,255,0.55) 96%)',
+              backgroundImage:
+                'linear-gradient(174deg, rgba(245,248,255,0.38) 11%, rgba(244,247,255,0.55) 96%)',
               border: 'none',
             }}
             onClick={() => {
@@ -213,4 +224,4 @@ const AttributesFilter: React.FC<props> = ({ schemaServiceId }) => {
   );
 };
 
-export default AttributesFilter
+export default AttributesFilter;
