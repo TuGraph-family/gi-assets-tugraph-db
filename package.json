@@ -22,9 +22,18 @@
     "build:es": "father build",
     "build:umd": "webpack  --mode production  -c ./webpack.config.js",
     "build:umd:watch": "webpack  --mode production  -c ./webpack.config.js --env watch=true",
-    "demo": "umi dev",
+    "demo": "max dev",
+    "generate": "max generate",
+    "postinstall": "max setup",
+    "lint": "max lint",
     "serve": "http-server dist -p 9527",
-    "start": "father build --watch"
+    "start": "father build --watch",
+    "tag": "bit tag --force-deploy --skip-auto-tag"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,css,less}": [
+      "max lint"
+    ]
   },
   "dependencies": {
     "@antv/g2": "^5.1.5",
@@ -32,6 +41,8 @@
     "@antv/g6": "4.x",
     "@antv/gi-sdk": "^2.4.15",
     "@antv/graphin": "2.x",
+    "@difizen/cofine-editor-core": "^0.0.1-alpha.4",
+    "@difizen/cofine-language-cypher": "^0.0.1-alpha.4",
     "ahooks": "^3.7.8",
     "antd": "4.x",
     "dayjs": "^1.11.10",
@@ -43,20 +54,22 @@
     "react": "17.x",
     "react-color": "^2.19.3",
     "react-dom": "17.x",
-    "umi-request": "^1.4.0",
-    "@difizen/cofine-editor-core": "^0.0.1-alpha.4",
-    "@difizen/cofine-language-cypher": "^0.0.1-alpha.4"
+    "umi-request": "^1.4.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
-    "father": "^2.30.6",
+    "@umijs/max": "^4.0.0",
+    "father": "^4.2.2",
     "http-server": "^14.1.1",
     "less-loader": "^11.1.3",
+    "lint-staged": "^15.1.0",
     "mini-css-extract-plugin": "^2.7.2",
+    "prettier": "^2.8.8",
+    "prettier-plugin-organize-imports": "^3.2.2",
+    "prettier-plugin-packagejson": "^2.4.3",
     "ts-loader": "^9.4.2",
     "typescript": "^4.1.2",
-    "umi": "3.x",
     "use-immer": "^0.9.0",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1"
