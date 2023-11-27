@@ -17,7 +17,8 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({
   height = '320px',
   languageServiceId,
 }) => {
-  const { updateContext, services, graph, schemaData } = useContext();
+  const { updateContext, services, graph, context } = useContext();
+  const { schemaData } = context;
   const editorRef = useRef<any>(null);
   const languageService = utils.getService(services, languageServiceId);
 
