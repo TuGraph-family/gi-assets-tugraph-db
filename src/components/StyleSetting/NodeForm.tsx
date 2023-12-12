@@ -1,13 +1,25 @@
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Collapse, Form, FormInstance, FormProps, Input, Radio, Select, Tooltip, Switch, Checkbox } from 'antd';
+import {
+  Button,
+  Checkbox,
+  Collapse,
+  Form,
+  FormInstance,
+  FormProps,
+  Input,
+  Radio,
+  Select,
+  Switch,
+  Tooltip,
+} from 'antd';
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
-import CustomIcon from './CustomIcon';
-import ColorInput from './ColorInputRadio';
-import CustomIconComponent from './CustomIconCompnent';
-import { getOperatorList, ICONS, NodeDefaultColor } from './Constant';
-import IntegerStep from './IntegerStep';
 import { typeImg } from '../StatisticsFilter/constants';
+import ColorInput from './ColorInputRadio';
+import { getOperatorList, ICONS, NodeDefaultColor } from './Constant';
+import CustomIcon from './CustomIcon';
+import CustomIconComponent from './CustomIconCompnent';
+import IntegerStep from './IntegerStep';
 
 interface NodeFormProps extends FormProps {
   form: FormInstance<any>;
@@ -50,7 +62,8 @@ export const NodeForm: React.FC<NodeFormProps> = ({
   }>({
     color: {
       basic: initialValues?.customColor || initialValues?.color,
-      advanced: initialValues?.advancedCustomColor || initialValues?.advancedColor,
+      advanced:
+        initialValues?.advancedCustomColor || initialValues?.advancedColor,
     },
 
     currentSchema: {},
@@ -62,9 +75,9 @@ export const NodeForm: React.FC<NodeFormProps> = ({
   });
   const { color, currentSchema, property } = state;
 
-  const handleChangeBasicColor = e => {
+  const handleChangeBasicColor = (e) => {
     // 设置选择的默认颜色
-    setState(draft => {
+    setState((draft) => {
       draft.color = {
         ...color,
         basic: e.target.value,
@@ -75,8 +88,8 @@ export const NodeForm: React.FC<NodeFormProps> = ({
     });
   };
 
-  const handleColorChange = e => {
-    setState(draft => {
+  const handleColorChange = (e) => {
+    setState((draft) => {
       draft.color = {
         ...color,
         basic: e.target.value,
@@ -87,7 +100,7 @@ export const NodeForm: React.FC<NodeFormProps> = ({
     });
   };
 
-  const handleIconChange = e => {
+  const handleIconChange = (e) => {
     const currentNodeType = form.getFieldValue('nodeType');
     form.setFieldsValue({
       icon: {
@@ -112,9 +125,9 @@ export const NodeForm: React.FC<NodeFormProps> = ({
     }
   };
 
-  const handleChangeAdvancedColor = e => {
+  const handleChangeAdvancedColor = (e) => {
     // 设置选择的默认颜色
-    setState(draft => {
+    setState((draft) => {
       draft.color = {
         ...color,
         advanced: e.target.value,
@@ -125,8 +138,8 @@ export const NodeForm: React.FC<NodeFormProps> = ({
     });
   };
 
-  const handleAdvancedColorChange = current => {
-    setState(draft => {
+  const handleAdvancedColorChange = (current) => {
+    setState((draft) => {
       draft.color = {
         ...color,
         advanced: current,
@@ -151,23 +164,26 @@ export const NodeForm: React.FC<NodeFormProps> = ({
 
     // 修改 nodeType 以后，更新 Schema 的属性
     if (nodeType) {
-      const currentNodeSchemas = schemaData.nodes.filter((node: any) => node.labelName === nodeType);
+      const currentNodeSchemas = schemaData.nodes.filter(
+        (node: any) => node.labelName === nodeType,
+      );
       if (currentNodeSchemas.length > 0) {
-        setState(draft => {
+        setState((draft) => {
           draft.currentSchema = currentNodeSchemas[0];
         });
       }
     } else {
       // 清空了 nodeType，则重置属性
-      setState(draft => {
+      setState((draft) => {
         draft.currentSchema = {};
       });
     }
 
     if ('nodeType' in changedValues && initialValues) {
-      const curNodeStyles = initialValues[changedValues.nodeType || 'allNodes'] || {};
+      const curNodeStyles =
+        initialValues[changedValues.nodeType || 'allNodes'] || {};
       if (curNodeStyles) {
-        setState(draft => {
+        setState((draft) => {
           draft.color.basic = curNodeStyles.color;
           draft.color.advanced = curNodeStyles.advancedColor;
           draft.property = curNodeStyles.property;
@@ -175,7 +191,7 @@ export const NodeForm: React.FC<NodeFormProps> = ({
       }
     }
     if ('property' in changedValues) {
-      setState(draft => {
+      setState((draft) => {
         draft.property = property;
       });
     }
@@ -184,7 +200,7 @@ export const NodeForm: React.FC<NodeFormProps> = ({
     }
   };
 
-  const propertyOptions = currentSchema.properties?.map(d => {
+  const propertyOptions = currentSchema.properties?.map((d) => {
     return (
       <Option value={d.name} key={d.name}>
         {d.name}
@@ -214,7 +230,12 @@ export const NodeForm: React.FC<NodeFormProps> = ({
           {schemaData.nodes?.map((node: any) => {
             return (
               <Option value={node.labelName} key={node.labelName}>
-                <img src={typeImg['person']} alt="" className="img" style={{ marginRight: 4 }} />
+                <img
+                  src={typeImg['person']}
+                  alt=""
+                  className="img"
+                  style={{ marginRight: 4 }}
+                />
                 {node.labelName}
               </Option>
             );
@@ -228,7 +249,7 @@ export const NodeForm: React.FC<NodeFormProps> = ({
       <div className="color">
         <Form.Item name="color" label="颜色">
           <Radio.Group onChange={handleChangeBasicColor}>
-            {NodeDefaultColor.map(color => (
+            {NodeDefaultColor.map((color) => (
               <Radio
                 className="custom-ant-radio-wrapper"
                 key={color}
@@ -247,40 +268,53 @@ export const NodeForm: React.FC<NodeFormProps> = ({
 
       <Form.Item name={['icon', 'iconText']} label="图标">
         <Radio.Group buttonStyle="solid">
-          {ICONS.map((icon: any, index) => {
-            if (index === ICONS.length - 1) {
-              return <CustomIconComponent onChange={handleIconChange} icon={icon} />;
-            }
-            return (
-              <Radio.Button
-                key={icon.key}
-                value={icon.key}
-                className="custom-ant-radio-wrapper"
-                style={{
-                  border: 'none',
-                  lineHeight: '25px',
-                  padding: '0 1px',
-                  width: 25,
-                  height: 25,
-                }}
-              >
-                <CustomIcon
-                  type={icon.value}
+          <div className="icons">
+            {ICONS.map((icon: any, index) => {
+              if (index === ICONS.length - 1) {
+                return (
+                  <div className="more">
+                    <CustomIconComponent
+                      onChange={handleIconChange}
+                      icon={icon}
+                    />
+                  </div>
+                );
+              }
+              return (
+                <Radio.Button
+                  key={icon.key}
+                  value={icon.key}
+                  className="custom-ant-radio-wrapper"
                   style={{
-                    fontSize: 23,
-                    cursor: 'pointer',
-                    position: 'absolute',
-                    bottom: 2,
-                    left: 1,
+                    border: 'none',
+                    lineHeight: '25px',
+                    padding: '0 1px',
+                    width: 25,
+                    height: 25,
                   }}
-                />
-              </Radio.Button>
-            );
-          })}
+                >
+                  <CustomIcon
+                    type={icon.value}
+                    style={{
+                      fontSize: 23,
+                      cursor: 'pointer',
+                      position: 'absolute',
+                      bottom: 2,
+                      left: 1,
+                    }}
+                  />
+                </Radio.Button>
+              );
+            })}
+          </div>
         </Radio.Group>
       </Form.Item>
 
-      <Form.Item label="显示文本" name="isShowText" style={{ height: 30, marginBottom: 16 }}>
+      <Form.Item
+        label="显示文本"
+        name="isShowText"
+        style={{ height: 30, marginBottom: 16 }}
+      >
         <Switch
           size="small"
           style={{ position: 'absolute', left: 70, top: -26 }}
@@ -290,7 +324,10 @@ export const NodeForm: React.FC<NodeFormProps> = ({
 
       {form.getFieldValue('isShowText') && (
         <Form.Item label="文本显示类型" name="labelText" initialValue={'id'}>
-          <Radio.Group onChange={handleChangeLableText} value={form.getFieldValue('labelText')}>
+          <Radio.Group
+            onChange={handleChangeLableText}
+            value={form.getFieldValue('labelText')}
+          >
             <Radio value="id">显示ID</Radio>
             <Radio value="label">显示Label</Radio>
             <Radio value="property">显示属性</Radio>
@@ -298,19 +335,22 @@ export const NodeForm: React.FC<NodeFormProps> = ({
         </Form.Item>
       )}
 
-      {form.getFieldValue('isShowText') && form.getFieldValue('labelText') === 'property' && (
-        <Form.Item name="displayLabel" label="文本对应属性">
-          <Select
-            placeholder={currentSchema.properties ? '请选择属性' : '请先选择点类型'}
-            showSearch
-            allowClear
-            mode="multiple"
-            disabled={!currentSchema.properties}
-          >
-            {propertyOptions}
-          </Select>
-        </Form.Item>
-      )}
+      {form.getFieldValue('isShowText') &&
+        form.getFieldValue('labelText') === 'property' && (
+          <Form.Item name="displayLabel" label="文本对应属性">
+            <Select
+              placeholder={
+                currentSchema.properties ? '请选择属性' : '请先选择点类型'
+              }
+              showSearch
+              allowClear
+              mode="multiple"
+              disabled={!currentSchema.properties}
+            >
+              {propertyOptions}
+            </Select>
+          </Form.Item>
+        )}
 
       <Collapse
         bordered={false}
@@ -318,7 +358,12 @@ export const NodeForm: React.FC<NodeFormProps> = ({
         // expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
         className="site-collapse-custom-collapse"
       >
-        <Panel header="高级配置" key="1" className="site-collapse-custom-panel" forceRender>
+        <Panel
+          header="高级配置"
+          key="1"
+          className="site-collapse-custom-panel"
+          forceRender
+        >
           <div style={{ marginBottom: 16 }}>属性</div>
           <Form.List name="property">
             {(fields, { add, remove }) => {
@@ -338,22 +383,43 @@ export const NodeForm: React.FC<NodeFormProps> = ({
                             {propertyOptions}
                           </Select>
                         </Form.Item>
-                        <Form.Item {...restField} name={[name, 'operator']} noStyle>
-                          <Select placeholder="请选择" showSearch allowClear style={{ width: '30%' }}>
+                        <Form.Item
+                          {...restField}
+                          name={[name, 'operator']}
+                          noStyle
+                        >
+                          <Select
+                            placeholder="请选择"
+                            showSearch
+                            allowClear
+                            style={{ width: '30%' }}
+                          >
                             {getOperatorList(
                               property && property[key]?.name
-                                ? currentSchema.properties.find(d => d.name === property[key]?.name)?.type
+                                ? currentSchema.properties.find(
+                                    (d) => d.name === property[key]?.name,
+                                  )?.type
                                 : undefined,
-                            ).map(op => {
+                            ).map((op) => {
                               return (
                                 <Option value={op.key} key={op.key}>
-                                  {op.text ? <Tooltip title={op.text}>{op.value}</Tooltip> : op.value}
+                                  {op.text ? (
+                                    <Tooltip title={op.text}>
+                                      {op.value}
+                                    </Tooltip>
+                                  ) : (
+                                    op.value
+                                  )}
                                 </Option>
                               );
                             })}
                           </Select>
                         </Form.Item>
-                        <Form.Item {...restField} name={[name, 'value']} noStyle>
+                        <Form.Item
+                          {...restField}
+                          name={[name, 'value']}
+                          noStyle
+                        >
                           <Input style={{ width: '30%' }} />
                         </Form.Item>
                       </Input.Group>

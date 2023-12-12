@@ -1,16 +1,16 @@
-import { EditOutlined } from "@ant-design/icons";
-import { Popover, Tooltip, Radio } from "antd";
-import React, { useEffect } from "react";
-import { SketchPicker } from "react-color";
-import { useImmer } from "use-immer";
-import "./index.less";
+import { Popover, Radio } from 'antd';
+import React, { useEffect } from 'react';
+import { useImmer } from 'use-immer';
+import './index.less';
 
 const advanceColors = [
-  '#cb962a',
-  '#23ad61',
-  '#ff8075',
-  '#07bce0'
-]
+  // '#cb962a',
+  // '#23ad61',
+  // '#ff8075',
+  // '#07bce0'
+  'rgb(0 134 169)',
+  'rgb(0 191 104)',
+];
 
 export interface ColorInputProps {
   value?: any;
@@ -18,8 +18,14 @@ export interface ColorInputProps {
   onChange?: (e: any) => void;
 }
 
-const ColorInput: React.FC<ColorInputProps> = ({ onChange, value, defaultValue }) => {
-  const [state, setState] = useImmer<{ color?: string }>({ color: defaultValue });
+const ColorInput: React.FC<ColorInputProps> = ({
+  onChange,
+  value,
+  defaultValue,
+}) => {
+  const [state, setState] = useImmer<{ color?: string }>({
+    color: defaultValue,
+  });
   const { color } = state;
   useEffect(() => {
     setState((draft) => {
@@ -27,10 +33,10 @@ const ColorInput: React.FC<ColorInputProps> = ({ onChange, value, defaultValue }
     });
   }, [value]);
   return (
-    <div className='color-input'>
+    <div className="color-input">
       <Popover
-        trigger='click'
-        overlayClassName='color-input-popover'
+        trigger="click"
+        overlayClassName="color-input-popover"
         content={
           <>
             <Radio.Group onChange={onChange}>
@@ -41,7 +47,7 @@ const ColorInput: React.FC<ColorInputProps> = ({ onChange, value, defaultValue }
                   value={color}
                   style={{
                     background: color,
-                    marginRight: index === 3 ? 0 : 8
+                    marginRight: index === 3 ? 0 : 8,
                   }}
                 />
               ))}
