@@ -19,6 +19,7 @@ import ColorInput from './ColorInputRadio';
 import { getOperatorList, ICONS, NodeDefaultColor } from './Constant';
 import CustomIcon from './CustomIcon';
 import CustomIconComponent from './CustomIconCompnent';
+import './global.less';
 import IntegerStep from './IntegerStep';
 
 interface NodeFormProps extends FormProps {
@@ -251,7 +252,7 @@ export const NodeForm: React.FC<NodeFormProps> = ({
           <Radio.Group onChange={handleChangeBasicColor}>
             {NodeDefaultColor.map((color) => (
               <Radio
-                className="custom-ant-radio-wrapper"
+                className="custom-ant-radio-wrapper-defaultColor"
                 key={color}
                 value={color}
                 style={{
