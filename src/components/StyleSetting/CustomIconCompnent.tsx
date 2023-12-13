@@ -18,7 +18,7 @@ const IconSelectComponent = ({ onChange }) => {
       {/* <Input style={{ marginBottom: 8 }} /> */}
       <Tabs
         tabPosition="left"
-        items={IconGroups.map(d => {
+        items={IconGroups.map((d) => {
           return {
             label: d.label,
             key: d.key,
@@ -62,11 +62,18 @@ const IconSelectComponent = ({ onChange }) => {
   );
 };
 
-const CustomIconCompnent: React.FC<ColorInputProps> = ({ onChange, value, defaultValue, icon }) => {
-  const [state, setState] = useImmer<{ color?: string }>({ color: defaultValue });
+const CustomIconCompnent: React.FC<ColorInputProps> = ({
+  onChange,
+  value,
+  defaultValue,
+  icon,
+}) => {
+  const [state, setState] = useImmer<{ color?: string }>({
+    color: defaultValue,
+  });
   const { color } = state;
   useEffect(() => {
-    setState(draft => {
+    setState((draft) => {
       draft.color = value;
     });
   }, [value]);

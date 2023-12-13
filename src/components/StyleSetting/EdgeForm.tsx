@@ -1,11 +1,23 @@
-import ColorInput from './ColorInputRadio';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Collapse, Form, FormInstance, FormProps, Input, Radio, Select, Tooltip, Switch } from 'antd';
+import {
+  Button,
+  Collapse,
+  Form,
+  FormInstance,
+  FormProps,
+  Input,
+  Radio,
+  Select,
+  Switch,
+  Tooltip,
+} from 'antd';
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
-import { DefaultColor, getOperatorList } from './Constant';
-import IntegerStep from './IntegerStep';
 import { typeImg } from '../StatisticsFilter/constants';
+import ColorInput from './ColorInputRadio';
+import { DefaultColor, getOperatorList } from './Constant';
+import './global.less';
+import IntegerStep from './IntegerStep';
 
 interface EdgeFormProps extends FormProps {
   form: FormInstance<any>;
@@ -53,9 +65,9 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
   });
   const { color, currentSchema, property } = state;
 
-  const handleChangeBasicColor = e => {
+  const handleChangeBasicColor = (e) => {
     // 设置选择的默认颜色
-    setState(draft => {
+    setState((draft) => {
       draft.color = {
         ...color,
         basic: e.target.value,
@@ -63,8 +75,8 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
     });
   };
 
-  const handleColorChange = e => {
-    setState(draft => {
+  const handleColorChange = (e) => {
+    setState((draft) => {
       draft.color = {
         ...color,
         basic: e.target.value,
@@ -75,10 +87,10 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
     });
   };
 
-  const handleChangeAdvancedColor = e => {
+  const handleChangeAdvancedColor = (e) => {
     // 设置选择的默认颜色
 
-    setState(draft => {
+    setState((draft) => {
       draft.color = {
         ...color,
         advanced: e.target.value,
@@ -86,8 +98,8 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
     });
   };
 
-  const handleAdvancedColorChange = current => {
-    setState(draft => {
+  const handleAdvancedColorChange = (current) => {
+    setState((draft) => {
       draft.color = {
         ...color,
         advanced: current,
@@ -105,22 +117,25 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
 
     // 修改 edgeType 以后，更新 Schema 的属性
     if (edgeType) {
-      const currentEdgeSchemas = schemaData.edges.filter((edge: any) => edge.labelName === edgeType);
+      const currentEdgeSchemas = schemaData.edges.filter(
+        (edge: any) => edge.labelName === edgeType,
+      );
       if (currentEdgeSchemas.length > 0) {
-        setState(draft => {
+        setState((draft) => {
           draft.currentSchema = currentEdgeSchemas[0];
         });
       }
     } else {
-      setState(draft => {
+      setState((draft) => {
         draft.currentSchema = {};
       });
     }
 
     if ('edgeType' in changedValues && initialValues) {
-      const curEdgeStyles = initialValues[changedValues.edgeType || 'allEdges'] || {};
+      const curEdgeStyles =
+        initialValues[changedValues.edgeType || 'allEdges'] || {};
       if (curEdgeStyles) {
-        setState(draft => {
+        setState((draft) => {
           draft.color.basic = curEdgeStyles.color;
           draft.color.advanced = curEdgeStyles.advancedColor;
           draft.property = curEdgeStyles.property;
@@ -132,13 +147,13 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
     }
 
     if ('property' in changedValues) {
-      setState(draft => {
+      setState((draft) => {
         draft.property = property;
       });
     }
   };
 
-  const propertyOptions = currentSchema.properties?.map(d => {
+  const propertyOptions = currentSchema.properties?.map((d) => {
     return (
       <Option value={d.name} key={d.name}>
         {d.name}
@@ -151,7 +166,7 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
   }, []);
 
   const handleChangeLableText = () => {
-    form.setFieldValue('displayLabel', undefined)
+    form.setFieldValue('displayLabel', undefined);
   };
 
   return (
@@ -167,7 +182,12 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
           {schemaData.edges?.map((edge: any) => {
             return (
               <Option value={edge.labelName} key={edge.labelName}>
-                <img src={typeImg['amount']} alt="" className="img" style={{ marginRight: 4 }} />
+                <img
+                  src={typeImg['amount']}
+                  alt=""
+                  className="img"
+                  style={{ marginRight: 4 }}
+                />
                 {edge.labelName}
               </Option>
             );
@@ -178,9 +198,9 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
       <div className="color">
         <Form.Item name="color" label="颜色">
           <Radio.Group onChange={handleChangeBasicColor}>
-            {DefaultColor.map(color => (
+            {DefaultColor.map((color) => (
               <Radio
-                className="custom-ant-radio-wrapper"
+                className="custom-ant-radio-wrapper-defaultColor"
                 key={color}
                 value={color}
                 style={{
@@ -196,31 +216,50 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
       </div>
 
       <Form.Item name="lineWidth" label="边宽" initialValue={1}>
-        <IntegerStep  marks={marks} min={1} max={10} />
+        <IntegerStep marks={marks} min={1} max={10} />
       </Form.Item>
 
-      <Form.Item label='显示文本' name="isShowText" style={{ height: 30, marginBottom: 16 }}>
-        <Switch size='small' style={{ position: 'absolute', left: 70, top: -26 }} checked={form.getFieldValue('isShowText')} />
+      <Form.Item
+        label="显示文本"
+        name="isShowText"
+        style={{ height: 30, marginBottom: 16 }}
+      >
+        <Switch
+          size="small"
+          style={{ position: 'absolute', left: 70, top: -26 }}
+          checked={form.getFieldValue('isShowText')}
+        />
       </Form.Item>
 
-      {
-        form.getFieldValue('isShowText') &&
+      {form.getFieldValue('isShowText') && (
         <Form.Item label="文本" name="labelText" initialValue={'id'}>
-          <Radio.Group onChange={handleChangeLableText} value={form.getFieldValue('labelText')}>
+          <Radio.Group
+            onChange={handleChangeLableText}
+            value={form.getFieldValue('labelText')}
+          >
             <Radio value="id">显示ID</Radio>
             <Radio value="label">显示Label</Radio>
             <Radio value="property">显示属性</Radio>
           </Radio.Group>
         </Form.Item>
-      }
-
-      {form.getFieldValue('isShowText') && form.getFieldValue('labelText') === 'property' && (
-        <Form.Item name="displayLabel" label="文本对应属性">
-          <Select placeholder={currentSchema.properties ? "请选择属性" : '请先选择边类型'} showSearch allowClear mode="multiple" disabled={!currentSchema.properties}>
-            {propertyOptions}
-          </Select>
-        </Form.Item>
       )}
+
+      {form.getFieldValue('isShowText') &&
+        form.getFieldValue('labelText') === 'property' && (
+          <Form.Item name="displayLabel" label="文本对应属性">
+            <Select
+              placeholder={
+                currentSchema.properties ? '请选择属性' : '请先选择边类型'
+              }
+              showSearch
+              allowClear
+              mode="multiple"
+              disabled={!currentSchema.properties}
+            >
+              {propertyOptions}
+            </Select>
+          </Form.Item>
+        )}
 
       <Collapse
         bordered={false}
@@ -228,13 +267,18 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
         // expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
         className="site-collapse-custom-collapse"
       >
-        <Panel header="高级配置" key="1" className="site-collapse-custom-panel" forceRender>
+        <Panel
+          header="高级配置"
+          key="1"
+          className="site-collapse-custom-panel"
+          forceRender
+        >
           <div style={{ marginBottom: 16 }}>属性</div>
           <Form.List name="property">
             {(fields, { add, remove }) => (
               <>
                 {fields.map(({ key, name, ...restField }) => (
-                  <div className='property-list'>
+                  <div className="property-list">
                     <Input.Group compact>
                       <Form.Item {...restField} name={[name, 'name']} noStyle>
                         <Select
@@ -247,22 +291,31 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
                           {propertyOptions}
                         </Select>
                       </Form.Item>
-                      <Form.Item {...restField} name={[name, 'operator']} noStyle>
-                        <Select placeholder="请选择" showSearch allowClear style={{ width: '30%' }}>
+                      <Form.Item
+                        {...restField}
+                        name={[name, 'operator']}
+                        noStyle
+                      >
+                        <Select
+                          placeholder="请选择"
+                          showSearch
+                          allowClear
+                          style={{ width: '30%' }}
+                        >
                           {getOperatorList(
                             property && property[key]?.name
-                              ? currentSchema.properties.find(d => d.name === property[key]?.name)?.type
+                              ? currentSchema.properties.find(
+                                  (d) => d.name === property[key]?.name,
+                                )?.type
                               : undefined,
-                          ).map(op => {
+                          ).map((op) => {
                             return (
                               <Option value={op.key} key={op.key}>
-                                {
-                                    op.text
-                                    ?
-                                    <Tooltip title={op.text}>{op.value}</Tooltip>
-                                    :
-                                    op.value
-                                  }
+                                {op.text ? (
+                                  <Tooltip title={op.text}>{op.value}</Tooltip>
+                                ) : (
+                                  op.value
+                                )}
                               </Option>
                             );
                           })}
@@ -272,7 +325,7 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
                         <Input style={{ width: '30%' }} />
                       </Form.Item>
                     </Input.Group>
-                    <DeleteOutlined onClick={() => remove(name)}  />
+                    <DeleteOutlined onClick={() => remove(name)} />
                   </div>
                 ))}
                 <Form.Item style={{ width: '91%' }}>
@@ -294,9 +347,9 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
           <div className="color">
             <Form.Item name="advancedColor" label="属性颜色">
               <Radio.Group onChange={handleChangeAdvancedColor}>
-                {DefaultColor.map(color => (
+                {DefaultColor.map((color) => (
                   <Radio
-                    className="custom-ant-radio-wrapper"
+                    className="custom-ant-radio-wrapper-defaultColor"
                     key={color}
                     value={color}
                     style={{ background: color }}

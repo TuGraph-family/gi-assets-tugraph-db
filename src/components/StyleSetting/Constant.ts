@@ -1,92 +1,105 @@
 export const DefaultColor = [
-  '#99add1',
-  "rgb(64 137 255)",
-  "rgb(204 116 255)",
-  "rgb(6 184 168)",
-  "rgb(255 136 52)",
-  "rgb(88 136 195)",
-  "rgb(250 115 205)",
-  // "rgb(7 188 224)",
+  'rgb(0 120 248)',
+  'rgb(0 194 192)',
+  'rgb(244 132 82)',
+  'rgb(212 116 250)',
+  'rgb(106 90 250)',
+  'rgb(72 186 54)',
+  'rgb(220 146 38)',
+  // 'rgb(255 117 193)',
+  // 'rgb(0 134 169)',
+  // 'rgb(0 191 104)',
 ];
 
 export const NodeDefaultColor = [
-  "rgb(64 137 255)",
-  "rgb(204 116 255)",
-  "rgb(6 184 168)",
-  "rgb(255 136 52)",
-  "rgb(88 136 195)",
-  "rgb(250 115 205)",
-  '#99add1',
-  // "rgb(7 188 224)",
+  'rgb(0 120 248)',
+  'rgb(0 194 192)',
+  'rgb(244 132 82)',
+  'rgb(212 116 250)',
+  'rgb(106 90 250)',
+  'rgb(72 186 54)',
+  'rgb(220 146 38)',
+  // 'rgb(255 117 193)',
+  // 'rgb(0 134 169)',
+  // 'rgb(0 191 104)',
 ];
 
 export const ICONS = [
   {
-    key: "renyuan",
-    value: "icon-renyuan"
+    key: 'renyuan',
+    value: 'icon-renyuan',
   },
   {
-    key: "shebei",
-    value: "icon-shebei"
+    key: 'shebei',
+    value: 'icon-shebei',
   },
   {
-    key: "gongsi",
-    value: "icon-gongsi"
+    key: 'gongsi',
+    value: 'icon-gongsi',
   },
   {
-    key: "yinhang",
-    value: "icon-yinhang"
+    key: 'yinhang',
+    value: 'icon-yinhang',
   },
   {
-    key: "ka",
-    value: "icon-ka"
+    key: 'ka',
+    value: 'icon-ka',
   },
   {
-    key: "shenfenzheng",
-    value: "icon-shenfenzheng"
+    key: 'shenfenzheng',
+    value: 'icon-shenfenzheng',
   },
   {
-    key: "jinqian",
-    value: "icon-jinqian"
+    key: 'jinqian',
+    value: 'icon-jinqian',
   },
   {
-    key: "zijinguanxi",
-    value: "icon-zijinguanxi"
+    key: 'zijinguanxi',
+    value: 'icon-zijinguanxi',
   },
   {
-    key: "dianwang",
-    value: "icon-dianwang"
+    key: 'dianwang',
+    value: 'icon-dianwang',
   },
   {
-    key: "IPdizhi",
-    value: "icon-IPdizhi"
-  },
-
-  {
-    key: "yingyezhizhao",
-    value: "icon-yingyezhizhao"
+    key: 'IPdizhi',
+    value: 'icon-IPdizhi',
   },
 
   {
-    key: "dizhi",
-    value: "icon-dizhi"
+    key: 'yingyezhizhao',
+    value: 'icon-yingyezhizhao',
+  },
+
+  {
+    key: 'dizhi',
+    value: 'icon-dizhi',
   },
   {
-    key: "Wi-Fi",
-    value: "icon-Wi-Fi"
+    key: 'Wi-Fi',
+    value: 'icon-Wi-Fi',
   },
   {
-    key: "duoren",
-    value: "icon-duoren"
+    key: 'duoren',
+    value: 'icon-duoren',
   },
   {
-    key: "qinshu",
-    value: "icon-qinshu"
+    key: 'qinshu',
+    value: 'icon-qinshu',
+  },
+
+  {
+    key: 'taobao',
+    value: 'icon-taobao',
+  },
+  {
+    key: 'Alipay',
+    value: 'icon-Alipay',
   },
   {
     key: 'gengduo',
-    value: 'icon-gengduo'
-  }
+    value: 'icon-gengduo',
+  },
 ];
 
 export const IconGroups = [
@@ -96,81 +109,81 @@ export const IconGroups = [
     icons: [
       {
         key: 'renyuan',
-        value: 'icon-renyuan'
+        value: 'icon-renyuan',
       },
       {
         key: 'shenfenzheng',
-        value: 'icon-shenfenzheng'
+        value: 'icon-shenfenzheng',
       },
       {
         key: 'shijian',
-        value: 'icon-shijian'
+        value: 'icon-shijian',
       },
       {
         key: 'jia',
-        value: 'icon-jia'
+        value: 'icon-jia',
       },
       {
         key: 'gongsi',
-        value: 'icon-gongsi'
+        value: 'icon-gongsi',
       },
       {
         key: 'shanghu',
-        value: 'icon-shanghu'
+        value: 'icon-shanghu',
       },
       {
         key: 'tongxunlu',
-        value: 'icon-tongxunlu'
+        value: 'icon-tongxunlu',
       },
       {
         key: 'cheliang',
-        value: 'icon-cheliang'
+        value: 'icon-cheliang',
       },
       {
         key: 'zhengshu',
-        value: 'icon-zhengshu'
+        value: 'icon-zhengshu',
       },
       {
         key: 'duoren',
-        value: 'icon-duoren'
+        value: 'icon-duoren',
       },
       {
         key: 'yingyezhizhao',
-        value: 'icon-yingyezhizhao'
+        value: 'icon-yingyezhizhao',
       },
       {
         key: 'qinshu',
-        value: 'icon-qinshu'
+        value: 'icon-qinshu',
       },
       {
         key: 'youjian',
-        value: 'icon-youjian'
+        value: 'icon-youjian',
       },
       {
         key: 'xiaoxi',
-        value: 'icon-xiaoxi'
+        value: 'icon-xiaoxi',
       },
       {
         key: 'lianxifangshi',
-        value: 'icon-lianxifangshi'
+        value: 'icon-lianxifangshi',
       },
       {
         key: 'gouwu',
-        value: 'icon-gouwu'
+        value: 'icon-gouwu',
       },
       {
         key: 'tupian',
-        value: 'icon-tupian'
+        value: 'icon-tupian',
       },
       {
         key: 'jiejuefangan',
-        value: 'icon-jiejuefangan'
+        value: 'icon-jiejuefangan',
       },
       {
         key: 'shenji',
-        value: 'icon-shenji'
-      }
-    ]
+        value: 'icon-shenji',
+      },
+    ],
   },
   {
     label: '设备',
@@ -178,41 +191,41 @@ export const IconGroups = [
     icons: [
       {
         key: 'shebei',
-        value: 'icon-shebei'
+        value: 'icon-shebei',
       },
       {
         key: 'shouji',
-        value: 'icon-shouji'
+        value: 'icon-shouji',
       },
       {
         key: 'Wi-Fi',
-        value: 'icon-Wi-Fi'
+        value: 'icon-Wi-Fi',
       },
       {
         key: 'IPdizhi',
-        value: 'icon-IPdizhi'
+        value: 'icon-IPdizhi',
       },
       {
         key: 'dianwang',
-        value: 'icon-dianwang'
+        value: 'icon-dianwang',
       },
       {
         key: 'API',
-        value: 'icon-API'
+        value: 'icon-API',
       },
       {
         key: 'yun',
-        value: 'icon-yun'
+        value: 'icon-yun',
       },
       {
         key: 'wenjianjia',
-        value: 'icon-wenjianjia2'
+        value: 'icon-wenjianjia2',
       },
       {
         key: 'fuwuqi',
-        value: 'icon-fuwuqi'
+        value: 'icon-fuwuqi',
       },
-    ]
+    ],
   },
   {
     label: '金融',
@@ -220,33 +233,33 @@ export const IconGroups = [
     icons: [
       {
         key: 'ka',
-        value: 'icon-ka'
+        value: 'icon-ka',
       },
       {
         key: 'yinhang',
-        value: 'icon-yinhang'
+        value: 'icon-yinhang',
       },
       {
         key: 'jinqian',
-        value: 'icon-jinqian'
+        value: 'icon-jinqian',
       },
       {
         key: 'zhanghu',
-        value: 'icon-zhanghu'
+        value: 'icon-zhanghu',
       },
       {
         key: 'zijinguanxi',
-        value: 'icon-zijinguanxi'
+        value: 'icon-zijinguanxi',
       },
       {
         key: 'baoxian',
-        value: 'icon-baoxian'
+        value: 'icon-baoxian',
       },
       {
         key: 'hongbao',
-        value: 'icon-hongbao'
+        value: 'icon-hongbao',
       },
-    ]
+    ],
   },
   {
     label: '品牌',
@@ -254,124 +267,123 @@ export const IconGroups = [
     icons: [
       {
         key: 'wangwang',
-        value: 'icon-wangwang'
+        value: 'icon-wangwang',
       },
       {
         key: 'anzhuo',
-        value: 'icon-anzhuo'
+        value: 'icon-anzhuo',
       },
       {
         key: 'pingguo',
-        value: 'icon-pingguo'
+        value: 'icon-pingguo',
       },
       {
         key: 'Windows',
-        value: 'icon-Windows'
+        value: 'icon-Windows',
       },
       {
         key: 'yamaxun',
-        value: 'icon-yamaxun'
+        value: 'icon-yamaxun',
       },
       {
         key: 'Chrome',
-        value: 'icon-Chrome'
+        value: 'icon-Chrome',
       },
       {
         key: 'Google',
-        value: 'icon-Google'
+        value: 'icon-Google',
       },
       {
         key: 'Alibaba',
-        value: 'icon-Alibaba'
+        value: 'icon-Alibaba',
       },
       {
         key: 'taobao',
-        value: 'icon-taobao'
+        value: 'icon-taobao',
       },
       {
         key: 'Alipay',
-        value: 'icon-Alipay'
+        value: 'icon-Alipay',
       },
-    ]
-  }
-]
-
+    ],
+  },
+];
 
 export const operatorMapping = {
-  CT: "CONTAINS",
-  NC: "CONTAINS",
-  EQ: "=",
-  NE: "<>",
-  GT: ">",
-  LT: "<",
-  GE: ">=",
-  LE: "<="
+  CT: 'CONTAINS',
+  NC: 'CONTAINS',
+  EQ: '=',
+  NE: '<>',
+  GT: '>',
+  LT: '<',
+  GE: '>=',
+  LE: '<=',
 };
 
 export const getOperatorList = (value: string = '') => {
-  const type = value.toLowerCase()
-  if (type === "string") {
+  const type = value.toLowerCase();
+  if (type === 'string') {
     return [
       {
-        key: "CT",
-        value: "⊃",
-        text: '包含'
+        key: 'CT',
+        value: '⊃',
+        text: '包含',
       },
       {
-        key: "NC",
-        value: "⊅",
-        text: '不包含'
+        key: 'NC',
+        value: '⊅',
+        text: '不包含',
       },
       {
-        key: "EQ",
-        value: "="
+        key: 'EQ',
+        value: '=',
       },
       {
-        key: "NE",
-        value: "≠"
-      }
+        key: 'NE',
+        value: '≠',
+      },
     ];
   }
 
-  if (type === "long" || type === "double" || type === 'int32') {
+  if (type === 'long' || type === 'double' || type === 'int32') {
     return [
       {
-        key: "GT",
-        value: ">"
+        key: 'GT',
+        value: '>',
       },
       {
-        key: "LT",
-        value: "<"
+        key: 'LT',
+        value: '<',
       },
       {
-        key: "EQ",
-        value: "="
+        key: 'EQ',
+        value: '=',
       },
       {
-        key: "NE",
-        value: "≠"
+        key: 'NE',
+        value: '≠',
       },
       {
-        key: "GE",
-        value: "≥"
+        key: 'GE',
+        value: '≥',
       },
       {
-        key: "LE",
-        value: "≤"
-      }
+        key: 'LE',
+        value: '≤',
+      },
     ];
   }
 
-  if (type === "boolean") {
+  if (type === 'boolean') {
     return [
       {
-        key: "EQ",
-        value: "="
+        key: 'EQ',
+        value: '=',
       },
       {
-        key: "NE",
-        value: "≠"
-      }
+        key: 'NE',
+        value: '≠',
+      },
     ];
   }
   return [];
