@@ -1,12 +1,11 @@
 import { getQueryString } from '@/utils';
 import { ArrowLeftOutlined, CaretDownOutlined } from '@ant-design/icons';
 import { Button, Select } from 'antd';
-import React from 'react';
+
 import './index.less';
 
 const Back = () => {
   const graphName = getQueryString('graphName');
-
   // 获取子图列表
   const subgraphList = localStorage.getItem('TUGRAPH_SUBGRAPH_LIST')
     ? JSON.parse(localStorage.getItem('TUGRAPH_SUBGRAPH_LIST') as string)
@@ -25,7 +24,7 @@ const Back = () => {
         type="text"
         icon={<ArrowLeftOutlined />}
         onClick={() => {
-          location.href = '/admin/g42qkxt1ccd';
+          window.location.href = window.location.origin;
         }}
       />
       <Select
