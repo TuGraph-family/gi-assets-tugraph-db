@@ -39,7 +39,7 @@ export const ICONS = [
   },
   {
     key: 'yinhang',
-    value: 'icon-yinhang',
+    value: 'icon-tugraph-yinhang',
   },
   {
     key: 'ka',
@@ -90,7 +90,7 @@ export const ICONS = [
 
   {
     key: 'taobao',
-    value: 'icon-taobao',
+    value: 'icon-tugraph-taobao',
   },
   {
     key: 'Alipay',
@@ -133,7 +133,7 @@ export const IconGroups = [
       },
       {
         key: 'tongxunlu',
-        value: 'icon-tongxunlu',
+        value: 'icon-tugraph-tongxunlu',
       },
       {
         key: 'cheliang',
@@ -195,7 +195,7 @@ export const IconGroups = [
       },
       {
         key: 'shouji',
-        value: 'icon-shouji',
+        value: 'icon-tugraph-shouji',
       },
       {
         key: 'Wi-Fi',
@@ -237,7 +237,7 @@ export const IconGroups = [
       },
       {
         key: 'yinhang',
-        value: 'icon-yinhang',
+        value: 'icon-tugraph-yinhang',
       },
       {
         key: 'jinqian',
@@ -299,7 +299,7 @@ export const IconGroups = [
       },
       {
         key: 'taobao',
-        value: 'icon-taobao',
+        value: 'icon-tugraph-taobao',
       },
       {
         key: 'Alipay',
