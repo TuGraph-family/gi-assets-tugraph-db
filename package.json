@@ -1,6 +1,6 @@
 {
   "name": "@tugraph/gi-assets-tugraph-db",
-  "version": "0.6.39",
+  "version": "0.6.41",
   "description": "G6VP Assets for TuGraph-DB",
   "keywords": [
     "G6VP",
@@ -26,6 +26,7 @@
     "generate": "max generate",
     "postinstall": "max setup",
     "lint": "max lint",
+    "publish": "npm run build && npm publish --registry=https://registry.npmjs.org",
     "serve": "http-server dist -p 9527",
     "start": "father build --watch",
     "tag": "bit tag --force-deploy --skip-auto-tag"
@@ -73,6 +74,7 @@
     "typescript": "^4.1.2",
     "use-immer": "^0.9.0",
     "webpack": "^5.75.0",
+    "webpack-bundle-analyzer": "^4.10.1",
     "webpack-cli": "^5.0.1"
   },
   "authors": [
