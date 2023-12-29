@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input, InputNumber, Form } from 'antd';
 
-const inputStyle: any = {
+const inputStyle = {
   width: 104, 
   borderRadius: '4px'
 };
