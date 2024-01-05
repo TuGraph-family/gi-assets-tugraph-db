@@ -1,14 +1,13 @@
-import { Select } from 'antd';
 import { common, useContext } from '@antv/gi-sdk';
-import React, { useEffect } from 'react';
+import { Select } from 'antd';
+import React, { useEffect, useState } from 'react';
 import './index.less';
-import { useState } from 'react';
 
 const Download: React.FC<{}> = ({}) => {
   const { graph, data } = useContext();
   const [state, setState] = useState({
-    disbaled: true
-  })
+    disbaled: true,
+  });
 
   const onExport = () => {
     const { nodes, edges } = graph.save() as {
@@ -17,15 +16,18 @@ const Download: React.FC<{}> = ({}) => {
     };
 
     const data = {
-      nodes: nodes.map(node => {
+      nodes: nodes.map((node) => {
         return node.data;
       }),
-      edges: edges.map(edge => {
+      edges: edges.map((edge) => {
         return edge.data;
       }),
     };
 
-    common.createDownload(new Blob([JSON.stringify(data)], { type: 'text/json' }), 'data.json');
+    common.createDownload(
+      new Blob([JSON.stringify(data)], { type: 'text/json' }),
+      'data.json',
+    );
   };
 
   const handleChange = (value: string) => {
@@ -39,20 +41,19 @@ const Download: React.FC<{}> = ({}) => {
   useEffect(() => {
     if (data.nodes.length > 0) {
       setState({
-        disbaled: false
-      })
+        disbaled: false,
+      });
     } else {
       setState({
-        disbaled: true
-      })
+        disbaled: true,
+      });
     }
-  }, [data.nodes.length])
+  }, [data.nodes.length]);
 
   return (
     <div className="tugraph-download-container">
       <Select
         placeholder="下载"
-        style={{ width: 75 }}
         onChange={handleChange}
         dropdownMatchSelectWidth={false}
         className="selection"

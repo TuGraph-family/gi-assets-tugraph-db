@@ -1,19 +1,18 @@
 import { CaretRightOutlined } from '@ant-design/icons';
 import { findShortestPath } from '@antv/algorithm';
-import NodeSelectionWrap from './NodeSelectionMode';
 import { useContext } from '@antv/gi-sdk';
-import { Button, Collapse, Empty, Form, Space, Switch, message } from 'antd';
+import { Button, Collapse, Empty, Form, message, Space, Switch } from 'antd';
 import { enableMapSet } from 'immer';
 import React, { memo, useEffect, useRef } from 'react';
 import { useImmer } from 'use-immer';
+import NodeSelectionWrap from './NodeSelectionMode';
 // import PanelExtra from './PanelExtra';
 // import SegementFilter from './SegmentFilter';
+import './index.less';
 import { IHighlightElement, IState } from './typing';
 import { getPathByWeight } from './utils';
-import './index.less';
 
 import { StepComponent } from './StepComponent';
-import { useState } from 'react';
 
 const { Panel } = Collapse;
 
@@ -87,7 +86,7 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = (props) => {
           graphData,
           source,
           target,
-          direction
+          direction,
         );
         if (!allNodePath?.length) {
           let info = '无符合条件的路径';
@@ -114,7 +113,7 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = (props) => {
           return;
         }
         const highlightPath = new Set<number>(
-          allNodePath.slice(0, 1).map((_, index) => index)
+          allNodePath.slice(0, 1).map((_, index) => index),
         );
         const defaultChecked = new Map<number, boolean>();
         defaultChecked.set(0, true);
@@ -252,7 +251,7 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = (props) => {
           ? getPathByWeight(
               path,
               state.filterRule.weightPropertyName,
-              sourceDataMap
+              sourceDataMap,
             )
           : path.length;
         minLen = Math.min(minLen, len);
@@ -260,10 +259,10 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = (props) => {
       });
 
       nodePath = state.allNodePath.filter(
-        (_, pathId) => pathLenMap[pathId] === minLen
+        (_, pathId) => pathLenMap[pathId] === minLen,
       );
       edgePath = state.allEdgePath.filter(
-        (_, pathId) => pathLenMap[pathId] === minLen
+        (_, pathId) => pathLenMap[pathId] === minLen,
       );
     } else if (
       state.filterRule.type === 'Edge-Type-Filter' &&
@@ -280,10 +279,10 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = (props) => {
         }
       });
       nodePath = state.allNodePath.filter((_, pathId) =>
-        validPathId.has(pathId)
+        validPathId.has(pathId),
       );
       edgePath = state.allEdgePath.filter((_, pathId) =>
-        validPathId.has(pathId)
+        validPathId.has(pathId),
       );
     } else {
       nodePath = state.allNodePath;
@@ -294,7 +293,7 @@ const TuGraphPathQuery: React.FC<IPathAnalysisProps> = (props) => {
       draft.nodePath = nodePath;
       draft.edgePath = edgePath;
       draft.highlightPath = new Set(
-        nodePath.slice(0, 1).map((_, index) => index)
+        nodePath.slice(0, 1).map((_, index) => index),
       );
     });
   }, [state.allNodePath, state.allEdgePath, state.filterRule]);

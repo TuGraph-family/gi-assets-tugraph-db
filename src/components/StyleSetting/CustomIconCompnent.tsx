@@ -24,7 +24,7 @@ const IconSelectComponent = ({ onChange }) => {
             key: d.key,
             children: (
               <div>
-                <Radio.Group onChange={onChange}>
+                <Radio.Group onChange={onChange} style={{ width: '100%' }}>
                   {d.icons.map((icon: any) => {
                     return (
                       <Radio
