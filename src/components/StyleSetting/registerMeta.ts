@@ -9,6 +9,8 @@ metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.tooltip.default =
   '根据点上的属性值可指定颜色、大小、形状';
 metas.GI_CONTAINER_INDEX.default = -8;
 
+export const MIN_WIDTH_KEY = 'GI_RICH_CONTAINER_SIDE_WIDTH';
+
 export default (context) => {
   const { services } = context;
   const serviceOptions = services.map((c) => {

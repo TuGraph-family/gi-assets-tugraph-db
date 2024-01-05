@@ -18,6 +18,7 @@ import ColorInput from './ColorInputRadio';
 import { DefaultColor, getOperatorList } from './Constant';
 import './global.less';
 import IntegerStep from './IntegerStep';
+import { MIN_WIDTH_KEY } from './registerMeta';
 
 interface EdgeFormProps extends FormProps {
   form: FormInstance<any>;
@@ -46,6 +47,7 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
   schemaData,
   ...othersProps
 }) => {
+  const MIN_WIDTH = window.localStorage.getItem(MIN_WIDTH_KEY);
   const [state, setState] = useImmer<{
     color: {
       basic: string;
@@ -197,7 +199,14 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
 
       <div className="color">
         <Form.Item name="color" label="颜色">
-          <Radio.Group onChange={handleChangeBasicColor}>
+          <Radio.Group
+            onChange={handleChangeBasicColor}
+            style={{
+              minWidth: `${Number(MIN_WIDTH) - 65}px`,
+              display: 'flex',
+              justifyContent: 'space-around',
+            }}
+          >
             {DefaultColor.map((color) => (
               <Radio
                 className="custom-ant-radio-wrapper-defaultColor"
@@ -328,7 +337,7 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
                     <DeleteOutlined onClick={() => remove(name)} />
                   </div>
                 ))}
-                <Form.Item style={{ width: '91%' }}>
+                <Form.Item>
                   <Button
                     type="dashed"
                     disabled={!currentSchema.properties}
@@ -346,7 +355,14 @@ export const EdgeForm: React.FC<EdgeFormProps> = ({
 
           <div className="color">
             <Form.Item name="advancedColor" label="属性颜色">
-              <Radio.Group onChange={handleChangeAdvancedColor}>
+              <Radio.Group
+                onChange={handleChangeAdvancedColor}
+                style={{
+                  minWidth: `${Number(MIN_WIDTH) - 65}px`,
+                  display: 'flex',
+                  justifyContent: 'space-around',
+                }}
+              >
                 {DefaultColor.map((color) => (
                   <Radio
                     className="custom-ant-radio-wrapper-defaultColor"

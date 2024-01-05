@@ -1,19 +1,25 @@
+import { Form, Input, InputNumber } from 'antd';
 import React from 'react';
-import { Input, InputNumber, Form } from 'antd';
 
 const inputStyle = {
-  width: 104, 
-  borderRadius: '4px'
+  width: 'auto',
+  borderRadius: '4px',
 };
 
 const TwoInput = () => {
   return (
-    <Input.Group style={{
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    }}>
-      <Form.Item name="x" extra="x 坐标" style={{ display: 'inline-block', marginBottom: 0 }}>
+    <Input.Group
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      }}
+    >
+      <Form.Item
+        name="x"
+        extra="x 坐标"
+        style={{ display: 'inline-block', marginBottom: 0 }}
+      >
         <InputNumber size="small" style={inputStyle} />
       </Form.Item>
       <Form.Item
