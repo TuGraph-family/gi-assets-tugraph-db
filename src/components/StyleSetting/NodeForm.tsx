@@ -21,6 +21,7 @@ import CustomIcon from './CustomIcon';
 import CustomIconComponent from './CustomIconCompnent';
 import './global.less';
 import IntegerStep from './IntegerStep';
+import { MIN_WIDTH_KEY } from './registerMeta';
 
 interface NodeFormProps extends FormProps {
   form: FormInstance<any>;
@@ -75,7 +76,7 @@ export const NodeForm: React.FC<NodeFormProps> = ({
     },
   });
   const { color, currentSchema, property } = state;
-
+  const MIN_WIDTH = window.localStorage.getItem(MIN_WIDTH_KEY);
   const handleChangeBasicColor = (e) => {
     // 设置选择的默认颜色
     setState((draft) => {
@@ -249,7 +250,14 @@ export const NodeForm: React.FC<NodeFormProps> = ({
 
       <div className="color">
         <Form.Item name="color" label="颜色">
-          <Radio.Group onChange={handleChangeBasicColor}>
+          <Radio.Group
+            onChange={handleChangeBasicColor}
+            style={{
+              minWidth: `${Number(MIN_WIDTH) - 65}px`,
+              display: 'flex',
+              justifyContent: 'space-around',
+            }}
+          >
             {NodeDefaultColor.map((color) => (
               <Radio
                 className="custom-ant-radio-wrapper-defaultColor"
@@ -268,45 +276,76 @@ export const NodeForm: React.FC<NodeFormProps> = ({
       </div>
 
       <Form.Item name={['icon', 'iconText']} label="图标">
-        <Radio.Group buttonStyle="solid">
+        <Radio.Group buttonStyle="solid" style={{ width: '100%' }}>
           <div className="icons">
-            {ICONS.map((icon: any, index) => {
-              if (index === ICONS.length - 1) {
+            <div className="line">
+              {[...ICONS.slice(0, 9)].map((icon) => {
                 return (
-                  <div className="more">
-                    <CustomIconComponent
-                      onChange={handleIconChange}
-                      icon={icon}
-                    />
-                  </div>
-                );
-              }
-              return (
-                <Radio.Button
-                  key={icon.key}
-                  value={icon.key}
-                  className="custom-ant-radio-wrapper"
-                  style={{
-                    border: 'none',
-                    lineHeight: '25px',
-                    padding: '0 1px',
-                    width: 25,
-                    height: 25,
-                  }}
-                >
-                  <CustomIcon
-                    type={icon.value}
+                  <Radio.Button
+                    key={icon.key}
+                    value={icon.key}
+                    className="custom-ant-radio-wrapper"
                     style={{
-                      fontSize: 23,
-                      cursor: 'pointer',
-                      position: 'absolute',
-                      bottom: 2,
-                      left: 1,
+                      border: 'none',
+                      lineHeight: '25px',
+                      padding: '0 1px',
+                      width: 25,
+                      height: 25,
                     }}
-                  />
-                </Radio.Button>
-              );
-            })}
+                  >
+                    <CustomIcon
+                      type={icon.value}
+                      style={{
+                        fontSize: 23,
+                        cursor: 'pointer',
+                        position: 'absolute',
+                        bottom: 2,
+                        left: 1,
+                      }}
+                    />
+                  </Radio.Button>
+                );
+              })}
+            </div>
+            <div className="line">
+              {[...ICONS.slice(9)].map((icon: any, index) => {
+                if (index === ICONS.length - 1) {
+                  return (
+                    <div className="more">
+                      <CustomIconComponent
+                        onChange={handleIconChange}
+                        icon={icon}
+                      />
+                    </div>
+                  );
+                }
+                return (
+                  <Radio.Button
+                    key={icon.key}
+                    value={icon.key}
+                    className="custom-ant-radio-wrapper"
+                    style={{
+                      border: 'none',
+                      lineHeight: '25px',
+                      padding: '0 1px',
+                      width: 25,
+                      height: 25,
+                    }}
+                  >
+                    <CustomIcon
+                      type={icon.value}
+                      style={{
+                        fontSize: 23,
+                        cursor: 'pointer',
+                        position: 'absolute',
+                        bottom: 2,
+                        left: 1,
+                      }}
+                    />
+                  </Radio.Button>
+                );
+              })}
+            </div>
           </div>
         </Radio.Group>
       </Form.Item>
@@ -428,7 +467,7 @@ export const NodeForm: React.FC<NodeFormProps> = ({
                       <DeleteOutlined onClick={() => remove(name)} />
                     </div>
                   ))}
-                  <Form.Item style={{ width: '91%' }}>
+                  <Form.Item>
                     <Button
                       type="dashed"
                       disabled={!currentSchema.properties}
