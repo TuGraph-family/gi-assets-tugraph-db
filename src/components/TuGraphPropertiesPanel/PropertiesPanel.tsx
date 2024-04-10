@@ -3,10 +3,11 @@ import './index.less';
 
 export interface props {
   data?: any;
+  label?: any;
 }
 
 const PropertiesDetailPanel: React.FC<props> = props => {
-  const { data } = props;
+  const { data , label} = props;
 
   let content;
   if (data) {
@@ -23,6 +24,7 @@ const PropertiesDetailPanel: React.FC<props> = props => {
   return (
     <div className="propertiesDetail">
       <div className="information">
+        <p style={{ fontWeight: 'bold', fontSize: 14, color: 'rgba(26,27,37,0.88)' }}>点类型：{label}</p>
         <p style={{ fontWeight: 500, fontSize: 14, color: 'rgba(26,27,37,0.88)' }}>属性信息</p>
         {content?.map(item => {
           const { key, value } = item;
