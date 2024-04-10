@@ -99,7 +99,7 @@ const TuGraphPropertiesPanel: React.FC<props> = props => {
 
   const content =
     !isLoading && detail ? (
-      <PropertiesDetailPanel data={detail?.data} />
+      <PropertiesDetailPanel data={detail?.data} label={detail?.label}/>
     ) : (
       <Skeleton active />
     );
