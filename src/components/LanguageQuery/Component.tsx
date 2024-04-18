@@ -153,7 +153,7 @@ const LanguageQuery: React.FC<ILanguageQueryProps> = ({
             <a
               onClick={() => {
                 window.open(
-                  'https://tugraph-db.readthedocs.io/zh_CN/latest/5.developer-manual/6.interface/1.query/index.html',
+                  'https://tugraph-db.readthedocs.io/zh-cn/latest/8.query/index.html#',
                 );
               }}
             >
