@@ -155,6 +155,7 @@ export const AttributesEditForm: React.FC<props> = ({
                           showSearch
                           // @ts-ignore
                           filterOption={(input, option) =>
+                            // @ts-ignore
                             (option?.label ?? '').includes(input)
                           }
                           style={{ width: '40%' }}

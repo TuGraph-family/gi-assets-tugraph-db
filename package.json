@@ -77,6 +77,10 @@
     "webpack-bundle-analyzer": "^4.10.1",
     "webpack-cli": "^5.0.1"
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "authors": [
     "https://github.com/pomelo-nwu",
     "https://github.com/baizn"
