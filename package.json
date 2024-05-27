@@ -31,6 +31,10 @@
     "start": "father build --watch",
     "tag": "bit tag --force-deploy --skip-auto-tag"
   },
+  "resolutions": {
+    "@types/react": "17.0.2",
+    "@types/react-dom": "17.0.2"
+  },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,css,less}": [
       "max lint"
@@ -59,8 +63,6 @@
     "umi-request": "^1.4.0"
   },
   "devDependencies": {
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
     "@umijs/max": "^4.0.0",
     "father": "^4.2.2",
     "http-server": "^14.1.1",

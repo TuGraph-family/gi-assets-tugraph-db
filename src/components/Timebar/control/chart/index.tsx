@@ -20,16 +20,20 @@ const createPathRender = (compute: any) => {
 };
 
 const handleW = (x: number, y: number, r: number): string => {
-  const path = `M${x - r / 2},${y + r * 0.5}c${-r * 0.25},0,${-r * 0.45},${r * 0.2},${-r * 0.45},${r * 0.45}v${
-    r * 3
-  }c0,${r * 0.25},${r * 0.2},${r * 0.45},${r * 0.45},${r * 0.45}V${y + r * 0.5}z`;
+  const path = `M${x - r / 2},${y + r * 0.5}c${-r * 0.25},0,${-r * 0.45},${
+    r * 0.2
+  },${-r * 0.45},${r * 0.45}v${r * 3}c0,${r * 0.25},${r * 0.2},${r * 0.45},${
+    r * 0.45
+  },${r * 0.45}V${y + r * 0.5}z`;
   return path;
 };
 
 const handleE = (x: number, y: number, r: number): string => {
-  const path = `M${x + r / 2},${y + r * 0.5}c${r * 0.25},0,${r * 0.45},${r * 0.2},${r * 0.45},${r * 0.45}v${r * 3}c0,${
-    r * 0.25
-  },${-r * 0.2},${r * 0.45},${-r * 0.45},${r * 0.45}V${y + r * 0.5}z`;
+  const path = `M${x + r / 2},${y + r * 0.5}c${r * 0.25},0,${r * 0.45},${
+    r * 0.2
+  },${r * 0.45},${r * 0.45}v${r * 3}c0,${r * 0.25},${-r * 0.2},${r * 0.45},${
+    -r * 0.45
+  },${r * 0.45}V${y + r * 0.5}z`;
   return path;
 };
 
@@ -53,7 +57,17 @@ export type TimebarChartProps = {
 let timeout: number | undefined = undefined;
 
 export const TimebarChart = (props: TimebarChartProps) => {
-  const { className, data = [], xField, yField, selection, onSelection, onReset, aggregation, granularity } = props;
+  const {
+    className,
+    data = [],
+    xField,
+    yField,
+    selection,
+    onSelection,
+    onReset,
+    aggregation,
+    granularity,
+  } = props;
   const chartRef = useRef<Chart>();
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRenderingRef = useRef(true);
@@ -94,12 +108,16 @@ export const TimebarChart = (props: TimebarChartProps) => {
           //series: true,
           maskOpacity: 0.3,
           maskFill: '#777',
-          maskHandleWRender: createPathRender((width: number, height: number) => ({
-            d: handleW(width, height / 2 - 20, 10),
-          })),
-          maskHandleERender: createPathRender((width: number, height: number) => ({
-            d: handleE(0, height / 2 - 20, 10),
-          })),
+          maskHandleWRender: createPathRender(
+            (width: number, height: number) => ({
+              d: handleW(width, height / 2 - 20, 10),
+            }),
+          ),
+          maskHandleERender: createPathRender(
+            (width: number, height: number) => ({
+              d: handleE(0, height / 2 - 20, 10),
+            }),
+          ),
           maskHandleEFill: '#D3D8E0',
           maskHandleWFill: '#D3D8E0',
         },
@@ -124,7 +142,7 @@ export const TimebarChart = (props: TimebarChartProps) => {
         style: {
           viewFill: 'transparent',
         },
-        children: [{ ...commConfig, ...getAggregation(aggregation) }],
+        children: [{ ...commConfig, ...getAggregation(aggregation) }] as any,
       });
 
       chartRef.current = chart;
@@ -135,7 +153,9 @@ export const TimebarChart = (props: TimebarChartProps) => {
         chartRef.current?.options({
           children: [{ ...commConfig, ...getAggregation(aggregation) }],
         });
-        chartRef.current?.render().then(() => (chartRenderingRef.current = false));
+        chartRef.current
+          ?.render()
+          .then(() => (chartRenderingRef.current = false));
       };
 
       if (chartRenderingRef.current) {
@@ -154,10 +174,14 @@ export const TimebarChart = (props: TimebarChartProps) => {
 
   // 同步更新高亮滑块
   useEffect(() => {
-    if (!chartRef.current || !selection || !selection[0] || !selection[1]) return;
+    if (!chartRef.current || !selection || !selection[0] || !selection[1])
+      return;
 
     const update = () => {
-      if (selection[0] === selection[1] || (selection[0] === -Infinity && selection[1] === Infinity)) {
+      if (
+        selection[0] === selection[1] ||
+        (selection[0] === -Infinity && selection[1] === Infinity)
+      ) {
         chartRef.current?.emit('brush:remove');
       } else {
         chartRef.current?.emit('brush:highlight', {
