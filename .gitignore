@@ -9,3 +9,4 @@ lib
 .bitmap
 workspace.jsonc
 yarn.lock
+pnpm-lock.yaml
